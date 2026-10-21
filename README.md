@@ -139,5 +139,5 @@ zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
   angezeigt mit `L(…)`. Fehlt eine Sprache, zeigt die App Deutsch und einen Hinweis.
 - **Neue Sprache:** `lang/de.js` nach `lang/<code>.js` kopieren, übersetzen und in `js/i18n.js` bei `DICT` und `LANGS` eintragen.
 - `tools/quran/build_ayat.py` prüft für **jede** Sprache, dass jede Ayah genau so viele Wortbedeutungen wie Wörter hat.
-- Noch nur auf Deutsch: die Mūsā-Inhalte (Geschichte, Wortbedeutungen, Quiz). Sie werden übersetzt, sobald sie geprüft sind.
+- Mūsā-Inhalte (Geschichte, Wortbedeutungen, Quiz): Deutsch und Englisch. fr/ru/tr folgen nach der Prüfung. Neue Sprache einfügen: `node tools/quran/merge_lang.mjs modules/propheten/data/musa.js <sprache> <datei.json>` (prüft Wortanzahl pro Aya und Quiz-Antworten).
 - Arbeitsblätter: `python3 tools/worksheets/generate.py` erzeugt jedes Blatt in allen Sprachen nach `modules/<rubrik>/blaetter/<sprache>/` (Texte in `tools/worksheets/texts.py`, gleiche Aufgaben in jeder Sprache).
