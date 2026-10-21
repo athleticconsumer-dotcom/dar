@@ -4,6 +4,11 @@
 //  Fortschritt (api.progress()):  mastery: { "<minute>": richtige }, gameBest
 // =====================================================================
 import { showWorksheets, toAr, rnd, shuffle, esc, loadCss, judge } from "../../js/shared.js";
+import { makeT } from "../../js/i18n.js";
+import DICT from "./lang.js";
+
+const T = makeT(DICT);
+const arS = (s) => `<span class="ar" lang="ar">${s}</span>`;
 
 const MASTER_AT = 3;           // pro Minuten-Muster
 const ROUNDS = 5;              // Runden im Spiel
@@ -28,7 +33,6 @@ const MIN = {
   55: ["إِلَّا خَمْسَ دَقَائِق", "illā khamsa daqāʾiq", "minus fünf Minuten"],
 };
 const MINUTES = Object.keys(MIN).map(Number);
-const HOUR_DE = ["", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf"];
 const DAYTIME = [
   ["صَبَاحًا", "ṣabāḥan", "morgens / vormittags"], ["ظُهْرًا", "ẓuhran", "mittags"], ["عَصْرًا", "ʿaṣran", "nachmittags"],
   ["مَسَاءً", "masāʾan", "abends"], ["لَيْلًا", "laylan", "nachts"],
@@ -38,7 +42,7 @@ const DAYTIME = [
 export function phrase(h, m) {
   const hh = m >= 40 ? (h % 12) + 1 : h, mi = MIN[m];
   return { ar: "السَّاعَةُ " + HOURS[hh][0] + " " + mi[0], short: HOURS[hh][0] + " " + mi[0],
-    tr: "as-sāʿatu " + HOURS[hh][1] + " " + mi[1], de: "„" + HOUR_DE[hh] + " " + mi[2] + "“" };
+    tr: "as-sāʿatu " + HOURS[hh][1] + " " + mi[1], g: T("q1") + T("h" + hh) + " " + T("m" + m) + T("q2") };
 }
 const fmt = (h, m) => h + ":" + String(m).padStart(2, "0");
 
@@ -53,7 +57,7 @@ function clock(h, m, { small = false, interactive = false } = {}) {
     nums.push(`<text x="${(100 + 69 * Math.sin(a)).toFixed(1)}" y="${(100 - 69 * Math.cos(a)).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="Amiri,serif" font-size="17" fill="var(--muted)">${toAr(i)}</text>`);
   }
   const ha = (((h % 12) + m / 60) * 30 * Math.PI) / 180, ma = (m * 6 * Math.PI) / 180;
-  return `<svg class="u-clock${small ? " small" : ""}${interactive ? " interactive" : ""}" viewBox="0 0 200 200" role="img" aria-label="Uhr zeigt ${fmt(h, m)}">
+  return `<svg class="u-clock${small ? " small" : ""}${interactive ? " interactive" : ""}" viewBox="0 0 200 200" role="img" aria-label="${T("clockAria", { t: fmt(h, m) })}">
     <circle cx="100" cy="100" r="96" fill="var(--surface)" stroke="var(--gold-a)" stroke-width="4"/><circle cx="100" cy="100" r="90.5" fill="none" stroke="var(--m)" stroke-width="1" opacity=".35"/>
     ${t.join("")}${nums.join("")}
     <line x1="100" y1="100" x2="${(100 + 46 * Math.sin(ha)).toFixed(1)}" y2="${(100 - 46 * Math.cos(ha)).toFixed(1)}" stroke="var(--ink)" stroke-width="7" stroke-linecap="round"/>
@@ -68,16 +72,16 @@ export default {
   },
   summary(p) {
     const m = p.mastery || {};
-    return `${MINUTES.filter((k) => (m[k] || 0) >= MASTER_AT).length} von ${MINUTES.length} Mustern`;
+    return T("sum", { a: MINUTES.filter((k) => (m[k] || 0) >= MASTER_AT).length, b: MINUTES.length });
   },
-  extraStats(p) { return `Spiel-Rekord ${p.gameBest || 0}/${ROUNDS}`; },
+  extraStats(p) { return T("record", { n: p.gameBest || 0, m: ROUNDS }); },
 
   mount(root, api) {
     loadCss(import.meta.url, "style.css");
     const S = { tab: api.progress().answered ? "aufgaben" : "erklaerung", h: 3, m: 15 };
     const credit = (m) => api.update((p) => { p.mastery = p.mastery || {}; p.mastery[m] = (p.mastery[m] || 0) + 1; });
     const mastered = (m) => Math.min(api.progress().mastery?.[m] || 0, MASTER_AT);
-    const listen = (text) => api.canSpeak() ? `<button class="btn" data-say="${esc(text)}">🔊 Anhören</button>` : "";
+    const listen = (text) => api.canSpeak() ? `<button class="btn" data-say="${esc(text)}">${T("listen")}</button>` : "";
     const bindSay = () => root.querySelectorAll("[data-say]").forEach((b) => (b.onclick = () => api.speak(b.dataset.say)));
     // Für die Übungen: bevorzugt Muster, die noch nicht sitzen
     const pickMinute = () => {
@@ -87,48 +91,48 @@ export default {
 
     function frame(body) {
       root.innerHTML = `
-        <div class="tabs" role="group" aria-label="Bereich der Rubrik">
+        <div class="tabs" role="group" aria-label="${T("tabsAria")}">
           ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["blaetter", api.t("tab.sheets")]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
       root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; show(); }));
     }
     const table = (h, clickable) => `<div class="tablewrap"><table class="ref"><tbody>${MINUTES.map((m) => `
-      <tr${clickable ? ` data-m="${m}" tabindex="0"` : ""}><td class="u-time">${fmt(h, m)}</td><td class="a" lang="ar">${MIN[m][0]}</td><td class="t">${MIN[m][2]}</td></tr>`).join("")}</tbody></table></div>`;
+      <tr${clickable ? ` data-m="${m}" tabindex="0"` : ""}><td class="u-time">${fmt(h, m)}</td><td class="a" lang="ar">${MIN[m][0]}</td><td class="t">${T("m" + m)}</td></tr>`).join("")}</tbody></table></div>`;
 
     // ---------------- Erklärung ----------------
     function erklaerung() {
-      const ex = (h, m, note) => { const p = phrase(h, m); return `<div class="ex"><span class="a" lang="ar">${p.ar}</span><b>${fmt(h, m)}</b><span class="t">${esc(p.tr)}${note ? " – " + note : ""}</span></div>`; };
+      const ex = (h, m, note) => { const p = phrase(h, m); return `<div class="ex"><span class="a" lang="ar">${p.ar}</span><b>${fmt(h, m)}</b><span class="t">${esc(p.tr)}${note ? " · " + note : ""}</span></div>`; };
       frame(`
         <div class="card explain">
-          <h2>1 · Die Frage</h2>
-          <div class="ex"><span class="a" lang="ar">كَمِ السَّاعَةُ؟</span><b>Wie spät ist es?</b><span class="t">kami s-sāʿa? – wörtlich „wie viel ist die Stunde?“</span></div>
-          <p>Die Antwort beginnt immer mit <span class="ar" lang="ar">السَّاعَةُ</span> (as-sāʿa, „die Stunde“) und dann der Stunde als <b>Ordnungszahl</b>: „die dritte“, nicht „drei“.</p>
+          <h2>${T("e1")}</h2>
+          <div class="ex"><span class="a" lang="ar">كَمِ السَّاعَةُ؟</span><b>${T("ask")}</b><span class="t">${T("askLit")}</span></div>
+          <p>${T("p1", { saa: arS("السَّاعَةُ") })}</p>
         </div>
         <div class="card explain">
-          <h2>2 · Die Stunden sind weiblich</h2>
-          <p>Weil <span class="ar" lang="ar">سَاعَة</span> weiblich ist, steht die Ordnungszahl in der weiblichen Form mit ـة am Ende. Nur bei 1 sagt man <span class="ar" lang="ar">الوَاحِدَة</span>, nicht „die erste“.</p>
+          <h2>${T("e2")}</h2>
+          <p>${T("p2", { saa: arS("سَاعَة"), wahida: arS("الوَاحِدَة") })}</p>
           <div class="u-hours">${Object.entries(HOURS).map(([n, [a, t]]) => `<div><b>${n}</b><span class="ar" lang="ar">${a}</span><i>${t}</i></div>`).join("")}</div>
         </div>
         <div class="card explain">
-          <h2>3 · Bis halb: „und …“</h2>
-          <p>Mit <span class="ar" lang="ar">وَ</span> (wa, „und“) hängst du Viertel, Drittel und Hälfte an. Das <b>Drittel</b> (20 Minuten) gibt es im Deutschen nicht – im Arabischen ist es ganz normal.</p>
-          ${ex(3, 15)}${ex(3, 20, "„und ein Drittel“")}${ex(3, 30)}
+          <h2>${T("e3")}</h2>
+          <p>${T("p3", { wa: arS("وَ") })}</p>
+          ${ex(3, 15)}${ex(3, 20, T("q1") + T("m20") + T("q2"))}${ex(3, 30)}
         </div>
         <div class="card explain">
-          <h2>4 · Ab :40 – „minus“ die nächste Stunde</h2>
-          <p>Wie „Viertel vor vier“: Ab 40 Minuten nimmst du die <b>nächste</b> Stunde und ziehst mit <span class="ar" lang="ar">إِلَّا</span> (illā, „außer/minus“) ab.</p>
-          ${ex(3, 45, "„vier minus ein Viertel“")}${ex(3, 40)}
-          <p>Bei 25 und 35 Minuten rechnet man von der halben Stunde aus: „halb minus fünf“ und „halb und fünf“ – wie „fünf vor halb“ im Deutschen.</p>
+          <h2>${T("e4")}</h2>
+          <p>${T("p4", { illa: arS("إِلَّا") })}</p>
+          ${ex(3, 45, T("n45"))}${ex(3, 40)}
+          <p>${T("p4b")}</p>
           ${ex(3, 25)}${ex(3, 35)}
         </div>
         <div class="card explain">
-          <h2>5 · Tageszeit dazusagen</h2>
-          <p>Die Uhr hat 12 Stunden. Ob morgens oder abends, sagst du mit einem Wort am Ende: <span class="ar" lang="ar">السَّاعَةُ الثَّامِنَةُ مَسَاءً</span> = 8 Uhr abends.</p>
-          <div class="tablewrap"><table class="ref"><tbody>${DAYTIME.map(([a, t, d]) => `<tr><td class="a" lang="ar">${a}</td><td class="t">${t}</td><td>${d}</td></tr>`).join("")}</tbody></table></div>
+          <h2>${T("e5")}</h2>
+          <p>${T("p5", { ex: arS("السَّاعَةُ الثَّامِنَةُ مَسَاءً") })}</p>
+          <div class="tablewrap"><table class="ref"><tbody>${DAYTIME.map(([a, t], i) => `<tr><td class="a" lang="ar">${a}</td><td class="t">${t}</td><td>${T("d" + i)}</td></tr>`).join("")}</tbody></table></div>
         </div>
-        <div class="card explain"><h2>Alle Muster auf einen Blick</h2>${table(3, false)}</div>
-        <div class="row center"><button class="btn primary" data-go>Weiter zum Lernen →</button></div>`);
+        <div class="card explain"><h2>${T("all")}</h2>${table(3, false)}</div>
+        <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button></div>`);
       root.querySelector("[data-go]").onclick = () => { S.tab = "lernen"; show(); };
     }
 
@@ -141,15 +145,15 @@ export default {
           <div class="u-digital">${fmt(S.h, S.m)}</div>
           <div class="u-phrase" lang="ar" dir="rtl">${p.ar}</div>
           <div class="u-tr">${esc(p.tr)}</div>
-          <div class="u-de">${esc(p.de)}</div>
+          <div class="u-de">${esc(p.g)}</div>
           <div class="row center">
-            <button class="btn" data-step="-60">− Stunde</button><button class="btn" data-step="60">+ Stunde</button>
-            <button class="btn" data-step="-5">− 5 Min</button><button class="btn" data-step="5">+ 5 Min</button>
+            <button class="btn" data-step="-60">${T("hMinus")}</button><button class="btn" data-step="60">${T("hPlus")}</button>
+            <button class="btn" data-step="-5">${T("mMinus")}</button><button class="btn" data-step="5">${T("mPlus")}</button>
           </div>
-          <div class="row center">${listen(p.ar)}<button class="btn" id="uRand">Zufällige Uhrzeit</button></div>
-          <p class="note" style="text-align:center">Tipp: Tippe auf das Zifferblatt, um den Minutenzeiger zu setzen.</p>
+          <div class="row center">${listen(p.ar)}<button class="btn" id="uRand">${T("random")}</button></div>
+          <p class="note" style="text-align:center">${T("tip")}</p>
         </div>
-        <div class="card"><div class="eyebrow">Muster für ${S.h} Uhr – antippen zum Anzeigen</div>${table(S.h, true)}</div>`);
+        <div class="card"><div class="eyebrow">${T("patternsFor", { h: S.h })}</div>${table(S.h, true)}</div>`);
       bindSay();
       root.querySelectorAll("[data-step]").forEach((b) => (b.onclick = () => {
         const t = (((S.h % 12) * 60 + S.m + +b.dataset.step) % 720 + 720) % 720;
@@ -188,28 +192,28 @@ export default {
       const h = rnd(1, 12), m = pickMinute(), p = phrase(h, m), opts = options(h, m), type = rnd(0, 1);
       const correct = fmt(h, m);
       const prompt = type === 0
-        ? `<p class="note">Wie spät ist es? · <span class="ar" lang="ar">كَمِ السَّاعَةُ؟</span></p><div class="u-face">${clock(h, m)}</div>`
-        : `<p class="note">Welche Uhr passt?</p><div class="u-phrase" lang="ar" dir="rtl">${p.ar}</div>`;
+        ? `<p class="note">${T("qTime")} · <span class="ar" lang="ar">كَمِ السَّاعَةُ؟</span></p><div class="u-face">${clock(h, m)}</div>`
+        : `<p class="note">${T("qClock")}</p><div class="u-phrase" lang="ar" dir="rtl">${p.ar}</div>`;
       const opt = type === 0
         ? opts.map(([a, b]) => `<button class="opt arabic" lang="ar" dir="rtl" data-v="${fmt(a, b)}">${phrase(a, b).short}</button>`).join("")
         : opts.map(([a, b]) => `<button class="opt u-opt" data-v="${fmt(a, b)}" aria-label="${fmt(a, b)}">${clock(a, b, { small: true })}</button>`).join("");
       const done = MINUTES.filter((k) => mastered(k) >= MASTER_AT).length;
       frame(`
         <div class="card">
-          <div class="hud"><span>Muster gemeistert <b>${done}/${MINUTES.length}</b></span><span>Serie <b>${api.progress().streak}</b></span></div>
+          <div class="hud"><span>${T("masteredHud", { a: done, b: MINUTES.length })}</span><span>${T("streak", { n: api.progress().streak })}</span></div>
           <div class="u-dots" aria-hidden="true">${MINUTES.map((k) => `<i class="${mastered(k) >= MASTER_AT ? "full" : mastered(k) ? "part" : ""}" title=":${String(k).padStart(2, "0")}"></i>`).join("")}</div>
           <div class="u-prompt">${prompt}</div>
           <div class="opts">${opt}</div>
           <div class="feedback" aria-live="polite"></div>
           <div class="u-tr" id="uSol" hidden></div>
-          <div class="row center">${listen(p.ar)}<button class="btn primary" data-next hidden>Nächste Aufgabe →</button></div>
+          <div class="row center">${listen(p.ar)}<button class="btn primary" data-next hidden>${T("nextTask")}</button></div>
         </div>`);
       bindSay();
       root.querySelectorAll(".opt").forEach((b) => (b.onclick = () => judge({
         root, api, picked: b, correctValue: correct, onNext: aufgaben,
         extra: (ok) => {
           if (ok) credit(m);
-          const s = root.querySelector("#uSol"); s.hidden = false; s.textContent = `${correct} = ${p.tr} ${p.de}`;
+          const s = root.querySelector("#uSol"); s.hidden = false; s.textContent = `${correct} = ${p.tr} ${p.g}`;
           root.querySelector(".hud span:last-child b").textContent = api.progress().streak;
         },
       })));
@@ -219,10 +223,10 @@ export default {
     function spiel() {
       frame(`
         <div class="card u-stage">
-          <div class="u-title"><span lang="ar" dir="rtl">اِضْبِطِ السَّاعَة</span><h2>Uhr stellen</h2></div>
-          <p class="lead" style="text-align:center">Du liest eine Uhrzeit auf Arabisch und stellst die Zeiger. ${ROUNDS} Runden – wie viele schaffst du ohne Fehler?</p>
-          <div class="hud" style="justify-content:center"><span>Dein Rekord: <b>${api.progress().gameBest || 0}/${ROUNDS}</b></span></div>
-          <div class="row center"><button class="btn primary" id="uGo">Spiel starten</button></div>
+          <div class="u-title"><span lang="ar" dir="rtl">اِضْبِطِ السَّاعَة</span><h2>${T("game")}</h2></div>
+          <p class="lead" style="text-align:center">${T("gameDesc", { n: ROUNDS })}</p>
+          <div class="hud" style="justify-content:center"><span>${T("yourRecord", { n: api.progress().gameBest || 0, m: ROUNDS })}</span></div>
+          <div class="row center"><button class="btn primary" id="uGo">${T("start")}</button></div>
         </div>`);
       root.querySelector("#uGo").onclick = () => round(1, 0);
     }
@@ -236,17 +240,17 @@ export default {
       };
       frame(`
         <div class="card u-stage">
-          <div class="hud"><span>Runde <b>${n}/${ROUNDS}</b></span><span>Richtig <b>${score}</b></span></div>
+          <div class="hud"><span>${T("round", { n, m: ROUNDS })}</span><span>${T("correct", { s: score })}</span></div>
           <div class="u-phrase" lang="ar" dir="rtl">${p.ar}</div>
           <div class="row center">${listen(p.ar)}</div>
           <div class="u-face"></div>
           <div class="u-digital"></div>
           <div class="row center">
-            <button class="btn" data-h="-1">− Stunde</button><button class="btn" data-h="1">+ Stunde</button>
-            <button class="btn" data-mm="-5">− 5 Min</button><button class="btn" data-mm="5">+ 5 Min</button>
+            <button class="btn" data-h="-1">${T("hMinus")}</button><button class="btn" data-h="1">${T("hPlus")}</button>
+            <button class="btn" data-mm="-5">${T("mMinus")}</button><button class="btn" data-mm="5">${T("mPlus")}</button>
           </div>
           <div class="feedback" aria-live="polite"></div>
-          <div class="row center"><button class="btn primary" id="uCheck">Prüfen</button><button class="btn primary" id="uNext" hidden>${n < ROUNDS ? "Nächste Runde →" : "Ergebnis"}</button></div>
+          <div class="row center"><button class="btn primary" id="uCheck">${T("check")}</button><button class="btn primary" id="uNext" hidden>${n < ROUNDS ? T("nextRound") : T("result")}</button></div>
         </div>`);
       bindSay(); draw();
       root.querySelectorAll("[data-h]").forEach((b) => (b.onclick = () => { cur.h = ((cur.h - 1 + +b.dataset.h + 12) % 12) + 1; draw(); }));
@@ -256,7 +260,7 @@ export default {
         api.answer(ok); if (ok) credit(target.m);
         const fb = root.querySelector(".feedback");
         fb.className = "feedback " + (ok ? "ok" : "no");
-        fb.textContent = ok ? "صَحِيح – genau richtig!" : `Fast – gemeint war ${fmt(target.h, target.m)} ${p.de}.`;
+        fb.textContent = ok ? T("exact") : T("almost", { t: fmt(target.h, target.m), g: p.g });
         if (!ok) { cur.h = target.h; cur.m = target.m; draw(); }
         root.querySelectorAll("[data-h],[data-mm],#uCheck").forEach((b) => (b.disabled = true));
         const next = root.querySelector("#uNext"); next.hidden = false; next.focus({ preventScroll: true });
@@ -268,9 +272,9 @@ export default {
       if (record) api.update((p) => { p.gameBest = score; });
       frame(`
         <div class="card u-stage">
-          <div class="u-title"><span lang="ar" dir="rtl">${score === ROUNDS ? "مُمْتَاز!" : "أَحْسَنْت!"}</span><h2>${score}/${ROUNDS} richtig${record ? " – neuer Rekord!" : ""}</h2></div>
-          <p class="lead" style="text-align:center">${record ? "So gut warst du noch nie." : `Dein Rekord liegt bei ${best}/${ROUNDS}.`}</p>
-          <div class="row center"><button class="btn primary" id="uAgain">Noch einmal</button></div>
+          <div class="u-title"><span lang="ar" dir="rtl">${score === ROUNDS ? "مُمْتَاز!" : "أَحْسَنْت!"}</span><h2>${T("scoreTitle", { s: score, m: ROUNDS })}${record ? T("newRec") : ""}</h2></div>
+          <p class="lead" style="text-align:center">${record ? T("bestEver") : T("recordIs", { n: best, m: ROUNDS })}</p>
+          <div class="row center"><button class="btn primary" id="uAgain">${T("again")}</button></div>
         </div>`);
       root.querySelector("#uAgain").onclick = () => round(1, 0);
     }

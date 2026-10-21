@@ -55,3 +55,13 @@ export function L(v) {
 
 /** true, wenn ein Inhalt in der aktuellen Sprache fehlt (für den Hinweis „nur auf Deutsch“). */
 export const missing = (v) => v && typeof v === "object" && !Array.isArray(v) && cur !== "de" && v[cur] == null;
+
+/**
+ * Eigenes Wörterbuch einer Rubrik: const T = makeT({ de: {...}, en: {...}, ... });  T("schlüssel", { werte })
+ * Fehlt ein Schlüssel in der Sprache, wird Deutsch genommen.
+ */
+export const makeT = (dict) => (key, vars) => {
+  let s = dict[cur]?.[key] ?? dict.de[key] ?? key;
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] ?? m));
+  return s;
+};

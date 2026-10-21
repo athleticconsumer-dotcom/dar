@@ -270,7 +270,6 @@ async function rubrikPage(id) {
         <h1>${esc(L(r.title))}</h1><span class="ar" lang="ar" dir="rtl">${r.ar}</span></div>
       <div style="min-width:180px;flex:0 1 240px"><div class="hud"><span>${t("c.progress")}</span><b id="modPct">${percentOf(id)}%</b></div>${bar(percentOf(id))}</div>
     </div>
-    ${lang() !== "de" ? `<p class="lang-note">${t("lang.partial")}</p>` : ""}
     <div id="modRoot" class="mod-${id}" style="display:flex;flex-direction:column;gap:18px"></div>`;
   const api = {
     id, rubrik: r,
