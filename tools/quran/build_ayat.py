@@ -24,17 +24,20 @@ def clean(t):
 refs = {}
 for f in sorted(DATA.glob("*.js")):
     src = f.read_text(encoding="utf-8")
-    for m in re.finditer(r'ref:\s*"(\d+):(\d+)",\s*gaps:\s*\[(.*?)\]\s*\}', src):
+    for m in re.finditer(r'ref:\s*"(\d+):(\d+)",\s*gaps:\s*\[(.*?)\],\s*w:\s*\[(.*?)\]\s*\}', src, re.S):
         s, a = int(m.group(1)), int(m.group(2))
         idx = [int(x) for x in re.findall(r"i:\s*(\d+)", m.group(3))]
-        refs[(s, a)] = (f.name, idx)
+        nw = len(re.findall(r'"(?:[^"\\]|\\.)*"', m.group(4)))
+        refs[(s, a)] = (f.name, idx, nw)
 
 cache, out, ok = {}, {}, True
-for (s, a), (fname, idx) in sorted(refs.items()):
+for (s, a), (fname, idx, nw) in sorted(refs.items()):
     if s not in cache:
         cache[s] = {v["verse"]: clean(v["text"]) for v in json.load(open(SRC / f"{s}.json", encoding="utf-8"))["chapter"]}
     text = cache[s][a]
     words = text.split(" ")
+    if nw != len(words):
+        print(f"✗ {fname} {s}:{a} hat {len(words)} Wörter, aber {nw} Übersetzungen"); ok = False
     for i in idx:
         if i >= len(words):
             print(f"✗ {fname} {s}:{a} Lücke {i} gibt es nicht ({len(words)} Wörter)"); ok = False

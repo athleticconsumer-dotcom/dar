@@ -35,7 +35,7 @@ const percentOf = (id) => {
   if (!m) return 0;
   try { return Math.max(0, Math.min(100, Math.round(m.percent(store.module(id))))); } catch (e) { return 0; }
 };
-// Gesamt = Durchschnitt aller verfügbaren Rubriken und Propheten-Geschichten
+// Gesamt = Durchschnitt aller verfügbaren Rubriken und Geschichten aus dem Qur'an
 const overallPercent = () => {
   const parts = [...liveRubriken().map((r) => percentOf(r.id)), ...PR.livePersons().map((p) => PR.personPercent(store, p.id))];
   return parts.length ? Math.round(parts.reduce((a, b) => a + b, 0) / parts.length) : 0;
@@ -95,7 +95,7 @@ function levelCards() {
 
 function prophetsCard() {
   const C = PR.CATEGORY, p = PR.categoryPercent(store), live = PR.livePersons();
-  return `<a class="level-card pr-card" href="#/propheten">
+  return `<a class="level-card pr-card" href="#/geschichten">
     <div class="level-top"><div><span class="level-no">Kategorie · ${PR.PERSONS.length} Personen</span><h3>${esc(C.title)}</h3></div>
       <span class="level-ar" lang="ar" dir="rtl">${C.ar}</span></div>
     <p class="desc">${esc(C.desc)}</p>
@@ -171,7 +171,7 @@ function home() {
     <section style="display:flex;flex-direction:column;gap:18px">
       <div class="section-head"><span class="eyebrow">Kategorien</span>
         <h2>Wähle deinen Weg</h2>
-        <p>Jedes Level fasst mehrere Rubriken zusammen. In den Geschichten der Propheten lernst du die Wörter des Qur'an.</p></div>
+        <p>Jedes Level fasst mehrere Rubriken zusammen. In den Geschichten aus dem Qur'an lernst du die Wörter des Qur'an.</p></div>
       <div class="levels">${levelCards()}${prophetsCard()}</div>
     </section>`;
 }
@@ -247,7 +247,7 @@ function progressPage() {
     <div class="card"><h2>${esc(PR.CATEGORY.title)}</h2>
       <div class="level-row"><b>${esc(PR.CATEGORY.title)}</b> <span class="ar" lang="ar">${PR.CATEGORY.ar}</span><span class="pct">${PR.categoryPercent(store)}%</span></div>
       <div class="ptable">${PR.livePersons().map((x) => { const pc = PR.personPercent(store, x.id), n = Object.keys(store.module("propheten").persons?.[x.id]?.passed || {}).length;
-        return `<div class="prow"><a href="#/propheten/${x.id}" style="text-decoration:none;min-width:0"><b>${esc(x.name)}</b> <span class="ar" lang="ar" style="color:var(--gold)">${x.ar}</span></a><span class="pct">${pc}%</span>${bar(pc)}<span class="sub">${n} von ${x.data.levels.length} Level bestanden</span></div>`; }).join("")}</div></div>
+        return `<div class="prow"><a href="#/geschichten/${x.id}" style="text-decoration:none;min-width:0"><b>${esc(x.name)}</b> <span class="ar" lang="ar" style="color:var(--gold)">${x.ar}</span></a><span class="pct">${pc}%</span>${bar(pc)}<span class="sub">${n} von ${x.data.levels.length} Level bestanden</span></div>`; }).join("")}</div></div>
     <div class="card"><h3>Neu anfangen</h3>
       <p class="note">Löscht deinen gesamten Fortschritt und die Antworten aus dem Leitfaden.</p>
       <div class="row"><button class="btn" id="reset1">Fortschritt zurücksetzen</button>
@@ -289,7 +289,7 @@ store.subscribe(() => {
     el.textContent = p + "%";
     const i = el.closest(".mod-head").querySelector(".bar > i");
     if (i) i.style.width = p + "%";
-  } else if (!id && !/^#\/propheten\/[\w-]+\/\d+/.test(location.hash) && !location.hash.startsWith("#/leitfaden")) route();      // Übersichtsseiten nach Cloud-Sync neu zeichnen
+  } else if (!id && !/^#\/geschichten\/[\w-]+\/\d+/.test(location.hash) && !location.hash.startsWith("#/leitfaden")) route();      // Übersichtsseiten nach Cloud-Sync neu zeichnen
 });
 
 // ---------- Router ----------
@@ -298,7 +298,7 @@ async function route() {
   stopSpeaking();
   view.className = "view";
   const h = location.hash || "#/";
-  const page = h.startsWith("#/leitfaden") ? "leitfaden" : h.startsWith("#/fortschritt") ? "fortschritt" : h.startsWith("#/r/") ? "rubrik" : h.startsWith("#/level/") ? "level" : h.startsWith("#/propheten") ? "propheten" : "home";
+  const page = h.startsWith("#/leitfaden") ? "leitfaden" : h.startsWith("#/fortschritt") ? "fortschritt" : h.startsWith("#/r/") ? "rubrik" : h.startsWith("#/level/") ? "level" : h.startsWith("#/geschichten") ? "propheten" : "home";
   document.querySelectorAll("[data-nav]").forEach((a) => a.dataset.nav === (page === "level" || page === "propheten" ? "home" : page) ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
   if (page === "leitfaden") guidePage();
   else if (page === "fortschritt") progressPage();

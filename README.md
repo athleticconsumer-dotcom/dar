@@ -121,7 +121,7 @@ zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
   `python3 tools/worksheets/generate.py` ausführen (braucht Python mit Playwright, pdftoppm und die Schriften Amiri, Cinzel, Plus Jakarta Sans).
 - In einer neuen Rubrik den Tab einbauen: `showWorksheets(element, import.meta.url)` aus `js/shared.js` aufrufen.
 
-## Geschichten der Propheten (Kategorie)
+## Geschichten aus dem Qur'an (Kategorie, Adresse #/geschichten)
 
 `modules/propheten/` – Personen-Übersicht → Level einer Person → Ablauf je Level: Erzählung, Ayat als Lückentext, Quiz (bestanden ab 4/5, schaltet das nächste Level frei).
 

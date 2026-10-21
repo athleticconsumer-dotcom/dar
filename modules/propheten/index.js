@@ -1,5 +1,6 @@
 // =====================================================================
-//  KATEGORIE: GESCHICHTEN DER PROPHETEN (قَصَصُ الأَنْبِيَاء)
+//  KATEGORIE: GESCHICHTEN AUS DEM QUR'AN (قَصَصُ القُرْآنِ)
+//  (Ordner heißt aus technischen Gründen weiter "propheten"; Adresse: #/geschichten)
 //  Übersicht der Personen → Level einer Person → Level-Ablauf:
 //    1. Erzählung   2. Ayat mit Lückentext   3. Quiz (bestanden ab 4 von 5)
 //  Fortschritt: store.module("propheten").persons[<id>].passed[<level>] = beste Punktzahl
@@ -9,9 +10,9 @@ import musa from "./data/musa.js";
 
 export const CATEGORY = {
   id: "propheten",
-  title: "Geschichten der Propheten",
-  ar: "قَصَصُ الأَنْبِيَاء",
-  desc: "Lerne die Wörter des Qur'an durch die Geschichten der Propheten und anderer Personen aus dem Qur'an. Jedes Level: eine Erzählung, die passenden Ayat als Lückentext und ein kurzes Quiz.",
+  title: "Geschichten aus dem Qur'an",
+  ar: "قَصَصُ القُرْآنِ",
+  desc: "Lerne die Wörter des Qur'an durch die Geschichten der Personen, von denen er erzählt. Jedes Level: eine Erzählung, die passenden Ayat als farbiger Lückentext und ein kurzes Quiz.",
 };
 
 // Personen in grob chronologischer Reihenfolge. Neue Person: Datei in data/ anlegen und hier "data" setzen.
@@ -81,7 +82,7 @@ export function renderCategory(view, ctx) {
     const live = !!p.data, pct = personPercent(ctx.store, p.id);
     const inner = `<span class="pr-ar" lang="ar" dir="rtl">${p.ar}</span><b class="pr-name">${esc(p.name)}</b>
       ${live ? `<span class="pr-sub">${p.data.levels.length} Level · ${pct}%</span>${ctx.bar(pct)}` : `<span class="pill">Bald</span>`}`;
-    return live ? `<a class="pr-person" href="#/propheten/${p.id}">${inner}</a>` : `<div class="pr-person soon">${inner}</div>`;
+    return live ? `<a class="pr-person" href="#/geschichten/${p.id}">${inner}</a>` : `<div class="pr-person soon">${inner}</div>`;
   }).join("");
   view.innerHTML = `
     <section class="welcome"><div class="welcome-card"><div class="text">
@@ -97,18 +98,18 @@ export function renderCategory(view, ctx) {
 export function renderPerson(view, ctx, id) {
   loadCss(import.meta.url, "style.css");
   const p = PERSONS.find((x) => x.id === id);
-  if (!p?.data) { view.innerHTML = `<div class="empty">Diese Geschichte kommt bald. <a href="#/propheten">Zurück</a></div>`; return; }
+  if (!p?.data) { view.innerHTML = `<div class="empty">Diese Geschichte kommt bald. <a href="#/geschichten">Zurück</a></div>`; return; }
   const st = personState(ctx.store, id);
   const steps = p.data.levels.map((l, k) => {
     const n = k + 1, passed = st.passed[n], open = isUnlocked(ctx.store, id, n);
     const status = passed ? `<span class="pill live">Bestanden · ${passed}/5</span>` : open ? `<span class="pill rec">Offen</span>` : `<span class="pill">Gesperrt</span>`;
     const inner = `<span class="pr-node${passed ? " done" : ""}">${passed ? "✓" : n}</span>
       <div class="pr-step-body"><span class="level-no">Level ${n}</span><h3>${esc(l.title)}</h3><span class="pr-src">${esc(l.source)}</span></div>${status}`;
-    return open ? `<li><a class="pr-step" href="#/propheten/${id}/${n}">${inner}</a></li>` : `<li><div class="pr-step locked">${inner}</div></li>`;
+    return open ? `<li><a class="pr-step" href="#/geschichten/${id}/${n}">${inner}</a></li>` : `<li><div class="pr-step locked">${inner}</div></li>`;
   }).join("");
   view.innerHTML = `
     <section class="welcome"><div class="welcome-card"><div class="text">
-      <a class="back" href="#/propheten">← ${CATEGORY.title}</a><span class="eyebrow">${esc(p.name)}</span>
+      <a class="back" href="#/geschichten">← ${CATEGORY.title}</a><span class="eyebrow">${esc(p.name)}</span>
       <p class="salam pr-big" lang="ar" dir="rtl" style="text-align:left">${p.ar}</p>
       <h1>${esc(p.data.title)}</h1><p class="lead">${esc(p.data.intro)}</p></div>
       ${ctx.ring(personPercent(ctx.store, id), p.name)}</div></section>
@@ -120,15 +121,15 @@ export function renderPerson(view, ctx, id) {
 export async function renderLevel(view, ctx, id, n) {
   loadCss(import.meta.url, "style.css");
   const p = PERSONS.find((x) => x.id === id), L = p?.data?.levels[n - 1];
-  if (!L) { view.innerHTML = `<div class="empty">Dieses Level gibt es nicht. <a href="#/propheten">Zurück</a></div>`; return; }
-  if (!isUnlocked(ctx.store, id, n)) { location.hash = `#/propheten/${id}`; return; }
+  if (!L) { view.innerHTML = `<div class="empty">Dieses Level gibt es nicht. <a href="#/geschichten">Zurück</a></div>`; return; }
+  if (!isUnlocked(ctx.store, id, n)) { location.hash = `#/geschichten/${id}`; return; }
   const A = await ayat();
   const total = p.data.levels.length;
   let audio = null;
   const stopAudio = () => { try { audio?.pause(); } catch (e) {} };
 
   const head = (stage) => `
-    <div class="mod-head"><div class="mod-title"><a class="back" href="#/propheten/${id}">← ${esc(p.name)}</a>
+    <div class="mod-head"><div class="mod-title"><a class="back" href="#/geschichten/${id}">← ${esc(p.name)}</a>
       <h1>Level ${n} · ${esc(L.title)}</h1></div></div>
     <ol class="pr-stages">${["Erzählung", "Ayat", "Quiz"].map((t, k) => `<li class="${k === stage ? "now" : k < stage ? "done" : ""}"><span>${k + 1}</span>${t}</li>`).join("")}</ol>`;
 
@@ -143,21 +144,27 @@ export async function renderLevel(view, ctx, id, n) {
     view.querySelector("#go").onclick = () => verse(0);
   }
 
-  // ---- 2. Ayat mit Lücken ----
+  // ---- 2. Ayat mit Lücken: jedes Wort in eigener Farbe, Übersetzung darunter in derselben Farbe ----
   const allGapWords = L.ayat.flatMap((v) => v.gaps.map((g) => clean(A[v.ref].text.split(" ")[g.i])));
+  const col = (i) => `c${i % 6}`;
   function verse(k) {
     const v = L.ayat[k], d = A[v.ref], words = d.text.split(" ");
-    const gaps = [...v.gaps].sort((a, b) => a.i - b.i);
-    const answers = gaps.map((g) => clean(words[g.i]));
+    const gapIdx = v.gaps.map((g) => g.i).sort((x, y) => x - y);
+    const answers = gapIdx.map((i) => clean(words[i]));
     const pool = [...new Set(allGapWords.filter((w) => !answers.includes(w)))];
     const chips = shuffle([...answers, ...shuffle(pool).slice(0, Math.max(2, 5 - answers.length))]);
     let next = 0, mistakes = 0;
     const html = words.map((w, i) => {
-      const gi = gaps.findIndex((g) => g.i === i);
-      if (gi < 0) return `<span>${w}</span>`;
+      const gi = gapIdx.indexOf(i);
+      if (gi < 0) return `<span class="pr-w ${col(i)}">${w}</span>`;
       const waqf = (w.match(WAQF) || []).join("");
-      return `<span class="pr-gap" data-g="${gi}" aria-label="Lücke ${gi + 1}">&nbsp;</span>${waqf ? `<span>${waqf}</span>` : ""}`;
+      return `<span class="pr-gap ${col(i)}" data-g="${gi}"><small lang="de" dir="ltr">${esc(v.w[i])}</small></span>${waqf ? `<span class="pr-w ${col(i)}">${waqf}</span>` : ""}`;
     }).join(" ");
+    const gloss = words.map((w, i) => {
+      const gi = gapIdx.indexOf(i);
+      return `<li class="${col(i)}${gi >= 0 ? " is-gap" : ""}" ${gi >= 0 ? `data-gl="${gi}"` : ""}>
+        <span class="ar" lang="ar" dir="rtl">${gi >= 0 ? "؟" : clean(w)}</span><span class="de">${esc(v.w[i])}</span></li>`;
+    }).join("");
     const [sn, sa] = SURAH[d.s] || [String(d.s), ""];
     view.innerHTML = head(1) + `
       <div class="hud"><span>Ayah <b>${k + 1}/${L.ayat.length}</b></span><span>Sure ${sn} · ${d.s}:${d.a}</span></div>
@@ -165,28 +172,28 @@ export async function renderLevel(view, ctx, id, n) {
         <div class="pr-surah"><span>سُورَةُ ${sa}</span></div>
         <p class="pr-ayah">${html} <span class="pr-end">﴿${ar(d.a)}﴾</span></p>
       </article>
-      <p class="note" style="text-align:center">Tippe die Wörter in der richtigen Reihenfolge an (von rechts nach links).</p>
-      <div class="pr-chips" lang="ar" dir="rtl">${chips.map((c, j) => `<button class="pr-chip" data-w="${esc(c)}" data-j="${j}">${c}</button>`).join("")}</div>
+      <p class="note" style="text-align:center">In jeder Lücke steht das deutsche Wort. Tippe das passende arabische Wort an, von rechts nach links.</p>
+      <div class="pr-chips" lang="ar" dir="rtl">${chips.map((c) => `<button class="pr-chip" data-w="${esc(c)}">${c}</button>`).join("")}</div>
       <div class="feedback" aria-live="polite"></div>
-      <div id="after" hidden class="card pr-after">
-        <h3>Neue Wörter</h3>
-        <div class="pr-gloss">${gaps.map((g) => `<div><span lang="ar" dir="rtl">${clean(words[g.i])}</span><span>${esc(g.de)}</span></div>`).join("")}</div>
-        <div class="row"><button class="btn" id="rec">▶ Rezitation anhören</button>
-          <button class="btn primary" id="nx">${k + 1 < L.ayat.length ? "Nächste Ayah →" : "Zum Quiz →"}</button></div>
-        <p class="pr-src">Rezitation: Mishary Rāshid al-ʿAfāsī (everyayah.com)</p>
-      </div>`;
+      <div id="after" hidden class="row center">
+        <button class="btn" id="rec">▶ Rezitation anhören</button>
+        <button class="btn primary" id="nx">${k + 1 < L.ayat.length ? "Nächste Ayah →" : "Zum Quiz →"}</button>
+      </div>
+      <section class="card pr-wbw"><h3>Wort für Wort</h3><ol class="pr-gloss" dir="rtl">${gloss}</ol>
+        <p class="pr-src">Wörtliche Bedeutungen als Lernhilfe, keine vollständige Übersetzung. Rezitation: Mishary Rāshid al-ʿAfāsī (everyayah.com)</p></section>`;
     const fb = view.querySelector(".feedback");
     view.querySelectorAll(".pr-chip").forEach((b) => (b.onclick = () => {
       if (next >= answers.length) return;
       if (b.dataset.w === answers[next]) {
         const slot = view.querySelector(`.pr-gap[data-g="${next}"]`);
         slot.textContent = b.dataset.w; slot.classList.add("filled");
+        const gl = view.querySelector(`[data-gl="${next}"] .ar`); if (gl) gl.textContent = b.dataset.w;
         b.disabled = true; b.classList.add("used"); next++;
         ctx.store.answer("propheten", true);
         if (next === answers.length) {
-          fb.className = "feedback ok"; fb.textContent = mistakes ? `Geschafft – mit ${mistakes} Fehler${mistakes > 1 ? "n" : ""}.` : "مَا شَاءَ ٱللَّه – alles richtig!";
+          fb.className = "feedback ok"; fb.textContent = mistakes ? `Geschafft, mit ${mistakes} Fehler${mistakes > 1 ? "n" : ""}.` : "مَا شَاءَ ٱللَّه, alles richtig!";
           view.querySelectorAll(".pr-chip:not(.used)").forEach((c) => (c.disabled = true));
-          const af = view.querySelector("#after"); af.hidden = false;
+          view.querySelector("#after").hidden = false;
           view.querySelector("#rec").onclick = () => { stopAudio(); audio = new Audio(recitation(d.s, d.a)); audio.play().catch(() => (fb.textContent = "Die Rezitation konnte nicht geladen werden.")); };
           view.querySelector("#nx").onclick = () => { stopAudio(); k + 1 < L.ayat.length ? verse(k + 1) : quiz(0, 0); };
           view.querySelector("#nx").focus({ preventScroll: true });
@@ -194,7 +201,7 @@ export async function renderLevel(view, ctx, id, n) {
       } else {
         mistakes++; ctx.store.answer("propheten", false);
         b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); setTimeout(() => b.classList.remove("shake"), 700);
-        fb.className = "feedback no"; fb.textContent = "Dieses Wort passt hier nicht – versuch ein anderes.";
+        fb.className = "feedback no"; fb.textContent = "Dieses Wort passt hier nicht. Versuch ein anderes.";
       }
     }));
   }
@@ -234,9 +241,9 @@ export async function renderLevel(view, ctx, id, n) {
         <h2>${passed ? `Level ${n} bestanden` : "Noch nicht bestanden"}</h2>
         <p class="lead">${score} von ${L.quiz.length} Fragen richtig. ${passed ? (hasNext ? `Level ${n + 1} ist jetzt freigeschaltet.` : `Du hast die ganze Geschichte von ${esc(p.name)} geschafft!`) : `Du brauchst mindestens ${PASS_AT} richtige Antworten.`}</p>
         <div class="row center">
-          ${passed && hasNext ? `<a class="btn primary" href="#/propheten/${id}/${n + 1}">Weiter zu Level ${n + 1} →</a>` : ""}
+          ${passed && hasNext ? `<a class="btn primary" href="#/geschichten/${id}/${n + 1}">Weiter zu Level ${n + 1} →</a>` : ""}
           ${!passed ? `<button class="btn primary" id="again">Quiz wiederholen</button>` : ""}
-          <a class="btn" href="#/propheten/${id}">Zur Übersicht</a></div></div>`;
+          <a class="btn" href="#/geschichten/${id}">Zur Übersicht</a></div></div>`;
     view.querySelector("#again")?.addEventListener("click", () => quiz(0, 0));
   }
 

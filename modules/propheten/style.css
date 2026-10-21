@@ -1,4 +1,4 @@
-/* Kategorie Geschichten der Propheten – eigene Optik: Mushaf-Rahmen, Pergament, Goldornament. */
+/* Kategorie Geschichten aus dem Qur'an – eigene Optik: Mushaf-Rahmen, Pergament, Goldornament. */
 .pr-big{font-size:2.4rem!important}
 .pr-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
 .pr-person{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;text-decoration:none;background:var(--surface);
@@ -68,3 +68,20 @@ a.pr-step:hover{background:var(--paper)}
 .pr-q{font-family:var(--f-body);font-weight:600;font-size:1.1rem;color:var(--ink);text-align:center}
 .pr-result{align-items:center;text-align:center}
 .pr-ar-big{font:700 2rem/1.4 var(--f-ar);color:var(--gold)}
+
+/* Wortfarben (hell / dunkel) */
+.pr-mushaf,.pr-wbw{--c0:#9B2C4A;--c1:#1F6F78;--c2:#9A5E12;--c3:#5B3A8C;--c4:#2E7D4F;--c5:#2F5C9E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pr-mushaf,:root:not([data-theme="light"]) .pr-wbw{--c0:#F09AB0;--c1:#7FD3DB;--c2:#F0BE6E;--c3:#C2A6F0;--c4:#8ED9AA;--c5:#9DBDF2}}
+:root[data-theme="dark"] .pr-mushaf,:root[data-theme="dark"] .pr-wbw{--c0:#F09AB0;--c1:#7FD3DB;--c2:#F0BE6E;--c3:#C2A6F0;--c4:#8ED9AA;--c5:#9DBDF2}
+.c0{--wc:var(--c0)}.c1{--wc:var(--c1)}.c2{--wc:var(--c2)}.c3{--wc:var(--c3)}.c4{--wc:var(--c4)}.c5{--wc:var(--c5)}
+.pr-w{color:var(--wc)}
+.pr-gap{color:var(--wc);border-bottom-color:var(--wc)!important;min-width:4em;text-align:center;vertical-align:baseline}
+.pr-gap small{display:inline-block;font:600 .42em/1.3 var(--f-body);color:var(--wc);padding:.2em .5em;border-radius:6px;
+  background:color-mix(in srgb,var(--wc) 12%,transparent);white-space:nowrap;vertical-align:middle}
+.pr-gap.filled{background:color-mix(in srgb,var(--wc) 12%,transparent)}
+.pr-wbw .pr-gloss{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pr-wbw .pr-gloss li{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:12px;
+  border:1.5px solid color-mix(in srgb,var(--wc) 45%,transparent);background:color-mix(in srgb,var(--wc) 7%,var(--surface));min-width:0}
+.pr-wbw .pr-gloss .ar{font:400 1.3rem/1.5 "Amiri Quran","Amiri",var(--f-ar);color:var(--wc)}
+.pr-wbw .pr-gloss .de{font-size:.8rem;color:var(--wc);font-weight:600;text-align:center;direction:ltr}
+.pr-wbw .pr-gloss li.is-gap{border-style:dashed}
