@@ -120,3 +120,13 @@ zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
 - **Neue Blätter im App-Design erzeugen:** in `tools/worksheets/generate.py` eine Funktion ergänzen und
   `python3 tools/worksheets/generate.py` ausführen (braucht Python mit Playwright, pdftoppm und die Schriften Amiri, Cinzel, Plus Jakarta Sans).
 - In einer neuen Rubrik den Tab einbauen: `showWorksheets(element, import.meta.url)` aus `js/shared.js` aufrufen.
+
+## Geschichten der Propheten (Kategorie)
+
+`modules/propheten/` – Personen-Übersicht → Level einer Person → Ablauf je Level: Erzählung, Ayat als Lückentext, Quiz (bestanden ab 4/5, schaltet das nächste Level frei).
+
+- Inhalte einer Person: `modules/propheten/data/<person>.js` (Erzählung, Ayat-Referenzen mit Lücken, Quiz). Vorbild: `musa.js`.
+- Neue Person in `modules/propheten/index.js` bei `PERSONS` mit `data` eintragen.
+- Der Qur'an-Text wird nie von Hand geschrieben: `python3 tools/quran/build_ayat.py <pfad-zu-quran-api>` holt alle verwendeten Ayat
+  aus dem Tanzil-Text (Uthmani/Hafs, github.com/fawazahmed0/quran-api), prüft jede Lücke und schreibt `modules/propheten/ayat.json`.
+- Rezitation: Mishary Rāshid al-ʿAfāsī über everyayah.com.

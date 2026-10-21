@@ -1,0 +1,70 @@
+/* Kategorie Geschichten der Propheten – eigene Optik: Mushaf-Rahmen, Pergament, Goldornament. */
+.pr-big{font-size:2.4rem!important}
+.pr-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.pr-person{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;text-decoration:none;background:var(--surface);
+  border:1.5px solid var(--gold-line);border-radius:var(--r);padding:20px 14px;box-shadow:var(--shadow);min-width:0}
+.pr-person .bar{width:100%}
+a.pr-person:hover{border-color:var(--maroon);box-shadow:var(--shadow-hover)}
+@media (prefers-reduced-motion:no-preference){a.pr-person{transition:transform .3s ease,box-shadow .3s ease}a.pr-person:hover{transform:translateY(-3px)}}
+.pr-ar{font:700 2rem/1.4 var(--f-ar);color:var(--heading)}
+.pr-name{font:700 1rem var(--f-serif);color:var(--heading)}
+.pr-sub{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.pr-person.soon{box-shadow:none;background:transparent;border-style:dashed}
+.pr-person.soon .pr-ar,.pr-person.soon .pr-name{color:var(--muted)}
+
+/* Lernpfad */
+.pr-path{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;position:relative}
+.pr-path::before{content:"";position:absolute;left:21px;top:22px;bottom:22px;width:2px;background:var(--gold-line)}
+.pr-step{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;text-decoration:none;
+  padding:10px 14px 10px 0;border-radius:16px}
+a.pr-step:hover{background:var(--paper)}
+.pr-step.locked{opacity:.55}
+.pr-node{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--surface);border:2px solid var(--gold-a);
+  font:700 1rem var(--f-serif);color:var(--heading);z-index:1}
+.pr-node.done{background:var(--maroon);color:var(--gold-light);border-color:var(--maroon)}
+.pr-step-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pr-src{font-size:.78rem;color:var(--muted)}
+
+/* Stufen-Anzeige */
+.pr-stages{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+.pr-stages li{display:flex;align-items:center;gap:6px;font:600 .82rem var(--f-body);color:var(--muted);padding:5px 12px 5px 5px;border-radius:999px;border:1px solid var(--line)}
+.pr-stages li span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--paper);font-size:.75rem}
+.pr-stages li.now{border-color:var(--gold-a);color:var(--heading)}
+.pr-stages li.now span{background:var(--gold-a);color:#350D19}
+.pr-stages li.done span{background:var(--maroon);color:var(--gold-light)}
+
+/* Erzählung */
+.pr-story p{max-width:65ch;font-size:1.02rem;line-height:1.75}
+.pr-motif{width:100%;max-width:340px;height:auto;align-self:center;margin-bottom:4px}
+
+/* Mushaf-Rahmen */
+.pr-mushaf{position:relative;background:var(--paper);border:2px solid var(--gold-a);border-radius:18px;padding:30px clamp(16px,4vw,34px) 26px;
+  box-shadow:inset 0 0 0 6px var(--paper),inset 0 0 0 7.5px var(--gold-line),var(--shadow)}
+.pr-surah{display:flex;justify-content:center;margin:-46px 0 12px}
+.pr-surah span{font:700 1.05rem/1 var(--f-ar);background:var(--maroon);color:var(--gold-light);padding:8px 20px;border-radius:999px;border:1.5px solid var(--gold-a)}
+.pr-ayah{font-family:"Amiri Quran","Amiri",var(--f-ar);font-size:clamp(1.55rem,5.4vw,2.15rem);line-height:2.35;text-align:center;color:var(--ink);margin:0;word-spacing:.08em}
+.pr-end{color:var(--gold);white-space:nowrap}
+.pr-gap{display:inline-block;min-width:3.4em;border-bottom:2.5px dashed var(--gold-a);line-height:1.5;padding:0 .15em;color:var(--good);border-radius:4px}
+.pr-gap.filled{border-bottom-style:solid;border-bottom-color:var(--good);background:color-mix(in srgb,var(--good) 10%,transparent);min-width:0}
+@media (prefers-reduced-motion:no-preference){.pr-gap.filled{animation:pr-pop .35s ease}}
+@keyframes pr-pop{0%{transform:scale(.85)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+.pr-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pr-chip{font:400 1.45rem/1.6 "Amiri Quran","Amiri",var(--f-ar);padding:6px 18px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface);
+  color:var(--ink);cursor:pointer;min-height:48px;box-shadow:var(--shadow)}
+.pr-chip:hover:not([disabled]){border-color:var(--maroon)}
+.pr-chip.used{opacity:.35;box-shadow:none}
+.pr-chip[disabled]{cursor:default}
+.pr-chip.shake{border-color:var(--bad);color:var(--bad)}
+@media (prefers-reduced-motion:no-preference){.pr-chip.shake{animation:pr-shake .4s ease}}
+@keyframes pr-shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+
+.pr-after{border-color:var(--good)}
+.pr-gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.pr-gloss div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--line)}
+.pr-gloss span:first-child{font:400 1.35rem/1.5 "Amiri Quran","Amiri",var(--f-ar);color:var(--heading)}
+.pr-gloss span:last-child{font-size:.88rem;color:var(--body);text-align:right}
+
+.pr-q{font-family:var(--f-body);font-weight:600;font-size:1.1rem;color:var(--ink);text-align:center}
+.pr-result{align-items:center;text-align:center}
+.pr-ar-big{font:700 2rem/1.4 var(--f-ar);color:var(--gold)}

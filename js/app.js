@@ -7,6 +7,7 @@ import { store } from "./store.js";
 import { startFirebase } from "./firebase.js";
 import { QUESTIONS, buildPath, recommend } from "./guide.js";
 import { DONE_AT } from "./config.js";
+import * as PR from "../modules/propheten/index.js";
 import { speak, canSpeak, stopSpeaking, esc } from "./shared.js";
 
 const view = document.getElementById("view");
@@ -34,9 +35,10 @@ const percentOf = (id) => {
   if (!m) return 0;
   try { return Math.max(0, Math.min(100, Math.round(m.percent(store.module(id))))); } catch (e) { return 0; }
 };
+// Gesamt = Durchschnitt aller verfügbaren Rubriken und Propheten-Geschichten
 const overallPercent = () => {
-  const live = liveRubriken();
-  return live.length ? Math.round(live.reduce((s, r) => s + percentOf(r.id), 0) / live.length) : 0;
+  const parts = [...liveRubriken().map((r) => percentOf(r.id)), ...PR.livePersons().map((p) => PR.personPercent(store, p.id))];
+  return parts.length ? Math.round(parts.reduce((a, b) => a + b, 0) / parts.length) : 0;
 };
 const levelPercent = (lid) => {
   const live = rubrikenOf(lid).filter((r) => r.status === "live");
@@ -89,6 +91,18 @@ function levelCards() {
       <div class="meta"><span>${p}% geschafft · ${live.length} von ${all.length} Rubriken verfügbar</span><span class="go">Öffnen →</span></div>
     </a>`;
   }).join("");
+}
+
+function prophetsCard() {
+  const C = PR.CATEGORY, p = PR.categoryPercent(store), live = PR.livePersons();
+  return `<a class="level-card pr-card" href="#/propheten">
+    <div class="level-top"><div><span class="level-no">Kategorie · ${PR.PERSONS.length} Personen</span><h3>${esc(C.title)}</h3></div>
+      <span class="level-ar" lang="ar" dir="rtl">${C.ar}</span></div>
+    <p class="desc">${esc(C.desc)}</p>
+    <div class="level-icons">${PR.PERSONS.map((x) => `<span class="${x.data ? "" : "soon"}" style="--m:var(--maroon)" lang="ar" title="${esc(x.name)}">${x.ar}</span>`).join("")}</div>
+    ${bar(p)}
+    <div class="meta"><span>${p}% geschafft · ${live.length} von ${PR.PERSONS.length} Geschichten verfügbar</span><span class="go">Öffnen →</span></div>
+  </a>`;
 }
 
 function levelPage(lid) {
@@ -155,10 +169,10 @@ function home() {
     </section>
     ${nextBox}
     <section style="display:flex;flex-direction:column;gap:18px">
-      <div class="section-head"><span class="eyebrow">Level</span>
-        <h2>Wähle dein Level</h2>
-        <p>Jedes Level fasst mehrere Rubriken zusammen.</p></div>
-      <div class="levels">${levelCards()}</div>
+      <div class="section-head"><span class="eyebrow">Kategorien</span>
+        <h2>Wähle deinen Weg</h2>
+        <p>Jedes Level fasst mehrere Rubriken zusammen. In den Geschichten der Propheten lernst du die Wörter des Qur'an.</p></div>
+      <div class="levels">${levelCards()}${prophetsCard()}</div>
     </section>`;
 }
 
@@ -216,7 +230,7 @@ function progressPage() {
       <div class="welcome-card">
         <div class="text"><span class="eyebrow">Fortschritt</span>
           <h1>Was du schon geschafft hast</h1>
-          <p class="lead">Der Gesamtfortschritt ist der Durchschnitt aller verfügbaren Rubriken. Neue Rubriken kommen dazu, sobald sie fertig sind.</p></div>
+          <p class="lead">Der Gesamtfortschritt ist der Durchschnitt aller verfügbaren Rubriken und Geschichten. Neue kommen dazu, sobald sie fertig sind.</p></div>
         ${ring(overallPercent(), "Gesamtfortschritt")}
       </div>
     </section>
@@ -230,6 +244,10 @@ function progressPage() {
     </div>
     <div class="card"><h2>Pro Rubrik</h2>${LEVELS.map((l) => `<div class="level-row"><b>${esc(l.title)}</b> <span class="ar" lang="ar">${l.ar}</span><span class="pct">${levelPercent(l.id)}%</span></div>`).join("")}<div class="ptable">${rows}</div>
       ${soon ? `<p class="note">In Arbeit: ${soon}</p>` : ""}</div>
+    <div class="card"><h2>${esc(PR.CATEGORY.title)}</h2>
+      <div class="level-row"><b>${esc(PR.CATEGORY.title)}</b> <span class="ar" lang="ar">${PR.CATEGORY.ar}</span><span class="pct">${PR.categoryPercent(store)}%</span></div>
+      <div class="ptable">${PR.livePersons().map((x) => { const pc = PR.personPercent(store, x.id), n = Object.keys(store.module("propheten").persons?.[x.id]?.passed || {}).length;
+        return `<div class="prow"><a href="#/propheten/${x.id}" style="text-decoration:none;min-width:0"><b>${esc(x.name)}</b> <span class="ar" lang="ar" style="color:var(--gold)">${x.ar}</span></a><span class="pct">${pc}%</span>${bar(pc)}<span class="sub">${n} von ${x.data.levels.length} Level bestanden</span></div>`; }).join("")}</div></div>
     <div class="card"><h3>Neu anfangen</h3>
       <p class="note">Löscht deinen gesamten Fortschritt und die Antworten aus dem Leitfaden.</p>
       <div class="row"><button class="btn" id="reset1">Fortschritt zurücksetzen</button>
@@ -271,7 +289,7 @@ store.subscribe(() => {
     el.textContent = p + "%";
     const i = el.closest(".mod-head").querySelector(".bar > i");
     if (i) i.style.width = p + "%";
-  } else if (!id) route();      // Startseite/Fortschritt nach Cloud-Sync neu zeichnen
+  } else if (!id && !/^#\/propheten\/[\w-]+\/\d+/.test(location.hash) && !location.hash.startsWith("#/leitfaden")) route();      // Übersichtsseiten nach Cloud-Sync neu zeichnen
 });
 
 // ---------- Router ----------
@@ -280,12 +298,19 @@ async function route() {
   stopSpeaking();
   view.className = "view";
   const h = location.hash || "#/";
-  const page = h.startsWith("#/leitfaden") ? "leitfaden" : h.startsWith("#/fortschritt") ? "fortschritt" : h.startsWith("#/r/") ? "rubrik" : h.startsWith("#/level/") ? "level" : "home";
-  document.querySelectorAll("[data-nav]").forEach((a) => a.dataset.nav === (page === "level" ? "home" : page) ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  const page = h.startsWith("#/leitfaden") ? "leitfaden" : h.startsWith("#/fortschritt") ? "fortschritt" : h.startsWith("#/r/") ? "rubrik" : h.startsWith("#/level/") ? "level" : h.startsWith("#/propheten") ? "propheten" : "home";
+  document.querySelectorAll("[data-nav]").forEach((a) => a.dataset.nav === (page === "level" || page === "propheten" ? "home" : page) ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
   if (page === "leitfaden") guidePage();
   else if (page === "fortschritt") progressPage();
   else if (page === "rubrik") await rubrikPage(h.slice(4).split(/[/?#]/)[0]);
   else if (page === "level") levelPage(h.slice(8).split(/[/?#]/)[0]);
+  else if (page === "propheten") {
+    const [, , pid, lvl] = h.split(/[/?]/);
+    const ctx = { store, bar, ring };
+    if (pid && lvl) cleanup = (await PR.renderLevel(view, ctx, pid, Number(lvl))) || null;
+    else if (pid) PR.renderPerson(view, ctx, pid);
+    else PR.renderCategory(view, ctx);
+  }
   else home();
 }
 
