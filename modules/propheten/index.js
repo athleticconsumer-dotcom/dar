@@ -141,12 +141,34 @@ export async function renderLevel(view, ctx, id, n) {
         ${L.story.map((t) => `<p>${esc(t)}</p>`).join("")}
         <p class="pr-src">Quelle: ${esc(L.source)}</p>
         <div class="row"><button class="btn primary" id="go">Weiter zu den Ayat →</button></div></article>`;
-    view.querySelector("#go").onclick = () => verse(0);
+    view.querySelector("#go").onclick = () => read(0);
   }
 
   // ---- 2. Ayat mit Lücken: jedes Wort in eigener Farbe, Übersetzung darunter in derselben Farbe ----
   const allGapWords = L.ayat.flatMap((v) => v.gaps.map((g) => clean(A[v.ref].text.split(" ")[g.i])));
   const col = (i) => `c${i % 6}`;
+  // ---- 2a. Ayah zuerst ganz lesen: alle Wörter farbig, Wort für Wort darunter ----
+  function read(k) {
+    stopAudio();
+    const v = L.ayat[k], d = A[v.ref], words = d.text.split(" ");
+    const [sn, sa] = SURAH[d.s] || [String(d.s), ""];
+    const html = words.map((w, i) => `<span class="pr-w ${col(i)}">${w}</span>`).join(" ");
+    const gloss = words.map((w, i) => `<li class="${col(i)}"><span class="ar" lang="ar" dir="rtl">${clean(w)}</span><span class="de">${esc(v.w[i])}</span></li>`).join("");
+    view.innerHTML = head(1) + `
+      <div class="hud"><span>Ayah <b>${k + 1}/${L.ayat.length}</b> · Lesen</span><span>Sure ${sn} · ${d.s}:${d.a}</span></div>
+      <article class="pr-mushaf" lang="ar" dir="rtl">
+        <div class="pr-surah"><span>سُورَةُ ${sa}</span></div>
+        <p class="pr-ayah">${html} <span class="pr-end">﴿${ar(d.a)}﴾</span></p>
+      </article>
+      <p class="note" style="text-align:center">Lies die Ayah in Ruhe. Jede Farbe gehört zu einer Bedeutung unten. Danach kommt der Lückentext.</p>
+      <div class="row center"><button class="btn" id="rec">▶ Rezitation anhören</button>
+        <button class="btn primary" id="toGap">Weiter zum Lückentext →</button></div>
+      <section class="card pr-wbw"><h3>Wort für Wort</h3><ol class="pr-gloss" dir="rtl">${gloss}</ol>
+        <p class="pr-src">Wörtliche Bedeutungen als Lernhilfe, keine vollständige Übersetzung. Rezitation: Mishary Rāshid al-ʿAfāsī (everyayah.com)</p></section>`;
+    view.querySelector("#rec").onclick = () => { stopAudio(); audio = new Audio(recitation(d.s, d.a)); audio.play().catch(() => {}); };
+    view.querySelector("#toGap").onclick = () => { stopAudio(); verse(k); window.scrollTo(0, 0); };
+  }
+
   function verse(k) {
     const v = L.ayat[k], d = A[v.ref], words = d.text.split(" ");
     const gapIdx = v.gaps.map((g) => g.i).sort((x, y) => x - y);
@@ -167,7 +189,7 @@ export async function renderLevel(view, ctx, id, n) {
     }).join("");
     const [sn, sa] = SURAH[d.s] || [String(d.s), ""];
     view.innerHTML = head(1) + `
-      <div class="hud"><span>Ayah <b>${k + 1}/${L.ayat.length}</b></span><span>Sure ${sn} · ${d.s}:${d.a}</span></div>
+      <div class="hud"><span>Ayah <b>${k + 1}/${L.ayat.length}</b> · Lückentext</span><span>Sure ${sn} · ${d.s}:${d.a}</span></div>
       <article class="pr-mushaf" lang="ar" dir="rtl">
         <div class="pr-surah"><span>سُورَةُ ${sa}</span></div>
         <p class="pr-ayah">${html} <span class="pr-end">﴿${ar(d.a)}﴾</span></p>
@@ -195,7 +217,7 @@ export async function renderLevel(view, ctx, id, n) {
           view.querySelectorAll(".pr-chip:not(.used)").forEach((c) => (c.disabled = true));
           view.querySelector("#after").hidden = false;
           view.querySelector("#rec").onclick = () => { stopAudio(); audio = new Audio(recitation(d.s, d.a)); audio.play().catch(() => (fb.textContent = "Die Rezitation konnte nicht geladen werden.")); };
-          view.querySelector("#nx").onclick = () => { stopAudio(); k + 1 < L.ayat.length ? verse(k + 1) : quiz(0, 0); };
+          view.querySelector("#nx").onclick = () => { stopAudio(); k + 1 < L.ayat.length ? read(k + 1) : quiz(0, 0); };
           view.querySelector("#nx").focus({ preventScroll: true });
         }
       } else {
