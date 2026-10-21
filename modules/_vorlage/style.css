@@ -1,0 +1,3 @@
+/* Eigenes Design der Rubrik. Alles mit .mod-<id> beginnen, z. B. .mod-farben,
+   damit sich Rubriken nicht gegenseitig beeinflussen.
+   --m ist die Akzentfarbe aus der Registry, --m-soft eine helle Variante. */

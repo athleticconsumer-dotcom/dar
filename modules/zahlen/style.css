@@ -1,0 +1,27 @@
+/* Rubrik Zahlen – eigene Optik: Rechenheft-Raster in Safran, große Ziffern. */
+.mod-zahlen .z-board{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:12px;padding:20px 22px;border-radius:18px;
+  border:1.5px solid var(--gold-line);background-color:var(--m-soft);
+  background-image:radial-gradient(color-mix(in srgb,var(--m) 30%,transparent) 1px,transparent 1px);
+  background-size:20px 20px}
+.mod-zahlen .z-num{font:800 clamp(2.6rem,11vw,4.4rem)/1 var(--f-disp);font-variant-numeric:tabular-nums;color:var(--ink);text-align:center}
+.mod-zahlen .z-board .z-num{text-align:left}
+.mod-zahlen .z-ar{font:400 clamp(2.6rem,11vw,4.4rem)/1 var(--f-ar);color:var(--m);text-align:right;direction:ltr}
+.mod-zahlen .z-ar-big{text-align:center;font-size:clamp(3rem,13vw,5rem)}
+.mod-zahlen .z-word{font:400 clamp(1.7rem,6.5vw,2.5rem)/1.6 var(--f-ar);text-align:center;color:var(--ink);overflow-wrap:anywhere}
+.mod-zahlen .z-tr{text-align:center;color:var(--muted);font-style:italic;margin-top:-6px}
+.mod-zahlen .z-prompt{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.mod-zahlen .z-slider{width:100%;accent-color:var(--m)}
+.mod-zahlen .z-input{font:600 1rem var(--f-disp);width:7.5rem;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.mod-zahlen .z-m{font-weight:400;color:var(--muted);font-size:.75em;margin-left:2px;font-variant-numeric:tabular-nums}
+.mod-zahlen .z-digits{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mod-zahlen .z-digits div{display:flex;flex-direction:column;align-items:center;padding:8px 4px;border-radius:14px;background:var(--m-soft);border:1px solid var(--gold-line);font-variant-numeric:tabular-nums}
+.mod-zahlen .z-digits span:first-child{font:600 .85rem var(--f-disp);color:var(--muted)}
+.mod-zahlen .z-digits span:last-child{font:400 1.8rem/1.2 var(--f-ar);color:var(--m)}
+.mod-zahlen .z-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.mod-zahlen .z-sprint{border-color:color-mix(in srgb,var(--m) 45%,var(--line))}
+.mod-zahlen .z-sprint-title{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.mod-zahlen .z-sprint-title span{font:700 1.6rem var(--f-ar);color:var(--m)}
+.mod-zahlen .z-sprint-title h2::before,.mod-zahlen .z-sprint-title h2::after{content:" ✦ ";color:var(--gold-a);font-size:.7em}
+.mod-zahlen .z-timebar{height:6px;border-radius:999px;background:var(--m-soft);overflow:hidden}
+.mod-zahlen .z-timebar i{display:block;height:100%;width:100%;background:var(--m)}
+@media (prefers-reduced-motion:no-preference){.mod-zahlen .z-timebar i{transition:width 1s linear}}

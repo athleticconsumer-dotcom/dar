@@ -1,0 +1,27 @@
+/* Rubrik Uhrzeit – eigene Optik: Zifferblatt im Mittelpunkt, Indigo wie der Abendhimmel. */
+.mod-uhrzeit .u-stage{background:radial-gradient(120% 70% at 50% 0%,var(--m-soft),var(--surface) 70%)}
+.mod-uhrzeit .u-face{display:flex;justify-content:center}
+.mod-uhrzeit .u-clock{width:min(250px,72vw);height:auto;max-width:100%;filter:drop-shadow(0 6px 18px color-mix(in srgb,var(--m) 22%,transparent))}
+.mod-uhrzeit .u-clock.interactive{cursor:pointer}
+.mod-uhrzeit .u-clock.small{width:100%;max-width:120px;filter:none}
+.mod-uhrzeit .u-digital{font:700 1.4rem var(--f-disp);text-align:center;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.mod-uhrzeit .u-phrase{font:400 clamp(1.5rem,6vw,2.2rem)/1.6 var(--f-ar);text-align:center;overflow-wrap:anywhere}
+.mod-uhrzeit .u-tr{text-align:center;color:var(--muted);font-style:italic}
+.mod-uhrzeit .u-de{text-align:center;font-size:.9rem;color:var(--muted);margin-top:-8px}
+.mod-uhrzeit .u-prompt{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.mod-uhrzeit .u-opt{padding:8px}
+.mod-uhrzeit .u-time{font:700 .95rem var(--f-disp);font-variant-numeric:tabular-nums;white-space:nowrap;width:3.5rem}
+.mod-uhrzeit tr[data-m]{cursor:pointer}
+.mod-uhrzeit tr[data-m]:hover td,.mod-uhrzeit tr[data-m]:focus-visible td{background:var(--m-soft)}
+.mod-uhrzeit .u-hours{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.mod-uhrzeit .u-hours div{display:grid;grid-template-columns:1.6rem minmax(0,1fr);gap:0 8px;align-items:baseline;padding:8px 10px;border-radius:14px;background:var(--m-soft);border:1px solid var(--gold-line)}
+.mod-uhrzeit .u-hours b{font:700 .9rem var(--f-disp);color:var(--m);grid-row:span 2;font-variant-numeric:tabular-nums}
+.mod-uhrzeit .u-hours .ar{font-size:1.2rem;text-align:right;direction:rtl}
+.mod-uhrzeit .u-hours i{font-size:.78rem;color:var(--muted)}
+.mod-uhrzeit .u-dots{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.mod-uhrzeit .u-dots i{width:12px;height:12px;border-radius:50%;border:2px solid var(--m);opacity:.45}
+.mod-uhrzeit .u-dots i.part{opacity:1;background:color-mix(in srgb,var(--m) 40%,transparent)}
+.mod-uhrzeit .u-dots i.full{opacity:1;background:var(--m)}
+.mod-uhrzeit .u-title{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.mod-uhrzeit .u-title span{font:700 1.6rem var(--f-ar);color:var(--m)}
+.mod-uhrzeit .u-title h2::before,.mod-uhrzeit .u-title h2::after{content:" ✦ ";color:var(--gold-a);font-size:.7em}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dār – Arabisch lernen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Arabisch (Fuṣḥā) lernen in Rubriken: Zahlen, Uhrzeit und mehr – mit Leitfaden und Fortschritt.">
+<meta name="theme-color" content="#4A1525">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/" aria-label="Zur Startseite">
+      <span class="brand-ar" lang="ar" dir="rtl">دَار</span>
+      <span class="brand-de">Dār</span>
+    </a>
+    <nav class="topnav" aria-label="Hauptnavigation">
+      <a href="#/" data-nav="home">Rubriken</a>
+      <a href="#/leitfaden" data-nav="leitfaden">Leitfaden</a>
+      <a href="#/fortschritt" data-nav="fortschritt">Fortschritt</a>
+    </nav>
+  </header>
+
+  <div class="account" id="account">
+    <span class="dot" id="syncDot"></span>
+    <span class="account-text" id="syncText">Fortschritt wird in diesem Browser gespeichert.</span>
+    <button class="btn small" id="loginBtn" hidden>Mit Google anmelden</button>
+    <button class="btn small" id="logoutBtn" hidden>Abmelden</button>
+  </div>
+
+  <main id="view" class="view" tabindex="-1"></main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
