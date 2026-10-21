@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ziffern",
+    "title": "Rakamlar ٠–٩",
+    "desc": "Üzerinden geçme, resimlerle sayma ve eşleştirme. Cevap sayfasıyla.",
+    "pdf": "blaetter/tr/ziffern.pdf",
+    "img": "blaetter/tr/ziffern.png",
+    "pages": 3
+  },
+  {
+    "id": "zahlen-bauen",
+    "title": "Sayı kurma 21–99",
+    "desc": "Renk kodlu: birler, وَ ve onlar. Okuma, kurma ve hesaplama. Cevaplarla.",
+    "pdf": "blaetter/tr/zahlen-bauen.pdf",
+    "img": "blaetter/tr/zahlen-bauen.png",
+    "pages": 3
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ziffern",
+    "title": "Цифры ٠–٩",
+    "desc": "Обводить, считать по картинкам и соединять. С листом ответов.",
+    "pdf": "blaetter/ru/ziffern.pdf",
+    "img": "blaetter/ru/ziffern.png",
+    "pages": 3
+  },
+  {
+    "id": "zahlen-bauen",
+    "title": "Строим числа 21–99",
+    "desc": "По цветам: единицы, وَ и десятки. Читать, строить и считать. С ответами.",
+    "pdf": "blaetter/ru/zahlen-bauen.pdf",
+    "img": "blaetter/ru/zahlen-bauen.png",
+    "pages": 3
+  }
+]

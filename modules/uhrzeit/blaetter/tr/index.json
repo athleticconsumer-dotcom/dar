@@ -1,0 +1,18 @@
+[
+  {
+    "id": "volle-stunden",
+    "title": "Tam saatler",
+    "desc": "Saatler için sıra sayıları, saat okuma ve akrep-yelkovan çizme. Cevaplarla.",
+    "pdf": "blaetter/tr/volle-stunden.pdf",
+    "img": "blaetter/tr/volle-stunden.png",
+    "pages": 3
+  },
+  {
+    "id": "viertel-drittel-halb",
+    "title": "Çeyrek, üçte bir, yarım",
+    "desc": "Saat parçalarının resimleri, işaretleme ve ibre çizme ile. Cevaplarla.",
+    "pdf": "blaetter/tr/viertel-drittel-halb.pdf",
+    "img": "blaetter/tr/viertel-drittel-halb.png",
+    "pages": 3
+  }
+]

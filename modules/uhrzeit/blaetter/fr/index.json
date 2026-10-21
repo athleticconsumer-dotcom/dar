@@ -1,0 +1,18 @@
+[
+  {
+    "id": "volle-stunden",
+    "title": "Les heures pile",
+    "desc": "Les heures en nombres ordinaux, lire l'horloge et dessiner les aiguilles. Avec solutions.",
+    "pdf": "blaetter/fr/volle-stunden.pdf",
+    "img": "blaetter/fr/volle-stunden.png",
+    "pages": 3
+  },
+  {
+    "id": "viertel-drittel-halb",
+    "title": "Quart, tiers, demie",
+    "desc": "Avec des images des parties de l'horloge, des cases à cocher et des aiguilles à dessiner. Avec solutions.",
+    "pdf": "blaetter/fr/viertel-drittel-halb.pdf",
+    "img": "blaetter/fr/viertel-drittel-halb.png",
+    "pages": 3
+  }
+]

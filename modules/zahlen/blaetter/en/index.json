@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ziffern",
+    "title": "The digits ٠–٩",
+    "desc": "Tracing, counting with pictures and matching. With an answer sheet.",
+    "pdf": "blaetter/en/ziffern.pdf",
+    "img": "blaetter/en/ziffern.png",
+    "pages": 3
+  },
+  {
+    "id": "zahlen-bauen",
+    "title": "Building numbers 21–99",
+    "desc": "Colour-coded: ones, وَ and tens. Reading, building and calculating. With answers.",
+    "pdf": "blaetter/en/zahlen-bauen.pdf",
+    "img": "blaetter/en/zahlen-bauen.png",
+    "pages": 3
+  }
+]

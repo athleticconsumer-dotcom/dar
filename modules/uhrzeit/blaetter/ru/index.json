@@ -1,0 +1,18 @@
+[
+  {
+    "id": "volle-stunden",
+    "title": "Целые часы",
+    "desc": "Порядковые числительные для часов, чтение часов и рисование стрелок. С ответами.",
+    "pdf": "blaetter/ru/volle-stunden.pdf",
+    "img": "blaetter/ru/volle-stunden.png",
+    "pages": 3
+  },
+  {
+    "id": "viertel-drittel-halb",
+    "title": "Четверть, треть, половина",
+    "desc": "С картинками частей часа, отметками и рисованием стрелок. С ответами.",
+    "pdf": "blaetter/ru/viertel-drittel-halb.pdf",
+    "img": "blaetter/ru/viertel-drittel-halb.png",
+    "pages": 3
+  }
+]

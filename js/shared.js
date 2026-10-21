@@ -134,16 +134,19 @@ export function judge({ root, api, picked, correctValue, onNext, extra }) {
 
 /**
  * Arbeitsblätter einer Rubrik anzeigen (PDF zum Ansehen, Drucken, Herunterladen).
- * Liest modules/<rubrik>/blaetter/index.json. Aufruf: showWorksheets(el, import.meta.url)
+ * Liest modules/<rubrik>/blaetter/<sprache>/index.json (Fallback: de). Aufruf: showWorksheets(el, import.meta.url)
  */
 export async function showWorksheets(el, base) {
   el.innerHTML = `<div class="card"><p class="note">${t("ws.loading")}</p></div>`;
   let list = [];
-  try { list = await (await fetch(new URL("blaetter/index.json", base))).json(); } catch (e) {}
+  let fellBack = false;
+  const load = async (l) => { try { const r = await fetch(new URL(`blaetter/${l}/index.json`, base)); return r.ok ? await r.json() : []; } catch (e) { return []; } };
+  list = await load(lang());
+  if (!list.length && lang() !== "de") { list = await load("de"); fellBack = list.length > 0; }
   if (!list.length) { el.innerHTML = `<div class="card empty">${t("ws.none")}</div>`; return; }
   el.innerHTML = `
     <div class="ws-intro"><span class="eyebrow">${t("ws.eyebrow")}</span>
-      <p class="lead">${t("ws.lead")}</p>${lang() !== "de" ? `<p class="lang-note">${t("ws.langNote")}</p>` : ""}</div>
+      <p class="lead">${t("ws.lead")}</p>${fellBack ? `<p class="lang-note">${t("ws.langNote")}</p>` : ""}</div>
     <div class="ws-grid">${list.map((w) => {
       const pdf = new URL(w.pdf, base).href, img = new URL(w.img, base).href;
       return `<article class="ws-card">

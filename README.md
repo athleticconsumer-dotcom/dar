@@ -109,11 +109,11 @@ Jeder Besucher wird automatisch anonym angemeldet. „Mit Google anmelden“ üb
 
 ## Arbeitsblätter (PDF zum Ausdrucken)
 
-Jede Rubrik kann einen Tab **Arbeitsblätter** haben. Die PDFs liegen in `modules/<rubrik>/blaetter/`
+Jede Rubrik kann einen Tab **Arbeitsblätter** haben. Die PDFs liegen in `modules/<rubrik>/blaetter/<sprache>/`
 zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
 
 ```json
-[{ "id": "ziffern", "title": "Die Ziffern ٠–٩", "desc": "…", "pdf": "blaetter/ziffern.pdf", "img": "blaetter/ziffern.png", "pages": 3 }]
+[{ "id": "ziffern", "title": "Die Ziffern ٠–٩", "desc": "…", "pdf": "blaetter/de/ziffern.pdf", "img": "blaetter/de/ziffern.png", "pages": 3 }]
 ```
 
 - **Eigene PDFs** (z. B. aus Canva): Datei und ein Vorschaubild in den Ordner legen und einen Eintrag in `index.json` ergänzen.
@@ -139,4 +139,5 @@ zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
   angezeigt mit `L(…)`. Fehlt eine Sprache, zeigt die App Deutsch und einen Hinweis.
 - **Neue Sprache:** `lang/de.js` nach `lang/<code>.js` kopieren, übersetzen und in `js/i18n.js` bei `DICT` und `LANGS` eintragen.
 - `tools/quran/build_ayat.py` prüft für **jede** Sprache, dass jede Ayah genau so viele Wortbedeutungen wie Wörter hat.
-- Noch nur auf Deutsch: Erklärungen in Zahlen/Uhrzeit, die Mūsā-Inhalte und die Arbeitsblätter.
+- Noch nur auf Deutsch: die Mūsā-Inhalte (Geschichte, Wortbedeutungen, Quiz). Sie werden übersetzt, sobald sie geprüft sind.
+- Arbeitsblätter: `python3 tools/worksheets/generate.py` erzeugt jedes Blatt in allen Sprachen nach `modules/<rubrik>/blaetter/<sprache>/` (Texte in `tools/worksheets/texts.py`, gleiche Aufgaben in jeder Sprache).

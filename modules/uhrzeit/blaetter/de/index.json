@@ -3,16 +3,16 @@
     "id": "volle-stunden",
     "title": "Volle Stunden",
     "desc": "Ordnungszahlen der Stunden, Uhren lesen und Zeiger einzeichnen. Mit Lösungen.",
-    "pdf": "blaetter/volle-stunden.pdf",
-    "img": "blaetter/volle-stunden.png",
+    "pdf": "blaetter/de/volle-stunden.pdf",
+    "img": "blaetter/de/volle-stunden.png",
     "pages": 3
   },
   {
     "id": "viertel-drittel-halb",
     "title": "Viertel, Drittel, Halb",
     "desc": "Mit Bildern der Uhrteile, Ankreuzen und Zeiger einzeichnen. Mit Lösungen.",
-    "pdf": "blaetter/viertel-drittel-halb.pdf",
-    "img": "blaetter/viertel-drittel-halb.png",
+    "pdf": "blaetter/de/viertel-drittel-halb.pdf",
+    "img": "blaetter/de/viertel-drittel-halb.png",
     "pages": 3
   }
 ]

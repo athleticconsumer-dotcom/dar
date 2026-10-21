@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ziffern",
+    "title": "Les chiffres ٠–٩",
+    "desc": "Repasser, compter avec des images et relier. Avec une page de solutions.",
+    "pdf": "blaetter/fr/ziffern.pdf",
+    "img": "blaetter/fr/ziffern.png",
+    "pages": 3
+  },
+  {
+    "id": "zahlen-bauen",
+    "title": "Construire les nombres 21–99",
+    "desc": "En couleurs : unités, وَ et dizaines. Lire, construire et calculer. Avec solutions.",
+    "pdf": "blaetter/fr/zahlen-bauen.pdf",
+    "img": "blaetter/fr/zahlen-bauen.png",
+    "pages": 3
+  }
+]
