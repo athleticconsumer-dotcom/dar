@@ -20,7 +20,8 @@ export const XP_PER_CORRECT = 10;
 export const DONE_AT = 80;
 
 // =====================================================================
-//  SPRACHAUSGABE (Cloud)
+//  SPRACHAUSGABE – Standard: Web Speech API (Stimme des Geräts), nichts einzurichten.
+//  Optional später: Cloud-Stimme (Ordner functions/)
 //  Nach dem Deploy der Firebase-Funktion steht ihre Adresse im Terminal, z. B.
 //  https://tts-abc123-ew.a.run.app  oder  https://europe-west1-DEIN_PROJEKT.cloudfunctions.net/tts
 //  Solange hier "DEIN" steht, nutzt die App nur die Gerätestimme.
@@ -29,4 +30,4 @@ export const TTS_URL = "https://europe-west1-DEIN_PROJEKT.cloudfunctions.net/tts
 
 // true  = immer die Cloud-Stimme (klingt auf allen Geräten gleich)
 // false = Gerätestimme, Cloud nur wenn das Gerät keine arabische Stimme hat (spart Kosten)
-export const TTS_PREFER_CLOUD = true;
+export const TTS_PREFER_CLOUD = false;

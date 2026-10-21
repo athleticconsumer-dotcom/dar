@@ -9,39 +9,65 @@ export const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j
 export const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 // =====================================================================
-//  SPRACHAUSGABE – live, auf jedem Gerät
-//  1. Gerätestimme, wenn das Gerät eine arabische Stimme hat
-//     (iPhone/iPad/Mac, die meisten Android-Geräte)
-//  2. sonst live aus der Cloud: Google Text-to-Speech über die Firebase-Funktion
-//     "tts" (Windows, Chrome am PC, Firefox …). Adresse in js/config.js → TTS_URL
-//  Mit TTS_PREFER_CLOUD = true klingt es auf allen Geräten gleich (immer Cloud).
+//  SPRACHAUSGABE – Web Speech API (speechSynthesis), direkt im Browser
+//  Nutzt die arabische Stimme des Geräts. Fehlt sie, zeigt die App,
+//  wie man sie auf diesem Gerät installiert.
+//  (Optional: Cloud-Stimme über TTS_URL in js/config.js)
 // =====================================================================
 import { TTS_URL, TTS_PREFER_CLOUD } from "./config.js";
 
 const hasSynth = (() => { try { return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window; } catch (e) { return false; } })();
-let arVoice = null;
+let arVoice = null, voicesLoaded = false;
+
 function pickVoice() {
   try {
-    const vs = speechSynthesis.getVoices().filter((v) => /^ar(-|_|$)/i.test(v.lang));
-    // bevorzugt hochwertige Stimmen (Online/Premium/Enhanced), dann Standard-Arabisch
-    arVoice = vs.find((v) => /premium|enhanced|natural|online/i.test(v.name)) || vs.find((v) => /ar-SA/i.test(v.lang)) || vs[0] || null;
+    const all = speechSynthesis.getVoices();
+    if (all.length) voicesLoaded = true;
+    const vs = all.filter((v) => /^ar([-_]|$)/i.test(v.lang) || /arab/i.test(v.name));
+    // Reihenfolge: hochwertige Stimmen → Saudi-Arabien (Fuṣḥā-nah) → irgendeine arabische
+    arVoice = vs.find((v) => /premium|enhanced|natural|neural|online/i.test(v.name))
+      || vs.find((v) => /ar[-_]SA/i.test(v.lang)) || vs[0] || null;
   } catch (e) {}
 }
-if (hasSynth) { pickVoice(); try { speechSynthesis.addEventListener("voiceschanged", pickVoice); } catch (e) { speechSynthesis.onvoiceschanged = pickVoice; } }
+if (hasSynth) {
+  pickVoice();
+  try { speechSynthesis.addEventListener("voiceschanged", pickVoice); } catch (e) { speechSynthesis.onvoiceschanged = pickVoice; }
+  // manche Browser (Chrome/Android) liefern die Stimmen erst verzögert
+  [250, 1000, 3000].forEach((t) => setTimeout(pickVoice, t));
+}
 
 const cloudReady = () => !!TTS_URL && !TTS_URL.includes("DEIN");
 let audio = null;
 
-/** Der 🔊-Knopf wird gezeigt, wenn irgendein Weg zur Verfügung steht. */
-export const canSpeak = () => cloudReady() || hasSynth;
+/** Der 🔊-Knopf wird gezeigt, wenn der Browser Sprachausgabe kann. */
+export const canSpeak = () => hasSynth || cloudReady();
+
+const ua = navigator.userAgent || "";
+const platform = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && "ontouchend" in document) ? "ios"
+  : /Android/i.test(ua) ? "android" : /Windows/i.test(ua) ? "windows" : /Macintosh/i.test(ua) ? "mac" : "other";
+const HELP = {
+  ios: "Keine arabische Stimme gefunden. iPhone: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Arabisch → Stimme laden.",
+  android: "Keine arabische Stimme gefunden. Android: Einstellungen → Text-in-Sprache (Sprachausgabe) → Google-Sprachdienste → Sprachdaten installieren → Arabisch.",
+  windows: "Keine arabische Stimme gefunden. Windows: Einstellungen → Zeit und Sprache → Sprache → Arabisch hinzufügen (mit Sprachausgabe). Danach Browser neu starten.",
+  mac: "Keine arabische Stimme gefunden. Mac: Systemeinstellungen → Bedienungshilfen → Gesprochene Inhalte → Systemstimme → Stimmen verwalten → Arabisch.",
+  other: "Keine arabische Stimme gefunden. Bitte in den Systemeinstellungen eine arabische Sprachausgabe installieren oder Chrome/Safari verwenden.",
+};
 
 function speakDevice(text) {
-  if (!hasSynth || !arVoice) return false;
+  if (!hasSynth) return false;
+  if (!arVoice) pickVoice();
+  // Stimmenliste ist geladen, aber ohne Arabisch → Gerät würde Unsinn vorlesen
+  if (!arVoice && voicesLoaded && platform !== "android") return false;
   try {
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.voice = arVoice; u.lang = arVoice.lang; u.rate = 0.85;
+    u.lang = arVoice ? arVoice.lang : "ar-SA";   // Android: Google-TTS wählt Arabisch auch ohne Eintrag in der Liste
+    if (arVoice) u.voice = arVoice;
+    u.rate = 0.85;
+    u.onerror = (e) => { if (e.error !== "interrupted" && e.error !== "canceled") toast(HELP[platform], 9000); };
     speechSynthesis.speak(u);
+    // Chrome-Eigenheit: hängt manchmal im Pausenzustand
+    setTimeout(() => { try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch (e) {} }, 120);
     return true;
   } catch (e) { return false; }
 }
@@ -49,13 +75,11 @@ function speakDevice(text) {
 function speakCloud(text, onFail) {
   try {
     if (audio) { audio.pause(); audio.src = ""; }
-    // Das Audio-Objekt wird direkt im Klick erzeugt – nötig für iPhone/Safari
     audio = new Audio(TTS_URL + (TTS_URL.includes("?") ? "&" : "?") + "text=" + encodeURIComponent(text));
     audio.addEventListener("error", onFail, { once: true });
     const p = audio.play();
     if (p && p.catch) p.catch(onFail);
-    return true;
-  } catch (e) { onFail(); return true; }
+  } catch (e) { onFail(); }
 }
 
 export function stopSpeaking() {
@@ -65,10 +89,8 @@ export function stopSpeaking() {
 
 export function speak(text) {
   stopSpeaking();
-  if (!arVoice) pickVoice();
-  const noVoice = () => toast("Auf diesem Gerät ist keine arabische Stimme verfügbar.");
+  const noVoice = () => toast(HELP[platform], 9000);
   if (cloudReady() && (TTS_PREFER_CLOUD || !arVoice)) {
-    // Cloud zuerst; klappt sie nicht (offline), dann Gerätestimme
     speakCloud(text, () => { if (!speakDevice(text)) noVoice(); });
     return;
   }
@@ -76,7 +98,7 @@ export function speak(text) {
 }
 
 /** Kurzer Hinweis unten am Bildschirm */
-export function toast(msg) {
+export function toast(msg, ms = 3500) {
   let el = document.getElementById("toast");
   if (!el) {
     el = document.createElement("div"); el.id = "toast"; el.setAttribute("role", "status");
@@ -85,7 +107,7 @@ export function toast(msg) {
     document.body.appendChild(el);
   }
   el.textContent = msg; el.hidden = false;
-  clearTimeout(toast.t); toast.t = setTimeout(() => (el.hidden = true), 3500);
+  clearTimeout(toast.t); toast.t = setTimeout(() => (el.hidden = true), ms);
 }
 
 /** Lädt die CSS-Datei einer Rubrik genau einmal. Aufruf: loadCss(import.meta.url, "style.css") */
