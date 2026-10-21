@@ -5,12 +5,12 @@
 // =====================================================================
 
 export const firebaseConfig = {
-  apiKey: "DEIN_API_KEY",
-  authDomain: "DEIN_PROJEKT.firebaseapp.com",
-  projectId: "DEIN_PROJEKT",
-  storageBucket: "DEIN_PROJEKT.appspot.com",
-  messagingSenderId: "000000000000",
-  appId: "1:000000000000:web:xxxxxxxxxxxxxx",
+  apiKey: "AIzaSyCJwoLkDn2W_uN-hlqjMk6kqbhKdZBPT_g",
+  authDomain: "dar-a-87f01.firebaseapp.com",
+  projectId: "dar-a-87f01",
+  storageBucket: "dar-a-87f01.firebasestorage.app",
+  messagingSenderId: "926469855723",
+  appId: "1:926469855723:web:6676d875c756487afa61ae",
 };
 
 // Wie viele XP es pro richtiger Antwort gibt
@@ -25,7 +25,7 @@ export const DONE_AT = 80;
 //  https://tts-abc123-ew.a.run.app  oder  https://europe-west1-DEIN_PROJEKT.cloudfunctions.net/tts
 //  Solange hier "DEIN" steht, nutzt die App nur die Gerätestimme.
 // =====================================================================
-export const TTS_URL = "https://europe-west1-DEIN_PROJEKT.cloudfunctions.net/tts";
+export const TTS_URL = "https://europe-west1-DEIN_PROJEKT.cloudfunctions.net/tts";  // noch nicht eingerichtet → Gerätestimme
 
 // true  = immer die Cloud-Stimme (klingt auf allen Geräten gleich)
 // false = Gerätestimme, Cloud nur wenn das Gerät keine arabische Stimme hat (spart Kosten)
