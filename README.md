@@ -130,3 +130,13 @@ zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
 - Der Qur'an-Text wird nie von Hand geschrieben: `python3 tools/quran/build_ayat.py <pfad-zu-quran-api>` holt alle verwendeten Ayat
   aus dem Tanzil-Text (Uthmani/Hafs, github.com/fawazahmed0/quran-api), prüft jede Lücke und schreibt `modules/propheten/ayat.json`.
 - Rezitation: Mishary Rāshid al-ʿAfāsī über everyayah.com.
+
+## Sprachen (de, en, fr, ru, tr)
+
+- **Oberfläche:** `lang/<sprache>.js`. `de.js` ist die Referenz; fehlt ein Schlüssel in einer anderen Sprache, erscheint Deutsch.
+  Im Code: `t("schlüssel", { platzhalter })` aus `js/i18n.js`.
+- **Inhalte** (Erzählungen, Wortbedeutungen, Quiz, Namen, Rubrik-Titel): pro Sprache als Objekt `{ de: …, en: …, fr: …, ru: …, tr: … }`,
+  angezeigt mit `L(…)`. Fehlt eine Sprache, zeigt die App Deutsch und einen Hinweis.
+- **Neue Sprache:** `lang/de.js` nach `lang/<code>.js` kopieren, übersetzen und in `js/i18n.js` bei `DICT` und `LANGS` eintragen.
+- `tools/quran/build_ayat.py` prüft für **jede** Sprache, dass jede Ayah genau so viele Wortbedeutungen wie Wörter hat.
+- Noch nur auf Deutsch: Erklärungen in Zahlen/Uhrzeit, die Mūsā-Inhalte und die Arbeitsblätter.

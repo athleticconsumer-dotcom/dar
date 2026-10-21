@@ -38,7 +38,7 @@ export default {
     function frame(body) {
       root.innerHTML = `
         <div class="tabs" role="group" aria-label="Bereich der Rubrik">
-          ${[["erklaerung", "Erklärung"], ["lernen", "Lernen"], ["aufgaben", "Aufgaben"], ["spiel", "Spiel"], ["blaetter", "Arbeitsblätter"]]
+          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["blaetter", api.t("tab.sheets")]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
       root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { stopTimer(); S.tab = b.dataset.tab; show(); }));

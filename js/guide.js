@@ -2,43 +2,15 @@
 //  LEITFADEN – drei kurze Fragen, daraus entsteht ein persönlicher Lernweg.
 // =====================================================================
 import { RUBRIKEN } from "./registry.js";
+import { t } from "./i18n.js";
 
+// Texte der Fragen stehen in lang/<sprache>.js unter guide.<key>, guide.<key>.<wert> und guide.<key>.<wert>.d
 export const QUESTIONS = [
-  {
-    key: "reading", label: "Wie gut liest du arabische Schrift?",
-    options: [
-      { v: "none", t: "Noch gar nicht", d: "Die Buchstaben sind mir neu." },
-      { v: "slow", t: "Langsam, mit Vokalzeichen", d: "Ich kann Wörter mit Ḥarakāt entziffern." },
-      { v: "fluent", t: "Sicher", d: "Ich lese flüssig, auch Qurʾān." },
-    ],
-  },
-  {
-    key: "goal", label: "Wofür lernst du Arabisch?",
-    options: [
-      { v: "quran", t: "Qurʾān verstehen", d: "Zahlen, Zeiten und Begriffe aus den Āyāt." },
-      { v: "alltag", t: "Alltag & Gespräche", d: "Grüßen, sich vorstellen, Uhrzeit fragen." },
-      { v: "allgemein", t: "Ein solides Fundament", d: "Schritt für Schritt alles Wichtige." },
-    ],
-  },
-  {
-    key: "daily", label: "Wie viel möchtest du am Tag schaffen?",
-    options: [
-      { v: 10, t: "10 richtige Antworten", d: "Etwa 5 Minuten" },
-      { v: 20, t: "20 richtige Antworten", d: "Etwa 10 Minuten" },
-      { v: 40, t: "40 richtige Antworten", d: "Etwa 20 Minuten" },
-    ],
-  },
+  { key: "reading", options: ["none", "slow", "fluent"] },
+  { key: "goal", options: ["quran", "alltag", "allgemein"] },
+  { key: "daily", options: [10, 20, 40] },
 ];
 
-const WHY = {
-  alphabet: "Ohne Buchstaben geht nichts – das ist dein Startpunkt.",
-  harakat: "Mit den Vokalzeichen liest du jedes Wort richtig aus.",
-  zahlen: "Zahlen brauchst du überall, und die Ziffern lernst du auch ohne Lesekenntnisse.",
-  uhrzeit: "Baut direkt auf den Zahlen auf: Ordnungszahlen für die Stunden.",
-  begruessung: "Die ersten Sätze, die du jeden Tag benutzt.",
-  wochentage: "Tage, Monate und Datum – inklusive hidschri-Kalender.",
-  familie: "Über Menschen sprechen und erste Besitzformen.",
-};
 const GOAL_ORDER = {
   quran: ["zahlen", "uhrzeit", "wochentage", "familie", "begruessung"],
   alltag: ["begruessung", "zahlen", "uhrzeit", "familie", "wochentage"],
@@ -61,7 +33,7 @@ export function buildPath(profile) {
   return ids.map((id) => {
     const rubrik = RUBRIKEN.find((r) => r.id === id);
     const optional = skip.includes(id);
-    return { rubrik, optional, why: optional ? "Optional – du kannst schon lesen. Gut zum Auffrischen." : WHY[id] || rubrik.desc };
+    return { rubrik, optional, why: optional ? t("why.optional") : t("why." + id) };
   });
 }
 

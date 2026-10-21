@@ -15,6 +15,7 @@ export const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "
 //  (Optional: Cloud-Stimme über TTS_URL in js/config.js)
 // =====================================================================
 import { TTS_URL, TTS_PREFER_CLOUD } from "./config.js";
+import { t, lang } from "./i18n.js";
 
 const hasSynth = (() => { try { return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window; } catch (e) { return false; } })();
 let arVoice = null, voicesLoaded = false;
@@ -45,13 +46,7 @@ export const canSpeak = () => hasSynth || cloudReady();
 const ua = navigator.userAgent || "";
 const platform = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && "ontouchend" in document) ? "ios"
   : /Android/i.test(ua) ? "android" : /Windows/i.test(ua) ? "windows" : /Macintosh/i.test(ua) ? "mac" : "other";
-const HELP = {
-  ios: "Keine arabische Stimme gefunden. iPhone: Einstellungen → Bedienungshilfen → Gesprochene Inhalte → Stimmen → Arabisch → Stimme laden.",
-  android: "Keine arabische Stimme gefunden. Android: Einstellungen → Text-in-Sprache (Sprachausgabe) → Google-Sprachdienste → Sprachdaten installieren → Arabisch.",
-  windows: "Keine arabische Stimme gefunden. Windows: Einstellungen → Zeit und Sprache → Sprache → Arabisch hinzufügen (mit Sprachausgabe). Danach Browser neu starten.",
-  mac: "Keine arabische Stimme gefunden. Mac: Systemeinstellungen → Bedienungshilfen → Gesprochene Inhalte → Systemstimme → Stimmen verwalten → Arabisch.",
-  other: "Keine arabische Stimme gefunden. Bitte in den Systemeinstellungen eine arabische Sprachausgabe installieren oder Chrome/Safari verwenden.",
-};
+const HELP = { ios: "voice.ios", android: "voice.android", windows: "voice.windows", mac: "voice.mac", other: "voice.other" };
 
 function speakDevice(text) {
   if (!hasSynth) return false;
@@ -64,7 +59,7 @@ function speakDevice(text) {
     u.lang = arVoice ? arVoice.lang : "ar-SA";   // Android: Google-TTS wählt Arabisch auch ohne Eintrag in der Liste
     if (arVoice) u.voice = arVoice;
     u.rate = 0.85;
-    u.onerror = (e) => { if (e.error !== "interrupted" && e.error !== "canceled") toast(HELP[platform], 9000); };
+    u.onerror = (e) => { if (e.error !== "interrupted" && e.error !== "canceled") toast(t(HELP[platform]), 9000); };
     speechSynthesis.speak(u);
     // Chrome-Eigenheit: hängt manchmal im Pausenzustand
     setTimeout(() => { try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch (e) {} }, 120);
@@ -89,7 +84,7 @@ export function stopSpeaking() {
 
 export function speak(text) {
   stopSpeaking();
-  const noVoice = () => toast(HELP[platform], 9000);
+  const noVoice = () => toast(t(HELP[platform]), 9000);
   if (cloudReady() && (TTS_PREFER_CLOUD || !arVoice)) {
     speakCloud(text, () => { if (!speakDevice(text)) noVoice(); });
     return;
@@ -130,7 +125,7 @@ export function judge({ root, api, picked, correctValue, onNext, extra }) {
   if (!ok) root.querySelector(`.opt[data-v="${correctValue}"]`)?.classList.add("ok");
   api.answer(ok);
   const fb = root.querySelector(".feedback");
-  if (fb) { fb.className = "feedback " + (ok ? "ok" : "no"); fb.textContent = ok ? "صَحِيح – richtig!" : "Nicht ganz – grün ist richtig."; }
+  if (fb) { fb.className = "feedback " + (ok ? "ok" : "no"); fb.textContent = ok ? t("c.right") : t("c.wrong"); }
   if (extra) extra(ok);
   const nx = root.querySelector("[data-next]");
   if (nx) { nx.hidden = false; nx.onclick = onNext; nx.focus({ preventScroll: true }); }
@@ -142,21 +137,21 @@ export function judge({ root, api, picked, correctValue, onNext, extra }) {
  * Liest modules/<rubrik>/blaetter/index.json. Aufruf: showWorksheets(el, import.meta.url)
  */
 export async function showWorksheets(el, base) {
-  el.innerHTML = `<div class="card"><p class="note">Arbeitsblätter werden geladen …</p></div>`;
+  el.innerHTML = `<div class="card"><p class="note">${t("ws.loading")}</p></div>`;
   let list = [];
   try { list = await (await fetch(new URL("blaetter/index.json", base))).json(); } catch (e) {}
-  if (!list.length) { el.innerHTML = `<div class="card empty">Für diese Rubrik gibt es noch keine Arbeitsblätter.</div>`; return; }
+  if (!list.length) { el.innerHTML = `<div class="card empty">${t("ws.none")}</div>`; return; }
   el.innerHTML = `
-    <div class="ws-intro"><span class="eyebrow">Auf Papier üben</span>
-      <p class="lead">Drucke die Blätter auf A4 aus, oder schreib die Antworten einfach auf ein Blatt Papier. Die Lösungen stehen jeweils auf der letzten Seite.</p></div>
+    <div class="ws-intro"><span class="eyebrow">${t("ws.eyebrow")}</span>
+      <p class="lead">${t("ws.lead")}</p>${lang() !== "de" ? `<p class="lang-note">${t("ws.langNote")}</p>` : ""}</div>
     <div class="ws-grid">${list.map((w) => {
       const pdf = new URL(w.pdf, base).href, img = new URL(w.img, base).href;
       return `<article class="ws-card">
-        <a class="ws-thumb" href="${pdf}" target="_blank" rel="noopener" aria-label="${esc(w.title)} ansehen"><img src="${img}" alt="Vorschau: ${esc(w.title)}" loading="lazy"></a>
+        <a class="ws-thumb" href="${pdf}" target="_blank" rel="noopener" aria-label="${esc(w.title)}"><img src="${img}" alt="${esc(t("ws.preview", { t: w.title }))}" loading="lazy"></a>
         <div class="ws-body"><h3>${esc(w.title)}</h3><p>${esc(w.desc)}</p>
-          <span class="ws-meta">PDF · A4 · ${w.pages} Seiten, letzte Seite mit Lösungen</span>
-          <div class="row"><a class="btn primary small" href="${pdf}" target="_blank" rel="noopener">Ansehen und drucken</a>
-            <a class="btn small" href="${pdf}" download>Herunterladen</a></div></div>
+          <span class="ws-meta">${t("ws.meta", { n: w.pages })}</span>
+          <div class="row"><a class="btn primary small" href="${pdf}" target="_blank" rel="noopener">${t("ws.view")}</a>
+            <a class="btn small" href="${pdf}" download>${t("ws.download")}</a></div></div>
       </article>`;
     }).join("")}</div>`;
 }

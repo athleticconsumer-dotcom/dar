@@ -226,3 +226,12 @@ a.level-card:hover{box-shadow:var(--shadow-hover)}
 
 .pr-card::before{background:linear-gradient(90deg,var(--gold-a),var(--maroon))}
 .pr-card .bar>i{background:var(--maroon)}
+
+/* Sprachauswahl */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.lang-pick select{font:600 .82rem var(--f-body);color:var(--heading);background:var(--paper);border:1.5px solid var(--gold-line);border-radius:999px;
+  padding:6px 26px 6px 12px;cursor:pointer;appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+  background-position:calc(100% - 14px) 52%,calc(100% - 9px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+.lang-pick select:hover{border-color:var(--maroon)}
+.lang-note{font-size:.84rem;color:var(--muted);background:var(--paper);border:1px dashed var(--gold-line);border-radius:12px;padding:8px 12px}

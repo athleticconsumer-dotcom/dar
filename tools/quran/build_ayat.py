@@ -9,7 +9,7 @@ Quelle: github.com/fawazahmed0/quran-api  editions/ara-quranuthmanihaf/<sure>.js
 
     python3 tools/quran/build_ayat.py <pfad-zu-quran-api>
 """
-import json, re, sys
+import json, re, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -22,22 +22,23 @@ def clean(t):
     return t.replace("\u200f", "").strip()
 
 refs = {}
+NODE = ("const f=process.argv[1];import('file://'+f).then(m=>console.log(JSON.stringify("
+        "m.default.levels.flatMap(l=>l.ayat.map(v=>({ref:v.ref,gaps:v.gaps.map(g=>g.i),w:v.w}))))))")
 for f in sorted(DATA.glob("*.js")):
-    src = f.read_text(encoding="utf-8")
-    for m in re.finditer(r'ref:\s*"(\d+):(\d+)",\s*gaps:\s*\[(.*?)\],\s*w:\s*\[(.*?)\]\s*\}', src, re.S):
-        s, a = int(m.group(1)), int(m.group(2))
-        idx = [int(x) for x in re.findall(r"i:\s*(\d+)", m.group(3))]
-        nw = len(re.findall(r'"(?:[^"\\]|\\.)*"', m.group(4)))
-        refs[(s, a)] = (f.name, idx, nw)
+    res = subprocess.run(["node", "--input-type=module", "-e", NODE, str(f)], capture_output=True, text=True, check=True)
+    for v in json.loads(res.stdout):
+        s, a = map(int, v["ref"].split(":"))
+        refs[(s, a)] = (f.name, v["gaps"], v["w"])
 
 cache, out, ok = {}, {}, True
-for (s, a), (fname, idx, nw) in sorted(refs.items()):
+for (s, a), (fname, idx, wl) in sorted(refs.items()):
     if s not in cache:
         cache[s] = {v["verse"]: clean(v["text"]) for v in json.load(open(SRC / f"{s}.json", encoding="utf-8"))["chapter"]}
     text = cache[s][a]
     words = text.split(" ")
-    if nw != len(words):
-        print(f"✗ {fname} {s}:{a} hat {len(words)} Wörter, aber {nw} Übersetzungen"); ok = False
+    for lg, glosses in wl.items():
+        if len(glosses) != len(words):
+            print(f"✗ {fname} {s}:{a} [{lg}] hat {len(words)} Wörter, aber {len(glosses)} Bedeutungen"); ok = False
     for i in idx:
         if i >= len(words):
             print(f"✗ {fname} {s}:{a} Lücke {i} gibt es nicht ({len(words)} Wörter)"); ok = False

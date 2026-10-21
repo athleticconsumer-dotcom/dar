@@ -6,14 +6,21 @@
 // =====================================================================
 import { firebaseConfig } from "./config.js";
 import { store } from "./store.js";
+import { t, onLang } from "./i18n.js";
 
 const V = "10.12.2";
 const $ = (s) => document.querySelector(s);
-const ui = (on, text) => { $("#syncDot").classList.toggle("on", on); $("#syncText").textContent = text; };
+let last = null;   // letzte Statusmeldung, wird bei Sprachwechsel neu übersetzt
+const ui = (on, key, vars) => {
+  last = [on, key, vars];
+  const el = $("#syncText"); el.removeAttribute("data-i18n");
+  $("#syncDot").classList.toggle("on", on); el.textContent = t(key, vars);
+};
+onLang(() => { if (last) ui(...last); });
 
 export async function startFirebase() {
   if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith("DEIN")) {
-    ui(false, "Fortschritt wird nur in diesem Browser gespeichert (Firebase noch nicht eingerichtet).");
+    ui(false, "fb.local");
     return;
   }
 
@@ -26,7 +33,7 @@ export async function startFirebase() {
     ]);
     fb = { ...appMod, ...authMod, ...fsMod };
   } catch (e) {
-    ui(false, "Offline – Fortschritt wird lokal gespeichert.");
+    ui(false, "fb.offline");
     return;
   }
 
@@ -39,14 +46,13 @@ export async function startFirebase() {
   const showUser = (user) => {
     $("#loginBtn").hidden = !user.isAnonymous;
     $("#logoutBtn").hidden = user.isAnonymous;
-    ui(true, user.isAnonymous
-      ? "Fortschritt gespeichert. Melde dich an, um ihn auf allen Geräten zu nutzen."
-      : "Angemeldet als " + (user.displayName || user.email || "Google-Konto") + " – Fortschritt wird synchronisiert.");
+    if (user.isAnonymous) ui(true, "fb.anon");
+    else ui(true, "fb.signedIn", { name: user.displayName || user.email || t("fb.account") });
   };
 
   const pushNow = (data) =>
     fb.setDoc(fb.doc(db, "users", uid), { ...data, updatedAt: fb.serverTimestamp() })
-      .catch((e) => ui(false, "Speichern fehlgeschlagen (" + e.code + ")."));
+      .catch((e) => ui(false, "fb.saveFail", { code: e.code }));
 
   // Nach jeder Änderung speichern – gebündelt, damit nicht jeder Klick schreibt
   store.setCloudSaver((data) => {
@@ -62,12 +68,12 @@ export async function startFirebase() {
       const taken = snap.exists() && store.applyRemote(snap.data(), preferRemote);
       preferRemote = false;
       if (!taken) pushNow(store.get());            // dieses Gerät ist weiter → hochladen
-    } catch (e) { ui(false, "Fortschritt konnte nicht geladen werden (" + e.code + ")."); }
+    } catch (e) { ui(false, "fb.loadFail", { code: e.code }); }
   }
 
   fb.onAuthStateChanged(auth, async (user) => {
     if (!user) {
-      fb.signInAnonymously(auth).catch((e) => ui(false, "Anmeldung fehlgeschlagen (" + e.code + ")."));
+      fb.signInAnonymously(auth).catch((e) => ui(false, "fb.loginFail", { code: e.code }));
       return;
     }
     showUser(user);
@@ -85,7 +91,7 @@ export async function startFirebase() {
         preferRemote = true;
         try { await fb.signInWithPopup(auth, provider); } catch (e2) { preferRemote = false; }
       } else if (e.code !== "auth/popup-closed-by-user" && e.code !== "auth/cancelled-popup-request") {
-        ui(false, "Anmeldung fehlgeschlagen (" + e.code + ").");
+        ui(false, "fb.loginFail", { code: e.code });
       }
     }
   };
