@@ -82,6 +82,23 @@ a.pr-step:hover{background:var(--paper)}
 .pr-wbw .pr-gloss{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .pr-wbw .pr-gloss li{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:12px;
   border:1.5px solid color-mix(in srgb,var(--wc) 45%,transparent);background:color-mix(in srgb,var(--wc) 7%,var(--surface));min-width:0}
-.pr-wbw .pr-gloss .ar{font:400 1.3rem/1.5 "Amiri Quran","Amiri",var(--f-ar);color:var(--wc)}
-.pr-wbw .pr-gloss .de{font-size:.8rem;color:var(--wc);font-weight:600;text-align:center;direction:ltr}
+.pr-wbw .pr-gloss .ar{display:block;font:400 1.3rem/2.3 "Amiri Quran","Amiri",var(--f-ar);color:var(--wc);padding-bottom:.15em}
+.pr-wbw .pr-gloss .de{display:block;font-size:.8rem;line-height:1.3;color:var(--wc);font-weight:600;text-align:center;direction:ltr;padding-top:2px;border-top:1px dashed color-mix(in srgb,var(--wc) 30%,transparent)}
 .pr-wbw .pr-gloss li.is-gap{border-style:dashed}
+
+/* Abschluss: gelernte Wörter, Segen, Kitāb */
+.pr-blessing{align-items:center;text-align:center;background:linear-gradient(180deg,color-mix(in srgb,var(--gold-a) 10%,var(--surface)),var(--surface))}
+.pr-blessing .eyebrow{align-self:center}
+.pr-blessing p{max-width:58ch}
+.pr-dua{font:700 2rem/2 "Amiri Quran","Amiri",var(--f-ar);color:var(--heading);margin:0}
+.pr-dua-de{font-size:.9rem;color:var(--muted);margin-top:-10px}
+.pr-learned{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.pr-learned li{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px 10px;border-radius:14px;text-align:center;
+  border:1.5px solid color-mix(in srgb,var(--wc) 45%,transparent);background:color-mix(in srgb,var(--wc) 7%,var(--surface))}
+.pr-learned .ar{display:block;font:400 1.6rem/2.3 "Amiri Quran","Amiri",var(--f-ar);color:var(--wc)}
+.pr-learned .de{display:block;direction:ltr;font-weight:600;font-size:.88rem;color:var(--wc);line-height:1.3}
+.pr-learned .ref{direction:ltr;font-size:.72rem;color:var(--muted)}
+.pr-kitab{flex-direction:row;align-items:flex-start;gap:16px;border-style:dashed;border-color:var(--gold-a)}
+.pr-kitab-icon{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:18px;background:var(--paper);border:1.5px solid var(--gold-line)}
+.pr-kitab p{max-width:62ch}
+@media (max-width:480px){.pr-kitab{flex-direction:column}}

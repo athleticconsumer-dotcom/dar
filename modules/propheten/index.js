@@ -257,15 +257,39 @@ export async function renderLevel(view, ctx, id, n) {
       s.passed[n] = Math.max(s.passed[n] || 0, score);
     });
     const hasNext = n < total;
+    // alle gesuchten Wörter dieses Levels, ohne Doppelte
+    const seen = new Set(), learned = [];
+    L.ayat.forEach((v) => {
+      const words = A[v.ref].text.split(" ");
+      [...v.gaps].sort((x, y) => x.i - y.i).forEach((g) => {
+        const w = clean(words[g.i]);
+        if (!seen.has(w)) { seen.add(w); learned.push({ w, de: v.w[g.i], ref: v.ref, c: col(g.i) }); }
+      });
+    });
+    const wordList = `<ol class="pr-learned" dir="rtl">${learned.map((x) => `
+      <li class="${x.c}"><span class="ar" lang="ar" dir="rtl">${x.w}</span><span class="de">${esc(x.de)}</span><span class="ref">${x.ref}</span></li>`).join("")}</ol>`;
     view.innerHTML = head(passed ? 3 : 2) + `
       <div class="card pr-result">
-        <span class="pr-ar-big" lang="ar">${passed ? "أَحْسَنْتَ!" : "حَاوِلْ مَرَّةً أُخْرَى"}</span>
+        <span class="pr-ar-big" lang="ar">${passed ? "بَارَكَ اللهُ فِيكَ" : "حَاوِلْ مَرَّةً أُخْرَى"}</span>
         <h2>${passed ? `Level ${n} bestanden` : "Noch nicht bestanden"}</h2>
-        <p class="lead">${score} von ${L.quiz.length} Fragen richtig. ${passed ? (hasNext ? `Level ${n + 1} ist jetzt freigeschaltet.` : `Du hast die ganze Geschichte von ${esc(p.name)} geschafft!`) : `Du brauchst mindestens ${PASS_AT} richtige Antworten.`}</p>
-        <div class="row center">
-          ${passed && hasNext ? `<a class="btn primary" href="#/geschichten/${id}/${n + 1}">Weiter zu Level ${n + 1} →</a>` : ""}
-          ${!passed ? `<button class="btn primary" id="again">Quiz wiederholen</button>` : ""}
-          <a class="btn" href="#/geschichten/${id}">Zur Übersicht</a></div></div>`;
+        <p class="lead">${score} von ${L.quiz.length} Fragen richtig. ${passed ? (hasNext ? `Level ${n + 1} ist jetzt freigeschaltet.` : `Du hast die ganze Geschichte von ${esc(p.name)} geschafft!`) : `Du brauchst mindestens ${PASS_AT} richtige Antworten. Schau dir die Wörter unten noch einmal an.`}</p>
+      </div>
+      ${passed ? `<section class="card pr-blessing">
+        <span class="eyebrow">Bārakallāhu fīk</span>
+        <p>Diese <b>${learned.length} Wörter</b> aus dem Qur'an hast du in diesem Level gelernt. Möge Allah dich für deine Mühe belohnen, es dir leicht machen und dein Wissen vermehren.</p>
+        <p class="pr-dua" lang="ar" dir="rtl">رَبِّ زِدْنِي عِلْمًا</p>
+        <p class="pr-dua-de">„Mein Herr, mehre mein Wissen.“ (Ṭā-Hā 20:114)</p>
+      </section>` : ""}
+      <section class="card pr-wbw"><h3>${passed ? "Deine neuen Wörter" : "Die Wörter dieses Levels"}</h3>${wordList}</section>
+      ${passed ? `<section class="card pr-kitab">
+        <div class="pr-kitab-icon" aria-hidden="true"><svg viewBox="0 0 48 48" width="44" height="44"><path d="M6 10c6-2 12-2 18 2v28c-6-4-12-4-18-2z" fill="none" stroke="var(--maroon)" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 10c-6-2-12-2-18 2v28c6-4 12-4 18-2z" fill="none" stroke="var(--maroon)" stroke-width="2.5" stroke-linejoin="round"/><path d="M33 4l6 6-14 14-7 1 1-7z" fill="var(--gold-a)"/></svg></div>
+        <div><h3>Eine Bitte an dich</h3>
+          <p>Du hast die Fragen gut beantwortet. Nimm jetzt einen Stift und schreib diese Wörter in dein eigenes <b>Kitāb</b>, also dein Heft: das arabische Wort und daneben die Bedeutung. Mit jedem Level wird dein Kitāb dicker, und mit der Zeit hast du einen großen Wortschatz aus dem Qur'an, mit deiner eigenen Hand geschrieben.</p></div>
+      </section>` : ""}
+      <div class="row center">
+        ${passed && hasNext ? `<a class="btn primary" href="#/geschichten/${id}/${n + 1}">Weiter zu Level ${n + 1} →</a>` : ""}
+        ${!passed ? `<button class="btn primary" id="again">Quiz wiederholen</button>` : ""}
+        <a class="btn" href="#/geschichten/${id}">Zur Übersicht</a></div>`;
     view.querySelector("#again")?.addEventListener("click", () => quiz(0, 0));
   }
 
