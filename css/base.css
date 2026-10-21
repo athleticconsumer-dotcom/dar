@@ -189,3 +189,26 @@ a.room:hover{border-color:var(--maroon);box-shadow:var(--shadow-hover)}
 .note{font-size:.85rem;color:var(--muted)}
 .empty{padding:28px;text-align:center;color:var(--muted)}
 @media (prefers-reduced-motion:no-preference){.opt,.btn,.chip,.choice{transition:background .2s,border-color .2s,box-shadow .2s}}
+
+/* ---------- Level ---------- */
+.levels{display:grid;gap:18px}
+.level-card{display:flex;flex-direction:column;gap:14px;text-decoration:none;background:var(--surface);border:1.5px solid var(--gold-a);border-radius:24px;
+  padding:clamp(18px,4vw,26px);box-shadow:var(--shadow);position:relative;overflow:hidden;min-width:0}
+.level-card::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--maroon),var(--gold-a))}
+a.level-card:hover{box-shadow:var(--shadow-hover)}
+@media (prefers-reduced-motion:no-preference){a.level-card{transition:transform .3s ease,box-shadow .3s ease}a.level-card:hover{transform:translateY(-3px)}}
+.level-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:8px 16px}
+.level-no{font:600 .72rem var(--f-serif);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.level-card h3{font-size:1.5rem}
+.level-ar{font:700 1.6rem/1.3 var(--f-ar);color:var(--heading)}
+.level-card .desc{color:var(--body);max-width:62ch}
+.level-icons{display:flex;flex-wrap:wrap;gap:8px}
+.level-icons span{font:700 1rem/1 var(--f-ar);padding:8px 12px;border-radius:12px;background:var(--paper);border:1.5px solid var(--m);color:var(--m)}
+.level-icons span.soon{border-color:var(--line);color:var(--muted)}
+.level-card .meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 12px;font-size:.84rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.level-card .go{font-weight:600;color:var(--heading)}
+.level-row{display:flex;align-items:baseline;gap:10px;padding-bottom:6px;border-bottom:1px dashed var(--line)}
+.level-row b{font:700 1rem var(--f-serif);color:var(--heading)}
+.level-row .ar{color:var(--gold)}
+.level-row .pct{margin-left:auto;font:700 .95rem var(--f-disp);color:var(--heading);font-variant-numeric:tabular-nums}
+.welcome .back{align-self:flex-start}

@@ -6,19 +6,28 @@
 //  Die Reihenfolge hier ist die Standard-Lernreihenfolge für den Leitfaden.
 // =====================================================================
 
+// Hauptkategorien. Jede Rubrik gehört über "level" zu genau einem Level.
+// Neues Level: hier eintragen, dann bei den Rubriken level: 2 usw. setzen.
+export const LEVELS = [
+  {
+    id: 1, title: "Level 1", ar: "المُسْتَوَى الأَوَّل",
+    desc: "Die Grundlagen: Schrift und Laute, Zahlen, Uhrzeit, erste Sätze und der Alltag in der Familie.",
+  },
+];
+
 export const RUBRIKEN = [
   {
     id: "alphabet", status: "soon",
     title: "Alphabet & Laute", ar: "الحُرُوف",
     desc: "Die 28 Buchstaben, ihre Formen am Wortanfang, in der Mitte und am Ende.",
-    needs: [], level: 0,
+    needs: [], level: 1,
     color: { light: "#82384E", dark: "#E7A1B4" },
   },
   {
     id: "harakat", status: "soon",
     title: "Vokale & Lesen", ar: "الحَرَكَات",
     desc: "Fatḥa, Kasra, Ḍamma, Sukūn, Shadda – vom Buchstaben zum Wort.",
-    needs: ["alphabet"], level: 0,
+    needs: ["alphabet"], level: 1,
     color: { light: "#2C6A6F", dark: "#8FCFD3" },
   },
   {
@@ -48,17 +57,19 @@ export const RUBRIKEN = [
     id: "wochentage", status: "soon",
     title: "Tage & Monate", ar: "الأَيَّام وَالشُّهُور",
     desc: "Wochentage, Monate (hidschri und gregorianisch) und Datumsangaben.",
-    needs: ["zahlen"], level: 2,
+    needs: ["zahlen"], level: 1,
     color: { light: "#8A4B2A", dark: "#E6AE88" },
   },
   {
     id: "familie", status: "soon",
     title: "Familie", ar: "العَائِلَة",
     desc: "Verwandtschaft, Possessiv-Endungen (ـي، ـكَ، ـهُ) und kleine Sätze.",
-    needs: [], level: 2,
+    needs: [], level: 1,
     color: { light: "#5E5A2A", dark: "#D3CC8A" },
   },
 ];
 
 export const byId = (id) => RUBRIKEN.find((r) => r.id === id);
 export const liveRubriken = () => RUBRIKEN.filter((r) => r.status === "live");
+export const levelById = (id) => LEVELS.find((l) => l.id === Number(id));
+export const rubrikenOf = (levelId) => RUBRIKEN.filter((r) => r.level === Number(levelId));

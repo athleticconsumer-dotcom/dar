@@ -2,7 +2,7 @@
 //  APP – Navigation, Startseite, Leitfaden, Fortschritt und das Laden
 //  der Rubriken. Rubriken selbst liegen in /modules/<id>/.
 // =====================================================================
-import { RUBRIKEN, byId, liveRubriken } from "./registry.js";
+import { RUBRIKEN, LEVELS, byId, liveRubriken, levelById, rubrikenOf } from "./registry.js";
 import { store } from "./store.js";
 import { startFirebase } from "./firebase.js";
 import { QUESTIONS, buildPath, recommend } from "./guide.js";
@@ -38,6 +38,10 @@ const overallPercent = () => {
   const live = liveRubriken();
   return live.length ? Math.round(live.reduce((s, r) => s + percentOf(r.id), 0) / live.length) : 0;
 };
+const levelPercent = (lid) => {
+  const live = rubrikenOf(lid).filter((r) => r.status === "live");
+  return live.length ? Math.round(live.reduce((a, r) => a + percentOf(r.id), 0) / live.length) : 0;
+};
 const dailyGoal = () => store.get().profile?.daily || 20;
 
 function ring(pct, label) {
@@ -52,24 +56,8 @@ function ring(pct, label) {
 const bar = (pct) => `<div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>`;
 
 // ---------- Seiten ----------
-function home() {
-  const s = store.get(), o = s.overall, profile = s.profile;
-  const pct = overallPercent(), today = store.todayCorrect(), goal = dailyGoal();
-  const { next, blocked } = recommend(profile, percentOf, DONE_AT);
-  const path = buildPath(profile);
-
-  const nextBox = !profile
-    ? `<div class="next">
-        <div class="txt"><span class="label">✦ Dein Einstieg</span><h3>Wo fängst du an?</h3>
-          <p class="lead">Beantworte drei kurze Fragen, und der Leitfaden schlägt dir die passende Reihenfolge vor.</p></div>
-        <a class="btn primary" href="#/leitfaden">Zum Leitfaden →</a></div>`
-    : next ? `<div class="next theme-${next.rubrik.id}">
-        <div class="txt"><span class="label">✦ Empfohlen als Nächstes</span>
-          <h3>${esc(next.rubrik.title)} <span class="ar" lang="ar" dir="rtl" style="color:var(--m)">${next.rubrik.ar}</span></h3>
-          <p class="lead">${blocked ? `„${esc(blocked.rubrik.title)}“ kommt bald. Bis dahin: ` : ""}${esc(next.why)}</p></div>
-        <a class="btn primary" href="#/r/${next.rubrik.id}">${percentOf(next.rubrik.id) > 0 ? "Weitermachen →" : "Starten →"}</a></div>` : "";
-
-  const rooms = path.map((step, i) => {
+function roomCards(path, next) {
+  return path.map((step, i) => {
     const r = step.rubrik, live = r.status === "live", p = percentOf(r.id);
     const isNext = next && next.rubrik.id === r.id;
     const badge = !live ? '<span class="pill">Bald</span>' : isNext ? '<span class="pill rec">Empfohlen</span>'
@@ -85,6 +73,66 @@ function home() {
       ? `<a class="room theme-${r.id}" href="#/r/${r.id}">${inner}</a>`
       : `<div class="room soon theme-${r.id}" aria-disabled="true">${inner}</div>`;
   }).join("");
+}
+
+function levelCards() {
+  return LEVELS.map((l) => {
+    const all = rubrikenOf(l.id), live = all.filter((r) => r.status === "live"), p = levelPercent(l.id);
+    return `<a class="level-card" href="#/level/${l.id}">
+      <div class="level-top">
+        <div><span class="level-no">${all.length} Rubriken</span><h3>${esc(l.title)}</h3></div>
+        <span class="level-ar" lang="ar" dir="rtl">${l.ar}</span>
+      </div>
+      <p class="desc">${esc(l.desc)}</p>
+      <div class="level-icons">${all.map((r) => `<span class="theme-${r.id}${r.status === "live" ? "" : " soon"}" lang="ar" title="${esc(r.title)}">${r.ar}</span>`).join("")}</div>
+      <div class="theme-zahlen">${bar(p)}</div>
+      <div class="meta"><span>${p}% geschafft · ${live.length} von ${all.length} Rubriken verfügbar</span><span class="go">Öffnen →</span></div>
+    </a>`;
+  }).join("");
+}
+
+function levelPage(lid) {
+  const l = levelById(lid);
+  if (!l) { view.innerHTML = `<div class="empty">Dieses Level gibt es (noch) nicht. <a href="#/">Zur Startseite</a></div>`; return; }
+  const profile = store.get().profile;
+  const { next } = recommend(profile, percentOf, DONE_AT);
+  const path = buildPath(profile).filter((st) => st.rubrik.level === l.id);
+  const p = levelPercent(l.id);
+  view.innerHTML = `
+    <section class="welcome">
+      <div class="welcome-card">
+        <div class="text">
+          <a class="back" href="#/">← Startseite</a>
+          <span class="eyebrow">Level ${l.id}</span>
+          <p class="salam" lang="ar" dir="rtl" style="text-align:left">${l.ar}</p>
+          <h1>${esc(l.title)}</h1>
+          <p class="lead">${esc(l.desc)}</p>
+        </div>
+        ${ring(p, "Fortschritt in " + l.title)}
+      </div>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:18px">
+      <div class="section-head"><span class="eyebrow">Rubriken</span>
+        <h2>Was möchtest du heute lernen?</h2>
+        <p>${profile ? "In deiner Reihenfolge aus dem Leitfaden" : "In der empfohlenen Standard-Reihenfolge"}</p></div>
+      <div class="rooms">${roomCards(path, next)}</div>
+    </section>`;
+}
+
+function home() {
+  const s = store.get(), o = s.overall, profile = s.profile;
+  const pct = overallPercent(), today = store.todayCorrect(), goal = dailyGoal();
+  const { next, blocked } = recommend(profile, percentOf, DONE_AT);
+  const nextBox = !profile
+    ? `<div class="next">
+        <div class="txt"><span class="label">✦ Dein Einstieg</span><h3>Wo fängst du an?</h3>
+          <p class="lead">Beantworte drei kurze Fragen, und der Leitfaden schlägt dir die passende Reihenfolge vor.</p></div>
+        <a class="btn primary" href="#/leitfaden">Zum Leitfaden →</a></div>`
+    : next ? `<div class="next theme-${next.rubrik.id}">
+        <div class="txt"><span class="label">✦ Empfohlen als Nächstes</span>
+          <h3>${esc(next.rubrik.title)} <span class="ar" lang="ar" dir="rtl" style="color:var(--m)">${next.rubrik.ar}</span></h3>
+          <p class="lead">${blocked ? `„${esc(blocked.rubrik.title)}“ kommt bald. Bis dahin: ` : ""}${esc(next.why)}</p></div>
+        <a class="btn primary" href="#/r/${next.rubrik.id}">${percentOf(next.rubrik.id) > 0 ? "Weitermachen →" : "Starten →"}</a></div>` : "";
 
   const streak = store.liveDayStreak();
   view.innerHTML = `
@@ -94,7 +142,7 @@ function home() {
           <span class="eyebrow">Fuṣḥā · Hocharabisch</span>
           <p class="salam" lang="ar" dir="rtl" style="text-align:left">أَهْلًا وَسَهْلًا</p>
           <h1>Dein Weg ins Arabische</h1>
-          <p class="lead">Wähle eine Rubrik und lerne mit Erklärungen, Übungen und Spielen. Dein Fortschritt wird bei jedem Schritt gespeichert.</p>
+          <p class="lead">Wähle ein Level und lerne in seinen Rubriken mit Erklärungen, Übungen und Spielen. Dein Fortschritt wird bei jedem Schritt gespeichert.</p>
           <div class="kpis">
             <span><b>${o.xp}</b> XP</span>
             <span><b>${streak}</b> ${streak === 1 ? "Tag" : "Tage"} in Folge</span>
@@ -107,10 +155,10 @@ function home() {
     </section>
     ${nextBox}
     <section style="display:flex;flex-direction:column;gap:18px">
-      <div class="section-head"><span class="eyebrow">Rubriken</span>
-        <h2>Was möchtest du heute lernen?</h2>
-        <p>${profile ? "In deiner Reihenfolge aus dem Leitfaden" : "In der empfohlenen Standard-Reihenfolge"}</p></div>
-      <div class="rooms">${rooms}</div>
+      <div class="section-head"><span class="eyebrow">Level</span>
+        <h2>Wähle dein Level</h2>
+        <p>Jedes Level fasst mehrere Rubriken zusammen.</p></div>
+      <div class="levels">${levelCards()}</div>
     </section>`;
 }
 
@@ -180,7 +228,7 @@ function progressPage() {
       <div class="stat"><b>${o.bestDayStreak}</b><span>längste Tagesserie</span></div>
       <div class="stat"><b>${Math.min(store.todayCorrect(), dailyGoal())}/${dailyGoal()}</b><span>Tagesziel heute</span></div>
     </div>
-    <div class="card"><h2>Pro Rubrik</h2><div class="ptable">${rows}</div>
+    <div class="card"><h2>Pro Rubrik</h2>${LEVELS.map((l) => `<div class="level-row"><b>${esc(l.title)}</b> <span class="ar" lang="ar">${l.ar}</span><span class="pct">${levelPercent(l.id)}%</span></div>`).join("")}<div class="ptable">${rows}</div>
       ${soon ? `<p class="note">In Arbeit: ${soon}</p>` : ""}</div>
     <div class="card"><h3>Neu anfangen</h3>
       <p class="note">Löscht deinen gesamten Fortschritt und die Antworten aus dem Leitfaden.</p>
@@ -199,7 +247,7 @@ async function rubrikPage(id) {
   view.classList.add("theme-" + id);
   view.innerHTML = `
     <div class="mod-head">
-      <div class="mod-title"><a class="back" href="#/">← Alle Rubriken</a>
+      <div class="mod-title"><a class="back" href="#/level/${r.level}">← ${esc(levelById(r.level)?.title || "Startseite")}</a>
         <h1>${esc(r.title)}</h1><span class="ar" lang="ar" dir="rtl">${r.ar}</span></div>
       <div style="min-width:180px;flex:0 1 240px"><div class="hud"><span>Fortschritt</span><b id="modPct">${percentOf(id)}%</b></div>${bar(percentOf(id))}</div>
     </div>
@@ -232,11 +280,12 @@ async function route() {
   stopSpeaking();
   view.className = "view";
   const h = location.hash || "#/";
-  const page = h.startsWith("#/leitfaden") ? "leitfaden" : h.startsWith("#/fortschritt") ? "fortschritt" : h.startsWith("#/r/") ? "rubrik" : "home";
-  document.querySelectorAll("[data-nav]").forEach((a) => a.dataset.nav === page ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  const page = h.startsWith("#/leitfaden") ? "leitfaden" : h.startsWith("#/fortschritt") ? "fortschritt" : h.startsWith("#/r/") ? "rubrik" : h.startsWith("#/level/") ? "level" : "home";
+  document.querySelectorAll("[data-nav]").forEach((a) => a.dataset.nav === (page === "level" ? "home" : page) ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
   if (page === "leitfaden") guidePage();
   else if (page === "fortschritt") progressPage();
   else if (page === "rubrik") await rubrikPage(h.slice(4).split(/[/?#]/)[0]);
+  else if (page === "level") levelPage(h.slice(8).split(/[/?#]/)[0]);
   else home();
 }
 
