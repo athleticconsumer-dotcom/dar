@@ -3,7 +3,7 @@
 //  Tabs: Erklärung · Lernen · Aufgaben · Spiel (Zahlen-Sprint)
 //  Fortschritt (api.progress()):  mastery: { "<bereich>": richtige }, sprintBest
 // =====================================================================
-import { toAr, rnd, shuffle, esc, loadCss, judge, AR_DIGITS } from "../../js/shared.js";
+import { showWorksheets, toAr, rnd, shuffle, esc, loadCss, judge, AR_DIGITS } from "../../js/shared.js";
 import { words, RANGES, MASTER_AT, pickIn, stepIn, inRange } from "./data.js";
 
 const SPRINT_SECONDS = 60;
@@ -38,7 +38,7 @@ export default {
     function frame(body) {
       root.innerHTML = `
         <div class="tabs" role="group" aria-label="Bereich der Rubrik">
-          ${[["erklaerung", "Erklärung"], ["lernen", "Lernen"], ["aufgaben", "Aufgaben"], ["spiel", "Spiel"]]
+          ${[["erklaerung", "Erklärung"], ["lernen", "Lernen"], ["aufgaben", "Aufgaben"], ["spiel", "Spiel"], ["blaetter", "Arbeitsblätter"]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
       root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { stopTimer(); S.tab = b.dataset.tab; show(); }));
@@ -232,8 +232,10 @@ export default {
       timer = setInterval(tick, 1000);
     }
 
+    function blaetter() { frame(`<div id="wsRoot" style="display:flex;flex-direction:column;gap:16px"></div>`); showWorksheets(root.querySelector("#wsRoot"), import.meta.url); }
+
     function show() {
-      ({ erklaerung, lernen, aufgaben, spiel })[S.tab]();
+      ({ erklaerung, lernen, aufgaben, spiel, blaetter })[S.tab]();
     }
     show();
     return stopTimer;   // wird beim Verlassen der Rubrik aufgerufen

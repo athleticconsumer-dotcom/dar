@@ -136,3 +136,27 @@ export function judge({ root, api, picked, correctValue, onNext, extra }) {
   if (nx) { nx.hidden = false; nx.onclick = onNext; nx.focus({ preventScroll: true }); }
   return ok;
 }
+
+/**
+ * Arbeitsblätter einer Rubrik anzeigen (PDF zum Ansehen, Drucken, Herunterladen).
+ * Liest modules/<rubrik>/blaetter/index.json. Aufruf: showWorksheets(el, import.meta.url)
+ */
+export async function showWorksheets(el, base) {
+  el.innerHTML = `<div class="card"><p class="note">Arbeitsblätter werden geladen …</p></div>`;
+  let list = [];
+  try { list = await (await fetch(new URL("blaetter/index.json", base))).json(); } catch (e) {}
+  if (!list.length) { el.innerHTML = `<div class="card empty">Für diese Rubrik gibt es noch keine Arbeitsblätter.</div>`; return; }
+  el.innerHTML = `
+    <div class="ws-intro"><span class="eyebrow">Auf Papier üben</span>
+      <p class="lead">Drucke die Blätter auf A4 aus, oder schreib die Antworten einfach auf ein Blatt Papier. Die Lösungen stehen jeweils auf der letzten Seite.</p></div>
+    <div class="ws-grid">${list.map((w) => {
+      const pdf = new URL(w.pdf, base).href, img = new URL(w.img, base).href;
+      return `<article class="ws-card">
+        <a class="ws-thumb" href="${pdf}" target="_blank" rel="noopener" aria-label="${esc(w.title)} ansehen"><img src="${img}" alt="Vorschau: ${esc(w.title)}" loading="lazy"></a>
+        <div class="ws-body"><h3>${esc(w.title)}</h3><p>${esc(w.desc)}</p>
+          <span class="ws-meta">PDF · A4 · ${w.pages} Seiten, letzte Seite mit Lösungen</span>
+          <div class="row"><a class="btn primary small" href="${pdf}" target="_blank" rel="noopener">Ansehen und drucken</a>
+            <a class="btn small" href="${pdf}" download>Herunterladen</a></div></div>
+      </article>`;
+    }).join("")}</div>`;
+}

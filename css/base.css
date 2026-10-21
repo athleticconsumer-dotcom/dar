@@ -212,3 +212,14 @@ a.level-card:hover{box-shadow:var(--shadow-hover)}
 .level-row .ar{color:var(--gold)}
 .level-row .pct{margin-left:auto;font:700 .95rem var(--f-disp);color:var(--heading);font-variant-numeric:tabular-nums}
 .welcome .back{align-self:flex-start}
+
+/* ---------- Arbeitsblätter ---------- */
+.ws-intro{display:flex;flex-direction:column;gap:8px}
+.ws-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.ws-card{display:flex;flex-direction:column;background:var(--surface);border:1.5px solid var(--gold-line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);min-width:0}
+.ws-thumb{display:block;background:var(--paper);padding:16px 16px 0;border-bottom:1px solid var(--line)}
+.ws-thumb img{display:block;width:100%;max-width:100%;aspect-ratio:210/297;object-fit:cover;object-position:top;border-radius:8px 8px 0 0;box-shadow:0 -2px 14px rgba(53,13,25,.12);background:#fff}
+@media (prefers-reduced-motion:no-preference){.ws-thumb img{transition:transform .3s ease}.ws-thumb:hover img{transform:translateY(-4px)}}
+.ws-body{display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px}
+.ws-body p{font-size:.9rem;color:var(--body)}
+.ws-meta{font-size:.78rem;color:var(--muted)}

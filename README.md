@@ -106,3 +106,17 @@ Firestore-Dokument `users/{uid}`:
 ```
 
 Jeder Besucher wird automatisch anonym angemeldet. „Mit Google anmelden“ übernimmt den bisherigen Fortschritt ins Google-Konto, dann ist er auf allen Geräten verfügbar.
+
+## Arbeitsblätter (PDF zum Ausdrucken)
+
+Jede Rubrik kann einen Tab **Arbeitsblätter** haben. Die PDFs liegen in `modules/<rubrik>/blaetter/`
+zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
+
+```json
+[{ "id": "ziffern", "title": "Die Ziffern ٠–٩", "desc": "…", "pdf": "blaetter/ziffern.pdf", "img": "blaetter/ziffern.png", "pages": 3 }]
+```
+
+- **Eigene PDFs** (z. B. aus Canva): Datei und ein Vorschaubild in den Ordner legen und einen Eintrag in `index.json` ergänzen.
+- **Neue Blätter im App-Design erzeugen:** in `tools/worksheets/generate.py` eine Funktion ergänzen und
+  `python3 tools/worksheets/generate.py` ausführen (braucht Python mit Playwright, pdftoppm und die Schriften Amiri, Cinzel, Plus Jakarta Sans).
+- In einer neuen Rubrik den Tab einbauen: `showWorksheets(element, import.meta.url)` aus `js/shared.js` aufrufen.

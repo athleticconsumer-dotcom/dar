@@ -3,7 +3,7 @@
 //  Tabs: Erklärung · Lernen · Aufgaben · Spiel (Uhr stellen)
 //  Fortschritt (api.progress()):  mastery: { "<minute>": richtige }, gameBest
 // =====================================================================
-import { toAr, rnd, shuffle, esc, loadCss, judge } from "../../js/shared.js";
+import { showWorksheets, toAr, rnd, shuffle, esc, loadCss, judge } from "../../js/shared.js";
 
 const MASTER_AT = 3;           // pro Minuten-Muster
 const ROUNDS = 5;              // Runden im Spiel
@@ -88,7 +88,7 @@ export default {
     function frame(body) {
       root.innerHTML = `
         <div class="tabs" role="group" aria-label="Bereich der Rubrik">
-          ${[["erklaerung", "Erklärung"], ["lernen", "Lernen"], ["aufgaben", "Aufgaben"], ["spiel", "Spiel"]]
+          ${[["erklaerung", "Erklärung"], ["lernen", "Lernen"], ["aufgaben", "Aufgaben"], ["spiel", "Spiel"], ["blaetter", "Arbeitsblätter"]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
       root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; show(); }));
@@ -275,7 +275,9 @@ export default {
       root.querySelector("#uAgain").onclick = () => round(1, 0);
     }
 
-    function show() { ({ erklaerung, lernen, aufgaben, spiel })[S.tab](); }
+    function blaetter() { frame(`<div id="wsRoot" style="display:flex;flex-direction:column;gap:16px"></div>`); showWorksheets(root.querySelector("#wsRoot"), import.meta.url); }
+
+    function show() { ({ erklaerung, lernen, aufgaben, spiel, blaetter })[S.tab](); }
     show();
   },
 };

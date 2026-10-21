@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ziffern",
+    "title": "Die Ziffern ٠–٩",
+    "desc": "Nachspuren, Zählen mit Bildern und Verbinden. Mit Lösungsblatt.",
+    "pdf": "blaetter/ziffern.pdf",
+    "img": "blaetter/ziffern.png",
+    "pages": 3
+  },
+  {
+    "id": "zahlen-bauen",
+    "title": "Zahlen bauen 21–99",
+    "desc": "Farbcodiert: Einer, وَ und Zehner. Lesen, Bauen und Rechnen. Mit Lösungen.",
+    "pdf": "blaetter/zahlen-bauen.pdf",
+    "img": "blaetter/zahlen-bauen.png",
+    "pages": 3
+  }
+]
