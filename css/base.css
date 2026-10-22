@@ -10,7 +10,7 @@
   --shadow:0 12px 30px rgba(53,13,25,.08); --shadow-hover:0 20px 40px rgba(53,13,25,.16);
   --good:#2F6B4F; --bad:#A3333D;
   --m:var(--gold); --m-ink:#350D19; --m-soft:var(--paper);   /* Akzent der aktuellen Rubrik */
-  --f-ar:"Amiri","Traditional Arabic","Geeza Pro",serif;
+  --f-ar:"Scheherazade New","Noto Naskh Arabic","Geeza Pro","Traditional Arabic",serif;
   --f-serif:"Cinzel","Playfair Display",Georgia,serif;
   --f-disp:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;

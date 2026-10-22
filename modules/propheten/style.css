@@ -42,7 +42,7 @@ a.pr-step:hover{background:var(--paper)}
   box-shadow:inset 0 0 0 6px var(--paper),inset 0 0 0 7.5px var(--gold-line),var(--shadow)}
 .pr-surah{display:flex;justify-content:center;margin:-46px 0 12px}
 .pr-surah span{font:700 1.05rem/1 var(--f-ar);background:var(--maroon);color:var(--gold-light);padding:8px 20px;border-radius:999px;border:1.5px solid var(--gold-a)}
-.pr-ayah{font-family:"Amiri Quran","Amiri",var(--f-ar);font-size:clamp(1.55rem,5.4vw,2.15rem);line-height:2.35;text-align:center;color:var(--ink);margin:0;word-spacing:.08em}
+.pr-ayah{font-family:var(--f-ar);font-size:clamp(1.55rem,5.4vw,2.15rem);line-height:2.35;text-align:center;color:var(--ink);margin:0;word-spacing:.08em}
 .pr-end{color:var(--gold);white-space:nowrap}
 .pr-gap{display:inline-block;min-width:3.4em;border-bottom:2.5px dashed var(--gold-a);line-height:1.5;padding:0 .15em;color:var(--good);border-radius:4px}
 .pr-gap.filled{border-bottom-style:solid;border-bottom-color:var(--good);background:color-mix(in srgb,var(--good) 10%,transparent);min-width:0}
@@ -50,7 +50,7 @@ a.pr-step:hover{background:var(--paper)}
 @keyframes pr-pop{0%{transform:scale(.85)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
 
 .pr-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.pr-chip{font:400 1.45rem/1.6 "Amiri Quran","Amiri",var(--f-ar);padding:6px 18px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface);
+.pr-chip{font:400 1.45rem/1.6 var(--f-ar);padding:6px 18px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface);
   color:var(--ink);cursor:pointer;min-height:48px;box-shadow:var(--shadow)}
 .pr-chip:hover:not([disabled]){border-color:var(--maroon)}
 .pr-chip.used{opacity:.35;box-shadow:none}
@@ -62,7 +62,7 @@ a.pr-step:hover{background:var(--paper)}
 .pr-after{border-color:var(--good)}
 .pr-gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
 .pr-gloss div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--line)}
-.pr-gloss span:first-child{font:400 1.35rem/1.5 "Amiri Quran","Amiri",var(--f-ar);color:var(--heading)}
+.pr-gloss span:first-child{font:400 1.35rem/1.5 var(--f-ar);color:var(--heading)}
 .pr-gloss span:last-child{font-size:.88rem;color:var(--body);text-align:right}
 
 .pr-q{font-family:var(--f-body);font-weight:600;font-size:1.1rem;color:var(--ink);text-align:center}
@@ -82,7 +82,7 @@ a.pr-step:hover{background:var(--paper)}
 .pr-wbw .pr-gloss{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .pr-wbw .pr-gloss li{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:12px;
   border:1.5px solid color-mix(in srgb,var(--wc) 45%,transparent);background:color-mix(in srgb,var(--wc) 7%,var(--surface));min-width:0}
-.pr-wbw .pr-gloss .ar{display:block;font:400 1.3rem/2.3 "Amiri Quran","Amiri",var(--f-ar);color:var(--wc);padding-bottom:.15em}
+.pr-wbw .pr-gloss .ar{display:block;font:400 1.3rem/2.3 var(--f-ar);color:var(--wc);padding-bottom:.15em}
 .pr-wbw .pr-gloss .de{display:block;font-size:.8rem;line-height:1.3;color:var(--wc);font-weight:600;text-align:center;direction:ltr;padding-top:2px;border-top:1px dashed color-mix(in srgb,var(--wc) 30%,transparent)}
 .pr-wbw .pr-gloss li.is-gap{border-style:dashed}
 
@@ -90,12 +90,12 @@ a.pr-step:hover{background:var(--paper)}
 .pr-blessing{align-items:center;text-align:center;background:linear-gradient(180deg,color-mix(in srgb,var(--gold-a) 10%,var(--surface)),var(--surface))}
 .pr-blessing .eyebrow{align-self:center}
 .pr-blessing p{max-width:58ch}
-.pr-dua{font:700 2rem/2 "Amiri Quran","Amiri",var(--f-ar);color:var(--heading);margin:0}
+.pr-dua{font:700 2rem/2 var(--f-ar);color:var(--heading);margin:0}
 .pr-dua-de{font-size:.9rem;color:var(--muted);margin-top:-10px}
 .pr-learned{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .pr-learned li{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px 10px;border-radius:14px;text-align:center;
   border:1.5px solid color-mix(in srgb,var(--wc) 45%,transparent);background:color-mix(in srgb,var(--wc) 7%,var(--surface))}
-.pr-learned .ar{display:block;font:400 1.6rem/2.3 "Amiri Quran","Amiri",var(--f-ar);color:var(--wc)}
+.pr-learned .ar{display:block;font:400 1.6rem/2.3 var(--f-ar);color:var(--wc)}
 .pr-learned .de{display:block;direction:ltr;font-weight:600;font-size:.88rem;color:var(--wc);line-height:1.3}
 .pr-learned .ref{direction:ltr;font-size:.72rem;color:var(--muted)}
 .pr-kitab{flex-direction:row;align-items:flex-start;gap:16px;border-style:dashed;border-color:var(--gold-a)}

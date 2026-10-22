@@ -9,7 +9,7 @@ Für jedes Blatt entsteht:
     modules/<rubrik>/blaetter/<id>.png   (Vorschaubild für die App)
 und die Liste modules/<rubrik>/blaetter/index.json.
 
-Benötigt: playwright (Chromium), pdftoppm, Schriften Amiri, Cinzel, Plus Jakarta Sans.
+Benötigt: playwright (Chromium), pdftoppm, Schriften Scheherazade New, Cinzel, Plus Jakarta Sans.
 """
 import json, math, random, subprocess, sys
 from pathlib import Path
@@ -87,7 +87,7 @@ def clock(h=None, m=None, size=150, numbers=True, wedge=None):
     if numbers:
         for i in range(1, 13):
             a = i * 30 * math.pi / 180
-            t.append(f'<text x="{100+66*math.sin(a):.1f}" y="{100-66*math.cos(a):.1f}" text-anchor="middle" dominant-baseline="central" font-family="Amiri" font-size="19" fill="{MUTED}">{ar(i)}</text>')
+            t.append(f'<text x="{100+66*math.sin(a):.1f}" y="{100-66*math.cos(a):.1f}" text-anchor="middle" dominant-baseline="central" font-family="Scheherazade New" font-size="19" fill="{MUTED}">{ar(i)}</text>')
     if h is not None:
         ha = ((h % 12) + m / 60) * 30 * math.pi / 180; ma = m * 6 * math.pi / 180
         t.append(f'<line x1="100" y1="100" x2="{100+44*math.sin(ha):.1f}" y2="{100-44*math.cos(ha):.1f}" stroke="{C_HOUR}" stroke-width="8" stroke-linecap="round"/>')
@@ -119,14 +119,14 @@ body {{ margin: 0; font-family: 'Plus Jakarta Sans', 'Manrope', sans-serif; colo
 header {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 6mm; }}
 .kicker {{ font: 700 7.5pt 'Cinzel', 'Playfair Display', serif; letter-spacing: .16em; text-transform: uppercase; color: #F4E2C2; background: {MAROON}; padding: 1.2mm 3.5mm; border-radius: 99px; display: inline-block; }}
 h1 {{ font: 700 21pt 'Cinzel', 'Playfair Display', serif; color: {MAROON}; margin: 2.5mm 0 0; }}
-.h-ar {{ font: 700 24pt 'Amiri', serif; color: {GOLD}; direction: rtl; line-height: 1.2; }}
+.h-ar {{ font: 700 24pt 'Scheherazade New', serif; color: {GOLD}; direction: rtl; line-height: 1.2; }}
 .name {{ display: flex; gap: 6mm; font-size: 9pt; color: {MUTED}; }}
 .name span {{ flex: 1; border-bottom: 1pt solid {LINE}; padding-bottom: 1mm; }}
 h2 {{ font: 700 12pt 'Cinzel', 'Playfair Display', serif; color: {MAROON}; margin: 0 0 2mm; display: flex; align-items: center; gap: 2.5mm; }}
 h2 .n {{ display: inline-grid; place-items: center; width: 7mm; height: 7mm; border-radius: 50%; background: {MAROON}; color: #F4E2C2; font-size: 9pt; }}
 .task {{ border: 1pt solid {LINE}; border-radius: 4mm; padding: 4mm 5mm; }}
 .hint {{ font-size: 9pt; color: {MUTED}; margin: -1mm 0 3mm; }}
-.arab {{ font-family: 'Amiri', serif; direction: rtl; unicode-bidi: isolate; }}
+.arab {{ font-family: 'Scheherazade New', serif; direction: rtl; unicode-bidi: isolate; }}
 .sol {{ unicode-bidi: isolate; }}
 .legend {{ display: flex; flex-wrap: wrap; gap: 3mm 6mm; font-size: 8.5pt; color: {MUTED}; align-items: center; }}
 .legend i {{ display: inline-block; width: 3.5mm; height: 3.5mm; border-radius: 1mm; margin-right: 1.5mm; vertical-align: -0.6mm; }}
@@ -138,7 +138,7 @@ h2 .n {{ display: inline-grid; place-items: center; width: 7mm; height: 7mm; bor
 footer {{ margin-top: auto; display: flex; justify-content: space-between; font-size: 7.5pt; color: {MUTED}; padding-top: 2mm; border-top: 1pt dashed {LINE}; }}
 footer b {{ font-family: 'Cinzel', 'Playfair Display', serif; color: {MAROON}; }}
 .sol {{ color: {C_UNIT}; font-weight: 700; }}
-.trace {{ font: 400 26pt/1 'Amiri', serif; color: #E3D6C5; }}
+.trace {{ font: 400 26pt/1 'Scheherazade New', serif; color: #E3D6C5; }}
 """
 
 def page(kicker, title, title_ar, body, footer, name=True):

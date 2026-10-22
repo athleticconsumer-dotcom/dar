@@ -118,7 +118,7 @@ zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
 
 - **Eigene PDFs** (z. B. aus Canva): Datei und ein Vorschaubild in den Ordner legen und einen Eintrag in `index.json` ergänzen.
 - **Neue Blätter im App-Design erzeugen:** in `tools/worksheets/generate.py` eine Funktion ergänzen und
-  `python3 tools/worksheets/generate.py` ausführen (braucht Python mit Playwright, pdftoppm und die Schriften Amiri, Cinzel, Plus Jakarta Sans).
+  `python3 tools/worksheets/generate.py` ausführen (braucht Python mit Playwright, pdftoppm und die Schriften Scheherazade New, Cinzel, Plus Jakarta Sans).
 - In einer neuen Rubrik den Tab einbauen: `showWorksheets(element, import.meta.url)` aus `js/shared.js` aufrufen.
 
 ## Geschichten aus dem Qur'an (Kategorie, Adresse #/geschichten)

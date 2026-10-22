@@ -54,7 +54,7 @@ function clock(h, m, { small = false, interactive = false } = {}) {
   }
   if (!small) for (let i = 1; i <= 12; i++) {
     const a = (i * 30 * Math.PI) / 180;
-    nums.push(`<text x="${(100 + 69 * Math.sin(a)).toFixed(1)}" y="${(100 - 69 * Math.cos(a)).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="Amiri,serif" font-size="17" fill="var(--muted)">${toAr(i)}</text>`);
+    nums.push(`<text x="${(100 + 69 * Math.sin(a)).toFixed(1)}" y="${(100 - 69 * Math.cos(a)).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-family="Scheherazade New,serif" font-size="17" fill="var(--muted)">${toAr(i)}</text>`);
   }
   const ha = (((h % 12) + m / 60) * 30 * Math.PI) / 180, ma = (m * 6 * Math.PI) / 180;
   return `<svg class="u-clock${small ? " small" : ""}${interactive ? " interactive" : ""}" viewBox="0 0 200 200" role="img" aria-label="${T("clockAria", { t: fmt(h, m) })}">
