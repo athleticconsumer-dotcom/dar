@@ -9,12 +9,14 @@ import { startFirebase } from "./firebase.js";
 import { QUESTIONS, buildPath, recommend } from "./guide.js";
 import { DONE_AT } from "./config.js";
 import * as PR from "../modules/propheten/index.js";
-import { speak, canSpeak, stopSpeaking, esc } from "./shared.js";
+import { speak, canSpeak, stopSpeaking, esc, toast } from "./shared.js";
+import { planSummary, mountPlanBox, checkAchieved } from "./plan.js";
 import { t, L, LANGS, lang, setLang, onLang } from "./i18n.js";
 
 const view = document.getElementById("view");
 const mods = {};               // geladene Rubrik-Module: { zahlen: {percent, summary, mount} }
 let cleanup = null;            // Aufräumfunktion der gerade offenen Rubrik
+let planDraw = null;           // zeichnet den Lernplan-Bereich der offenen Rubrik neu
 
 // ---------- Farbwelten der Rubriken aus der Registry erzeugen ----------
 (function themes() {
@@ -146,6 +148,16 @@ function levelPage(lid) {
     </section>`;
 }
 
+function plansSection() {
+  const plans = store.get().plans || {};
+  const list = liveRubriken().filter((r) => plans[r.id]);
+  if (!list.length) return "";
+  return `<section style="display:flex;flex-direction:column;gap:14px">
+    <div class="section-head"><span class="eyebrow">${t("plan.homeEyebrow")}</span><h2>${t("plan.homeTitle")}</h2></div>
+    <div class="plan-list">${list.map((r) => planSummary({ rubrik: r, mod: mods[r.id], current: percentOf(r.id), compact: true })).join("")}</div>
+  </section>`;
+}
+
 function home() {
   const s = store.get(), o = s.overall, profile = s.profile;
   const pct = overallPercent(), today = store.todayCorrect(), goal = dailyGoal();
@@ -181,6 +193,7 @@ function home() {
       </div>
     </section>
     ${nextBox}
+    ${plansSection()}
     <section style="display:flex;flex-direction:column;gap:18px">
       <div class="section-head"><span class="eyebrow">${t("home.catEyebrow")}</span>
         <h2>${t("home.catTitle")}</h2>
@@ -283,7 +296,9 @@ async function rubrikPage(id) {
         <h1>${esc(L(r.title))}</h1><span class="ar" lang="ar" dir="rtl">${r.ar}</span></div>
       <div style="min-width:180px;flex:0 1 240px"><div class="hud"><span>${t("c.progress")}</span><b id="modPct">${percentOf(id)}%</b></div>${bar(percentOf(id))}</div>
     </div>
+    <div id="planBox" class="plan-box"></div>
     <div id="modRoot" class="mod-${id}" style="display:flex;flex-direction:column;gap:18px"></div>`;
+  planDraw = mountPlanBox(view.querySelector("#planBox"), { rubrik: r, mod, percent: () => percentOf(id) });
   const api = {
     id, rubrik: r,
     progress: () => store.module(id),
@@ -296,6 +311,10 @@ async function rubrikPage(id) {
 
 // Kopf der Rubrik live aktualisieren, wenn sich etwas ändert
 store.subscribe(() => {
+  const hit = checkAchieved(percentOf);
+  if (hit.length) toast(t("plan.achievedToast", { title: L(byId(hit[0]).title) }), 6000);
+  const box = document.getElementById("planBox");
+  if (box && planDraw && !box.querySelector(".plan-form")) planDraw();
   const el = document.getElementById("modPct");
   const id = location.hash.match(/^#\/r\/([\w-]+)/)?.[1];
   if (el && id) {

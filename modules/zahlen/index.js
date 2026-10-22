@@ -24,6 +24,8 @@ export default {
     return T("sum", { a: RANGES.filter((r) => (m[r.key] || 0) >= MASTER_AT).length, b: RANGES.length });
   },
   extraStats(p) { return T("record", { n: p.sprintBest || 0 }); },
+  // Stufen für den Lernplan: jeder Bereich schließt die vorherigen ein
+  milestones() { return RANGES.map((r, i) => ({ pct: Math.round(((i + 1) / RANGES.length) * 100), label: rl(r) })); },
 
   mount(root, api) {
     loadCss(import.meta.url, "style.css");

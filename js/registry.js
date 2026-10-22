@@ -55,6 +55,7 @@ export const RUBRIKEN = [
     desc: { de: "0 bis 9999 lesen, hören und schreiben, mit arabisch-indischen Ziffern.", en: "Read, hear and write 0 to 9999, with Arabic-Indic digits.", fr: "Lire, écouter et écrire de 0 à 9999, avec les chiffres arabo-indiens.", ru: "Читать, слушать и писать числа от 0 до 9999, с арабо-индийскими цифрами.", tr: "0'dan 9999'a kadar okumak, dinlemek ve yazmak, Arap-Hint rakamlarıyla." },
     needs: [], level: 1,
     color: { light: "#A8742B", dark: "#E8C58D" },
+    minutes: 300,   // geschätzte Übungszeit 0 → 100 % (für den Lernplan)
     load: () => import("../modules/zahlen/index.js"),
   },
   {
@@ -63,6 +64,7 @@ export const RUBRIKEN = [
     desc: { de: "Die Uhr lesen: Viertel, Drittel, halb und „minus“, wie im Hocharabischen üblich.", en: "Reading the clock: quarter, third, half and “minus”, as is usual in Standard Arabic.", fr: "Lire l'heure : quart, tiers, demie et « moins », comme en arabe littéraire.", ru: "Читать часы: четверть, треть, половина и «без», как принято в литературном арабском.", tr: "Saati okumak: çeyrek, üçte bir, buçuk ve “kala”, Fushâ'da olduğu gibi." },
     needs: ["zahlen"], level: 1,
     color: { light: "#4B2D63", dark: "#C8A9E6" },
+    minutes: 240,
     load: () => import("../modules/uhrzeit/index.js"),
   },
   {
@@ -94,6 +96,7 @@ export const RUBRIKEN = [
     desc: { de: "Jedes arabische Wort ist Nomen, Verb oder Partikel. Woran du sie erkennst.", en: "Every Arabic word is a noun, a verb or a particle. How to tell them apart.", fr: "Chaque mot arabe est un nom, un verbe ou une particule. Comment les reconnaître.", ru: "Каждое арабское слово является именем, глаголом или частицей. Как их различать.", tr: "Her Arapça kelime isim, fiil ya da harftir. Onları nasıl tanırsın." },
     needs: [], level: "g1",
     color: { light: "#1F5C7A", dark: "#8EC6E3" },
+    minutes: 60,
     load: () => import("../modules/wortarten/index.js"),
   },
   {

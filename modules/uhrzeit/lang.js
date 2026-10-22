@@ -2,6 +2,10 @@
 // Die Vergleiche (z. B. „Viertel vor vier“, „moins le quart“) sind pro Sprache angepasst.
 export default {
   de: {
+    "ms.full": "Volle Stunden",
+    "ms.quarter": "+ Viertel und halb",
+    "ms.third": "+ Drittel",
+    "ms.all": "Alle 5-Minuten-Schritte",
     q1: "„", q2: "“",
     h1: "eins", h2: "zwei", h3: "drei", h4: "vier", h5: "fünf", h6: "sechs", h7: "sieben", h8: "acht", h9: "neun", h10: "zehn", h11: "elf", h12: "zwölf",
     m0: "genau", m5: "und fünf Minuten", m10: "und zehn Minuten", m15: "und ein Viertel", m20: "und ein Drittel", m25: "und halb minus fünf Minuten",
@@ -30,6 +34,10 @@ export default {
     scoreTitle: "{s}/{m} richtig", newRec: ", neuer Rekord!", bestEver: "So gut warst du noch nie.", recordIs: "Dein Rekord liegt bei {n}/{m}.", again: "Noch einmal",
   },
   en: {
+    "ms.full": "Full hours",
+    "ms.quarter": "+ quarter and half",
+    "ms.third": "+ thirds",
+    "ms.all": "All 5-minute steps",
     q1: "“", q2: "”",
     h1: "one", h2: "two", h3: "three", h4: "four", h5: "five", h6: "six", h7: "seven", h8: "eight", h9: "nine", h10: "ten", h11: "eleven", h12: "twelve",
     m0: "exactly", m5: "and five minutes", m10: "and ten minutes", m15: "and a quarter", m20: "and a third", m25: "and a half minus five minutes",
@@ -58,6 +66,10 @@ export default {
     scoreTitle: "{s}/{m} correct", newRec: ", new record!", bestEver: "You've never done this well.", recordIs: "Your record is {n}/{m}.", again: "Once more",
   },
   fr: {
+    "ms.full": "Heures pleines",
+    "ms.quarter": "+ quart et demie",
+    "ms.third": "+ tiers",
+    "ms.all": "Tous les pas de 5 minutes",
     q1: "« ", q2: " »",
     h1: "une", h2: "deux", h3: "trois", h4: "quatre", h5: "cinq", h6: "six", h7: "sept", h8: "huit", h9: "neuf", h10: "dix", h11: "onze", h12: "douze",
     m0: "pile", m5: "et cinq minutes", m10: "et dix minutes", m15: "et quart", m20: "et un tiers", m25: "et demie moins cinq minutes",
@@ -86,6 +98,10 @@ export default {
     scoreTitle: "{s}/{m} justes", newRec: ", nouveau record !", bestEver: "Tu n'as jamais fait aussi bien.", recordIs: "Ton record est de {n}/{m}.", again: "Encore une fois",
   },
   ru: {
+    "ms.full": "Ровные часы",
+    "ms.quarter": "+ четверть и половина",
+    "ms.third": "+ трети",
+    "ms.all": "Все шаги по 5 минут",
     q1: "«", q2: "»",
     h1: "один", h2: "два", h3: "три", h4: "четыре", h5: "пять", h6: "шесть", h7: "семь", h8: "восемь", h9: "девять", h10: "десять", h11: "одиннадцать", h12: "двенадцать",
     m0: "ровно", m5: "и пять минут", m10: "и десять минут", m15: "и четверть", m20: "и треть", m25: "и половина без пяти минут",
@@ -114,6 +130,10 @@ export default {
     scoreTitle: "Верно: {s}/{m}", newRec: ", новый рекорд!", bestEver: "Так хорошо у тебя ещё не получалось.", recordIs: "Твой рекорд: {n}/{m}.", again: "Ещё раз",
   },
   tr: {
+    "ms.full": "Tam saatler",
+    "ms.quarter": "+ çeyrek ve buçuk",
+    "ms.third": "+ üçte birler",
+    "ms.all": "Bütün 5 dakikalık adımlar",
     q1: "“", q2: "”",
     h1: "bir", h2: "iki", h3: "üç", h4: "dört", h5: "beş", h6: "altı", h7: "yedi", h8: "sekiz", h9: "dokuz", h10: "on", h11: "on bir", h12: "on iki",
     m0: "tam", m5: "ve beş dakika", m10: "ve on dakika", m15: "ve çeyrek", m20: "ve üçte bir", m25: "ve yarım eksi beş dakika",

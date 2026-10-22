@@ -9,6 +9,7 @@
 //    overall: { xp, answered, correct, dayStreak, bestDayStreak, lastDay,
 //               today: { day, correct } },
 //    modules: { zahlen: {...}, uhrzeit: {...} }  // jede Rubrik verwaltet ihr eigenes Objekt
+//    plans: { zahlen: {...} }                    // Lernpläne (siehe js/plan.js)
 //  }
 // =====================================================================
 import { XP_PER_CORRECT } from "./config.js";
@@ -22,6 +23,7 @@ const fresh = () => ({
   profile: null,
   overall: { xp: 0, answered: 0, correct: 0, dayStreak: 0, bestDayStreak: 0, lastDay: null, today: { day: null, correct: 0 } },
   modules: {},
+  plans: {},
 });
 
 let state = load();
@@ -74,6 +76,9 @@ export const store = {
     touchDay();
     if (o.today.day !== today) o.today = { day: today, correct: 0 };
     p.answered++; o.answered++;
+    const now = Date.now();                                   // aktive Übungszeit (für den Lernplan)
+    if (p.lastAt && now - p.lastAt < 120000) p.activeSec = (p.activeSec || 0) + Math.round((now - p.lastAt) / 1000);
+    p.lastAt = now;
     if (ok) {
       p.correct++; p.streak++; p.best = Math.max(p.best, p.streak);
       o.correct++; o.xp += XP_PER_CORRECT; o.today.correct++;
@@ -89,6 +94,9 @@ export const store = {
     const o = state.overall, y = new Date(); y.setDate(y.getDate() - 1);
     return o.lastDay === dayKey() || o.lastDay === dayKey(y) ? o.dayStreak : 0;
   },
+
+  /** Lernpläne ändern: store.setPlans(all => { all.zahlen = {...} }) */
+  setPlans(fn) { state.plans = state.plans || {}; fn(state.plans); state.rev++; persist(); },
 
   setProfile(profile) { state.profile = profile; state.rev++; persist(); },
 

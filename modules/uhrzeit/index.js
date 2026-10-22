@@ -70,6 +70,11 @@ export default {
     const m = p.mastery || {};
     return (MINUTES.reduce((s, k) => s + Math.min(m[k] || 0, MASTER_AT), 0) / (MINUTES.length * MASTER_AT)) * 100;
   },
+  // Stufen für den Lernplan (Anteil der Minuten-Muster)
+  milestones() {
+    const pc = (n) => Math.round((n / MINUTES.length) * 100);
+    return [{ pct: pc(1), label: T("ms.full") }, { pct: pc(4), label: T("ms.quarter") }, { pct: pc(6), label: T("ms.third") }, { pct: 100, label: T("ms.all") }];
+  },
   summary(p) {
     const m = p.mastery || {};
     return T("sum", { a: MINUTES.filter((k) => (m[k] || 0) >= MASTER_AT).length, b: MINUTES.length });

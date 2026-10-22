@@ -19,6 +19,7 @@ export default {
   percent(p) { return wordsScore(p) * 70 + (solvedCount(p) / SENTENCES.length) * 30; },
   summary(p) { return T("sum", { a: WORDS.filter((w) => (p.mastery?.[w.id] || 0) >= MASTER_AT).length, b: WORDS.length }); },
   extraStats(p) { return T("solved", { a: solvedCount(p), b: SENTENCES.length }); },
+  milestones() { return [{ pct: 35, label: T("ms.half") }, { pct: 70, label: T("ms.words") }, { pct: 100, label: T("ms.all") }]; },
 
   mount(root, api) {
     loadCss(import.meta.url, "style.css");

@@ -242,3 +242,34 @@ a.level-card:hover{box-shadow:var(--shadow-hover)}
   background-position:calc(100% - 14px) 52%,calc(100% - 9px) 52%;background-size:5px 5px;background-repeat:no-repeat}
 .lang-pick select:hover{border-color:var(--maroon)}
 .lang-note{font-size:.84rem;color:var(--muted);background:var(--paper);border:1px dashed var(--gold-line);border-radius:12px;padding:8px 12px}
+
+/* ---------- Lernplan ---------- */
+.plan-box:empty{display:none}
+.plan-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:14px 18px;border-radius:var(--r);border:1.5px dashed var(--gold-line);background:var(--paper)}
+.plan-cta div{display:flex;flex-direction:column;gap:2px;flex:1;min-width:200px}
+.plan-cta span{color:var(--muted);font-size:.9rem}
+.plan-sum{display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:var(--r);border:1.5px solid color-mix(in srgb,var(--m) 35%,var(--line));background:var(--m-soft)}
+.plan-sum.done{border-color:var(--good)}
+.plan-sum-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.plan-title{text-decoration:none;color:var(--heading)}
+.plan-title .ar{font-family:var(--f-ar);color:var(--m);font-size:1.15rem}
+.plan-line{margin:0;font-size:.9rem;color:var(--body)}
+.plan-bar{position:relative;height:10px;border-radius:999px;background:var(--paper);overflow:visible}
+.plan-bar i{position:absolute;inset:0 auto 0 0;border-radius:999px;background:var(--m)}
+.plan-bar b{position:absolute;top:-4px;width:3px;height:18px;margin-left:-1.5px;border-radius:2px;background:var(--gold)}
+.plan-actions{margin-top:8px}
+.plan-list{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.pill.warn{background:color-mix(in srgb,var(--gold-a) 18%,var(--surface));color:var(--gold);border-color:var(--gold-line)}
+.plan-form{display:flex;flex-direction:column;gap:16px}
+.plan-form h2{margin:0}
+.plan-q{display:flex;flex-direction:column;gap:8px}
+.plan-q h3{margin:0;font:600 .98rem var(--f-body);color:var(--ink)}
+.plan-q .note{margin:0}
+.plan-date{font:500 1rem var(--f-body);padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);max-width:220px}
+.plan-result{padding:14px 16px;border-radius:16px;background:var(--paper);border:1px solid var(--gold-line);display:flex;flex-direction:column;gap:4px}
+.plan-result p{margin:0}
+.plan-result .big{font:700 1.15rem var(--f-body);color:var(--heading)}
+.plan-result .verdict{font-weight:600}
+.plan-result .v-easy,.plan-result .v-ok{color:var(--good)}
+.plan-result .v-tight{color:var(--gold)}
+.plan-result .v-hard{color:var(--bad)}

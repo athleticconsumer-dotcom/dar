@@ -1,6 +1,9 @@
 // Texte der Rubrik „Ism, Fiʿl, Ḥarf“ in allen Sprachen. Platzhalter {x} werden im Code gefüllt.
 export default {
   de: {
+    "ms.half": "Die Hälfte der Wörter",
+    "ms.words": "Alle Wörter",
+    "ms.all": "Alle Wörter und Sätze",
     "ism": "Ism", "fiil": "Fiʿl", "harf": "Ḥarf",
     "ism.sub": "Nomen", "fiil.sub": "Verb", "harf.sub": "Partikel",
     "ism.d": "Benennt Personen, Dinge, Orte und Eigenschaften. Auch Namen und Pronomen wie {huwa} (er) gehören dazu. Ein Ism trägt keine Zeit in sich.",
@@ -46,6 +49,9 @@ export default {
     "listen": "▶ Anhören",
   },
   en: {
+    "ms.half": "Half of the words",
+    "ms.words": "All words",
+    "ms.all": "All words and sentences",
     "ism": "Ism", "fiil": "Fiʿl", "harf": "Ḥarf",
     "ism.sub": "noun", "fiil.sub": "verb", "harf.sub": "particle",
     "ism.d": "Names people, things, places and qualities. Names and pronouns like {huwa} (he) belong here too. An ism carries no tense.",
@@ -91,6 +97,9 @@ export default {
     "listen": "▶ Listen",
   },
   fr: {
+    "ms.half": "La moitié des mots",
+    "ms.words": "Tous les mots",
+    "ms.all": "Tous les mots et phrases",
     "ism": "Ism", "fiil": "Fiʿl", "harf": "Ḥarf",
     "ism.sub": "nom", "fiil.sub": "verbe", "harf.sub": "particule",
     "ism.d": "Désigne des personnes, des choses, des lieux et des qualités. Les noms propres et les pronoms comme {huwa} (il) en font partie. Un ism ne porte pas de temps.",
@@ -136,6 +145,9 @@ export default {
     "listen": "▶ Écouter",
   },
   ru: {
+    "ms.half": "Половина слов",
+    "ms.words": "Все слова",
+    "ms.all": "Все слова и предложения",
     "ism": "Исм", "fiil": "Фиʿль", "harf": "Харф",
     "ism.sub": "имя", "fiil.sub": "глагол", "harf.sub": "частица",
     "ism.d": "Называет людей, вещи, места и качества. Сюда же относятся имена собственные и местоимения, например {huwa} (он). Исм не содержит времени.",
@@ -181,6 +193,9 @@ export default {
     "listen": "▶ Слушать",
   },
   tr: {
+    "ms.half": "Kelimelerin yarısı",
+    "ms.words": "Bütün kelimeler",
+    "ms.all": "Bütün kelimeler ve cümleler",
     "ism": "İsim", "fiil": "Fiil", "harf": "Harf",
     "ism.sub": "isim", "fiil.sub": "fiil", "harf.sub": "edat",
     "ism.d": "Kişileri, şeyleri, yerleri ve sıfatları adlandırır. Özel isimler ve {huwa} (o) gibi zamirler de buna girer. İsim içinde zaman taşımaz.",

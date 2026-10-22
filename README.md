@@ -149,3 +149,11 @@ zusammen mit einem Vorschaubild (`.png`) und der Liste `index.json`:
 - `tools/quran/build_ayat.py` prüft für **jede** Sprache, dass jede Ayah genau so viele Wortbedeutungen wie Wörter hat.
 - Mūsā-Inhalte (Geschichte, Wortbedeutungen, Quiz): in allen 5 Sprachen (Prüfung durch den Lehrer steht noch aus). Neue Sprache einfügen: `node tools/quran/merge_lang.mjs modules/propheten/data/musa.js <sprache> <datei.json>` (prüft Wortanzahl pro Aya und Quiz-Antworten).
 - Arbeitsblätter: `python3 tools/worksheets/generate.py` erzeugt jedes Blatt in allen Sprachen nach `modules/<rubrik>/blaetter/<sprache>/` (Texte in `tools/worksheets/texts.py`, gleiche Aufgaben in jeder Sprache).
+
+## Lernplan
+
+Auf jeder Rubrik-Seite kann man einen Lernplan anlegen (Logik und Oberfläche in `js/plan.js`, gespeichert in `store.plans`):
+- Was kann ich schon, was will ich können (Stufen aus `milestones()` des Moduls, sonst 25/50/75/100 %).
+- Entweder **bis zu einem Datum** (App rechnet Minuten pro Lerntag aus) oder **mit fester Zeit pro Tag** (App schätzt das Enddatum).
+- Aufwand: `minutes` in der Registry (0 → 100 %). Sobald genug Übungszeit gemessen ist (`activeSec`, Lücken unter 2 Minuten zwischen Antworten), rechnet der Plan mit dem eigenen Tempo.
+- Pläne erscheinen auf der Startseite mit Status (auf Kurs / im Rückstand / erreicht). Wird das Ziel erreicht, kommt eine Meldung.
