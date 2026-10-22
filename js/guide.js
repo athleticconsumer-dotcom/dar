@@ -1,7 +1,10 @@
 // =====================================================================
 //  LEITFADEN – drei kurze Fragen, daraus entsteht ein persönlicher Lernweg.
 // =====================================================================
-import { RUBRIKEN } from "./registry.js";
+import { RUBRIKEN as ALL, LEVELS } from "./registry.js";
+
+// Der Leitfaden plant den Wortschatz-Weg. Der Grammatik-Weg hat eine feste Reihenfolge (Registry).
+const RUBRIKEN = ALL.filter((r) => LEVELS.find((l) => String(l.id) === String(r.level))?.approach === "vokabel");
 import { t } from "./i18n.js";
 
 // Texte der Fragen stehen in lang/<sprache>.js unter guide.<key>, guide.<key>.<wert> und guide.<key>.<wert>.d

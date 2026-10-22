@@ -13,7 +13,7 @@
   --f-ar:"Scheherazade New","Noto Naskh Arabic","Geeza Pro","Traditional Arabic",serif;
   --f-serif:"Cinzel","Playfair Display",Georgia,serif;
   --f-disp:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Plus Jakarta Sans","Scheherazade New",system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:20px;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -192,6 +192,13 @@ a.room:hover{border-color:var(--maroon);box-shadow:var(--shadow-hover)}
 
 /* ---------- Level ---------- */
 .levels{display:grid;gap:18px}
+.approach{display:flex;flex-direction:column;gap:14px}
+.approach + .approach{margin-top:18px;padding-top:26px;border-top:1px dashed var(--gold-line)}
+.approach-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.approach-head h3{font-size:1.35rem;margin:6px 0 4px}
+.approach-head p{margin:0;color:var(--muted);max-width:60ch}
+.approach-ar{font:700 1.5rem/1.6 var(--f-ar);color:var(--gold);white-space:nowrap}
+@media (max-width:520px){.approach-head{flex-direction:column-reverse;gap:2px}.approach-ar{align-self:flex-end}}
 .level-card{display:flex;flex-direction:column;gap:14px;text-decoration:none;background:var(--surface);border:1.5px solid var(--gold-a);border-radius:24px;
   padding:clamp(18px,4vw,26px);box-shadow:var(--shadow);position:relative;overflow:hidden;min-width:0}
 .level-card::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--maroon),var(--gold-a))}

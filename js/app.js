@@ -2,7 +2,8 @@
 //  APP – Navigation, Startseite, Leitfaden, Fortschritt und das Laden
 //  der Rubriken. Rubriken selbst liegen in /modules/<id>/.
 // =====================================================================
-import { RUBRIKEN, LEVELS, byId, liveRubriken, levelById, rubrikenOf } from "./registry.js";
+import { RUBRIKEN, LEVELS, APPROACHES, byId, liveRubriken, levelById, rubrikenOf, levelsOf } from "./registry.js";
+const approachOf = (l) => APPROACHES.find((a) => a.id === l.approach) || APPROACHES[0];
 import { store } from "./store.js";
 import { startFirebase } from "./firebase.js";
 import { QUESTIONS, buildPath, recommend } from "./guide.js";
@@ -78,8 +79,8 @@ function roomCards(path, next) {
   }).join("");
 }
 
-function levelCards() {
-  return LEVELS.map((l) => {
+function levelCards(levels = LEVELS) {
+  return levels.map((l) => {
     const all = rubrikenOf(l.id), live = all.filter((r) => r.status === "live"), p = levelPercent(l.id);
     return `<a class="level-card" href="#/level/${l.id}">
       <div class="level-top">
@@ -92,6 +93,13 @@ function levelCards() {
       <div class="meta"><span>${t("lvl.meta", { p, live: live.length, all: all.length })}</span><span class="go">${t("c.openArrow")}</span></div>
     </a>`;
   }).join("");
+}
+
+function approachBlock(head, cards) {
+  return `<div class="approach">
+    <div class="approach-head"><div><span class="eyebrow">${head.kicker}</span><h3>${esc(head.title)}</h3><p>${esc(head.desc)}</p></div>
+      <span class="approach-ar" lang="ar" dir="rtl">${head.ar}</span></div>
+    <div class="levels">${cards}</div></div>`;
 }
 
 function prophetsCard() {
@@ -111,14 +119,18 @@ function levelPage(lid) {
   if (!l) { view.innerHTML = `<div class="empty">${t("lvl.notFound")} <a href="#/">${t("c.toHome")}</a></div>`; return; }
   const profile = store.get().profile;
   const { next } = recommend(profile, percentOf, DONE_AT);
-  const path = buildPath(profile).filter((st) => st.rubrik.level === l.id);
+  const vocab = l.approach === "vokabel";
+  const path = vocab ? buildPath(profile).filter((st) => String(st.rubrik.level) === String(l.id))
+    : rubrikenOf(l.id).map((r) => ({ rubrik: r, optional: false, why: "" }));
+  const fixedNext = vocab ? next : path.find((st) => st.rubrik.status === "live" && percentOf(st.rubrik.id) < DONE_AT) || null;
+  const A = approachOf(l);
   const p = levelPercent(l.id);
   view.innerHTML = `
     <section class="welcome">
       <div class="welcome-card">
         <div class="text">
           <a class="back" href="#/">${t("c.backHome")}</a>
-          <span class="eyebrow">${esc(L(l.title))}</span>
+          <span class="eyebrow">${esc(L(A.title))} · ${esc(L(l.title))}</span>
           <p class="salam" lang="ar" dir="rtl" style="text-align:left">${l.ar}</p>
           <h1>${esc(L(l.title))}</h1>
           <p class="lead">${esc(L(l.desc))}</p>
@@ -129,8 +141,8 @@ function levelPage(lid) {
     <section style="display:flex;flex-direction:column;gap:18px">
       <div class="section-head"><span class="eyebrow">${t("c.rubriken")}</span>
         <h2>${t("lvl.whatToday")}</h2>
-        <p>${profile ? t("order.guide") : t("order.default")}</p></div>
-      <div class="rooms">${roomCards(path, next)}</div>
+        <p>${!vocab ? t("order.grammar") : profile ? t("order.guide") : t("order.default")}</p></div>
+      <div class="rooms">${roomCards(path, fixedNext)}</div>
     </section>`;
 }
 
@@ -173,7 +185,8 @@ function home() {
       <div class="section-head"><span class="eyebrow">${t("home.catEyebrow")}</span>
         <h2>${t("home.catTitle")}</h2>
         <p>${t("home.catLead")}</p></div>
-      <div class="levels">${levelCards()}${prophetsCard()}</div>
+      ${APPROACHES.map((a) => approachBlock({ kicker: t("ap.kicker"), title: L(a.title), desc: L(a.desc), ar: a.ar }, levelCards(levelsOf(a.id)))).join("")}
+      ${approachBlock({ kicker: t("ap.storiesKicker"), title: L(PR.CATEGORY.title), desc: t("ap.storiesLead"), ar: PR.CATEGORY.ar }, prophetsCard())}
     </section>`;
 }
 
@@ -216,7 +229,7 @@ function guidePage() {
 function progressPage() {
   const s = store.get(), o = s.overall;
   const acc = o.answered ? Math.round((o.correct / o.answered) * 100) : 0;
-  const rows = liveRubriken().map((r) => {
+  const rows = [...liveRubriken()].sort((a, b) => LEVELS.findIndex((l) => String(l.id) === String(a.level)) - LEVELS.findIndex((l) => String(l.id) === String(b.level))).map((r) => {
     const p = store.module(r.id), pct = percentOf(r.id);
     const a = p.answered ? Math.round((p.correct / p.answered) * 100) : 0;
     return `<div class="prow theme-${r.id}">
@@ -243,7 +256,7 @@ function progressPage() {
       <div class="stat"><b>${o.bestDayStreak}</b><span>${t("pg.best")}</span></div>
       <div class="stat"><b>${Math.min(store.todayCorrect(), dailyGoal())}/${dailyGoal()}</b><span>${t("pg.goal")}</span></div>
     </div>
-    <div class="card"><h2>${t("pg.perRubrik")}</h2>${LEVELS.map((l) => `<div class="level-row"><b>${esc(L(l.title))}</b> <span class="ar" lang="ar">${l.ar}</span><span class="pct">${levelPercent(l.id)}%</span></div>`).join("")}<div class="ptable">${rows}</div>
+    <div class="card"><h2>${t("pg.perRubrik")}</h2>${LEVELS.map((l) => `<div class="level-row"><b>${esc(L(approachOf(l).title))} · ${esc(L(l.title))}</b> <span class="ar" lang="ar">${l.ar}</span><span class="pct">${levelPercent(l.id)}%</span></div>`).join("")}<div class="ptable">${rows}</div>
       ${soon ? `<p class="note">${t("pg.inWork", { list: soon })}</p>` : ""}</div>
     <div class="card"><h2>${esc(L(PR.CATEGORY.title))}</h2>
       <div class="level-row"><b>${esc(L(PR.CATEGORY.title))}</b> <span class="ar" lang="ar">${PR.CATEGORY.ar}</span><span class="pct">${PR.categoryPercent(store)}%</span></div>
@@ -266,7 +279,7 @@ async function rubrikPage(id) {
   view.classList.add("theme-" + id);
   view.innerHTML = `
     <div class="mod-head">
-      <div class="mod-title"><a class="back" href="#/level/${r.level}">← ${esc(L(levelById(r.level)?.title) || t("nav.start"))}</a>
+      <div class="mod-title"><a class="back" href="#/level/${r.level}">← ${levelById(r.level) ? esc(L(approachOf(levelById(r.level)).title) + " · " + L(levelById(r.level).title)) : t("nav.start")}</a>
         <h1>${esc(L(r.title))}</h1><span class="ar" lang="ar" dir="rtl">${r.ar}</span></div>
       <div style="min-width:180px;flex:0 1 240px"><div class="hud"><span>${t("c.progress")}</span><b id="modPct">${percentOf(id)}%</b></div>${bar(percentOf(id))}</div>
     </div>

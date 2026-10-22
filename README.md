@@ -29,6 +29,14 @@ functions/              Firebase-Funktion „tts“ für die Sprachausgabe
 .nojekyll               nötig, damit GitHub Pages den Ordner _vorlage ausliefert
 ```
 
+
+## Lernwege
+
+Die Startseite hat drei Blöcke: den **Wortschatz-Weg** (Level 1: Zahlen, Uhrzeit, …), den **Grammatik-Weg** (Level 1: Ism/Fiʿl/Ḥarf, bestimmt/unbestimmt, …) und die **Geschichten aus dem Qur'an**.
+Lernwege stehen in `js/registry.js` unter `APPROACHES`, jedes Level hat `approach: "vokabel"` oder `approach: "grammatik"`.
+Der Leitfaden (drei Fragen) plant nur den Wortschatz-Weg; der Grammatik-Weg folgt der Reihenfolge in der Registry.
+Erste Grammatik-Rubrik: `modules/wortarten/` (Inhalte in `data.js`, Texte in `lang.js`).
+
 ## Neue Rubrik hinzufügen
 
 1. `modules/_vorlage` kopieren und umbenennen, z. B. `modules/farben`.
