@@ -33,7 +33,7 @@ export default {
   "home.lead": "Choisis un niveau et apprends dans ses rubriques avec des explications, des exercices et des jeux. Ta progression est enregistrée à chaque étape.",
   "home.streak": "Série : <b>{n}</b> jours", "home.today": "Aujourd'hui <b>{a}/{b}</b> justes", "home.overall": "Progrès global",
   "home.catEyebrow": "Catégories", "home.catTitle": "Choisis ton parcours",
-  "home.catLead": "Deux parcours complémentaires : beaucoup de mots, ou la grammaire depuis la base. Et les histoires du Coran.",
+  "home.catLead": "Trois parcours complémentaires : beaucoup de mots, la grammaire depuis la base, ou parler vite. Et les histoires du Coran.",
 
   "guide.eyebrow": "Guide", "guide.title": "Ton chemin à travers les rubriques",
   "guide.lead": "Trois questions, puis le guide te montre par où commencer. Tu peux modifier tes réponses à tout moment.",

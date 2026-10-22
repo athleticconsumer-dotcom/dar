@@ -33,7 +33,7 @@ export default {
   "home.lead": "Bir seviye seç ve bölümlerinde açıklamalar, alıştırmalar ve oyunlarla öğren. İlerlemen her adımda kaydedilir.",
   "home.streak": "<b>{n}</b> gün üst üste", "home.today": "Bugün <b>{a}/{b}</b> doğru", "home.overall": "Genel ilerleme",
   "home.catEyebrow": "Kategoriler", "home.catTitle": "Yolunu seç",
-  "home.catLead": "Birbirini tamamlayan iki yol: çok kelime ya da temelden dilbilgisi. Bir de Kur'an'dan kıssalar.",
+  "home.catLead": "Birbirini tamamlayan üç yol: çok kelime, temelden dilbilgisi ya da hızla konuşmaya başlamak. Bir de Kur'an'dan kıssalar.",
 
   "guide.eyebrow": "Rehber", "guide.title": "Bölümlerdeki yolun",
   "guide.lead": "Üç soru, ardından rehber nereden başlaman gerektiğini gösterir. Cevaplarını istediğin zaman değiştirebilirsin.",

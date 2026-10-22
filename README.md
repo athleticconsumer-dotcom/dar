@@ -157,3 +157,10 @@ Auf jeder Rubrik-Seite kann man einen Lernplan anlegen (Logik und Oberfläche in
 - Entweder **bis zu einem Datum** (App rechnet Minuten pro Lerntag aus) oder **mit fester Zeit pro Tag** (App schätzt das Enddatum).
 - Aufwand: `minutes` in der Registry (0 → 100 %). Sobald genug Übungszeit gemessen ist (`activeSec`, Lücken unter 2 Minuten zwischen Antworten), rechnet der Plan mit dem eigenen Tempo.
 - Pläne erscheinen auf der Startseite mit Status (auf Kurs / im Rückstand / erreicht). Wird das Ziel erreicht, kommt eine Meldung.
+
+## Gesprächs-Weg
+
+Dritter Lernweg (`approach: "gespraech"`, Level `c1`). Jedes Thema ist eine Datei in `modules/gespraech/<thema>.js` mit
+`DIALOG` (Zeilen A/B, Männer- und Frauenfassung), `PHRASES` (Wendungen, Anrede-Varianten m/f), `PAIRS` (Frage → Antwort) und `COUNTRIES`,
+die an die gemeinsame Engine `engine.js` übergeben werden. Neues Thema: Datei kopieren, Inhalte tauschen, in der Registry `status: "live"` und `load` setzen.
+Tabs: Gespräch · Wendungen (mit eigenem Vorstellungssatz) · Aufgaben · Rollenspiel (beide Rollen).

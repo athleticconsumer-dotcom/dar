@@ -33,7 +33,7 @@ export default {
   "home.lead": "Choose a level and learn in its topics with explanations, exercises and games. Your progress is saved at every step.",
   "home.streak": "<b>{n}</b>-day streak", "home.today": "Today <b>{a}/{b}</b> correct", "home.overall": "Overall progress",
   "home.catEyebrow": "Categories", "home.catTitle": "Choose your path",
-  "home.catLead": "Two paths that complement each other: lots of words, or grammar from the ground up. Plus the stories from the Qur'an.",
+  "home.catLead": "Three paths that complement each other: lots of words, grammar from the ground up, or getting talking fast. Plus the stories from the Qur'an.",
 
   "guide.eyebrow": "Guide", "guide.title": "Your path through the topics",
   "guide.lead": "Three questions, then the guide shows you where to start. You can change your answers at any time.",

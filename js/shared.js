@@ -98,7 +98,7 @@ export function toast(msg, ms = 3500) {
   if (!el) {
     el = document.createElement("div"); el.id = "toast"; el.setAttribute("role", "status");
     el.style.cssText = "position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,420px);" +
-      "background:var(--maroon);color:var(--gold-light);padding:10px 16px;border-radius:999px;font-size:.88rem;box-shadow:var(--shadow-hover);z-index:50;text-align:center";
+      "background:var(--maroon);color:var(--gold-light);padding:10px 16px;border-radius:999px;font-size:.88rem;box-shadow:var(--shadow-hover);z-index:50;text-align:center;pointer-events:none";
     document.body.appendChild(el);
   }
   el.textContent = msg; el.hidden = false;

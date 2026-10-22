@@ -33,7 +33,7 @@ export default {
   "home.lead": "Wähle ein Level und lerne in seinen Rubriken mit Erklärungen, Übungen und Spielen. Dein Fortschritt wird bei jedem Schritt gespeichert.",
   "home.streak": "<b>{n}</b> Tage in Folge", "home.today": "Heute <b>{a}/{b}</b> richtig", "home.overall": "Gesamtfortschritt",
   "home.catEyebrow": "Kategorien", "home.catTitle": "Wähle deinen Weg",
-  "home.catLead": "Zwei Lernwege, die sich ergänzen: viele Wörter oder die Grammatik von Grund auf. Dazu die Geschichten aus dem Qur'an.",
+  "home.catLead": "Drei Lernwege, die sich ergänzen: viele Wörter, Grammatik von Grund auf oder schnell ins Gespräch kommen. Dazu die Geschichten aus dem Qur'an.",
 
   "guide.eyebrow": "Leitfaden", "guide.title": "Dein Weg durch die Rubriken",
   "guide.lead": "Drei Fragen, dann zeigt dir der Leitfaden, womit du anfangen solltest. Du kannst die Antworten jederzeit ändern.",
