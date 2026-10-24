@@ -25,7 +25,7 @@ export function makeConversation({ NAMES, DIALOG, PHRASES, PAIRS, COUNTRIES }) {
     mount(root, api) {
       loadCss(import.meta.url, "style.css");
       const S = { tab: api.progress().answered ? "aufgaben" : "dialog", g: "m", showTr: true, showGl: true, last: null, role: null };
-      const say = (text) => { if (api.canSpeak()) api.speak(text); };   // automatisches Vorlesen nur mit vorhandener Stimme
+      const say = (text) => { if (api.canSpeak()) api.speak(text, { auto: true }); };   // automatisches Vorlesen nur mit vorhandener Stimme
       const credit = (id) => api.update((p) => { p.mastery = p.mastery || {}; p.mastery[id] = (p.mastery[id] || 0) + 1; });
 
       function frame(body) {

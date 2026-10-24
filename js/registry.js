@@ -84,11 +84,13 @@ export const RUBRIKEN = [
     color: { light: "#2F6B4F", dark: "#94D3AE" },
   },
   {
-    id: "wochentage", status: "soon",
+    id: "wochentage", status: "live",
     title: { de: "Tage & Monate", en: "Days & months", fr: "Jours & mois", ru: "Дни и месяцы", tr: "Günler ve aylar" }, ar: "الأَيَّام وَالشُّهُور",
     desc: { de: "Wochentage, Monate (hidschri und gregorianisch) und Datumsangaben.", en: "Days of the week, months (Hijri and Gregorian) and dates.", fr: "Jours de la semaine, mois (hégiriens et grégoriens) et dates.", ru: "Дни недели, месяцы (по хиджре и григорианские) и даты.", tr: "Haftanın günleri, aylar (hicrî ve miladî) ve tarihler." },
     needs: ["zahlen"], level: 1,
     color: { light: "#8A4B2A", dark: "#E6AE88" },
+    minutes: 120,
+    load: () => import("../modules/wochentage/index.js"),
   },
   {
     id: "familie", status: "soon",

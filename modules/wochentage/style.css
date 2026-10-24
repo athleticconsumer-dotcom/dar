@@ -1,0 +1,56 @@
+/* Rubrik Tage & Monate – Kalenderblatt-Optik in Terrakotta */
+.mod-wochentage .ar{font-family:var(--f-ar);font-size:1.2em}
+.mod-wochentage .tm-today{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
+  background:linear-gradient(180deg,var(--m-soft),var(--surface));border-top:6px solid var(--m)}
+.mod-wochentage .tm-today-ar{border:0;background:none;cursor:pointer;font:700 clamp(1.8rem,7vw,2.4rem)/1.7 var(--f-ar);color:var(--m)}
+.mod-wochentage .tm-today-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;width:100%}
+.mod-wochentage .tm-today-grid div{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px;border-radius:16px;background:var(--surface);border:1px solid var(--gold-line)}
+.mod-wochentage .tm-today-grid small{font:600 .7rem var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mod-wochentage .tm-today-grid span:last-child{font-size:.88rem;color:var(--body)}
+.mod-wochentage .tm-big{font-size:1.5rem;color:var(--ink)}
+
+.mod-wochentage .tm-rows{display:flex;flex-direction:column}
+.mod-wochentage .tm-row{display:flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.mod-wochentage .tm-row:last-child{border-bottom:0}
+.mod-wochentage .tm-row > div{display:flex;flex-direction:column;min-width:0}
+.mod-wochentage .tm-row.sacred .tm-ar{color:var(--gold)}
+.mod-wochentage .tm-n{font:700 .85rem var(--f-body);color:var(--muted);min-width:1.4em;text-align:right;font-variant-numeric:tabular-nums}
+.mod-wochentage .tm-ar{border:0;background:none;cursor:pointer;padding:0;font:400 1.6rem/1.6 var(--f-ar);color:var(--m);min-width:6.5em;text-align:right}
+.mod-wochentage .tm-tr{font-style:italic;color:var(--muted);font-size:.85rem}
+.mod-wochentage .tm-o{font-size:.85rem;color:var(--body)}
+.mod-wochentage .tm-quote{margin:0;padding:12px 16px;border-radius:14px;background:var(--m-soft);border-inline-start:3px solid var(--gold-a);display:flex;flex-direction:column;gap:4px}
+.mod-wochentage .tm-quote .ar{font-size:1.5rem;color:var(--heading);text-align:right}
+.mod-wochentage .tm-quote span:last-child{font-style:italic;color:var(--muted);font-size:.9rem}
+
+.mod-wochentage .tm-rel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mod-wochentage .tm-rel button{display:flex;flex-direction:column;align-items:center;padding:10px 6px;border-radius:16px;border:1.5px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit;color:var(--body)}
+.mod-wochentage .tm-rel span{font:400 1.7rem/1.6 var(--f-ar);color:var(--m)}
+.mod-wochentage .tm-rel small{font-style:italic;color:var(--muted)}
+.mod-wochentage .tm-qa{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:4px 14px}
+.mod-wochentage .tm-qa button{border:0;background:none;cursor:pointer;font:400 1.45rem/1.7 var(--f-ar);color:var(--ink);text-align:right}
+.mod-wochentage .tm-greg button{border:0;background:none;cursor:pointer;font:400 1.3rem/1.6 var(--f-ar);color:var(--m);padding:0}
+.mod-wochentage .tm-greg .tm-lev button{color:var(--muted)}
+.mod-wochentage .tm-greg td:not(:first-child),.mod-wochentage .tm-greg th:not(:first-child){text-align:right}
+
+.mod-wochentage .tm-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.mod-wochentage .tm-card{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:16px 8px 12px;border-radius:16px;cursor:pointer;font:inherit;color:var(--body);
+  border:1.5px solid var(--gold-line);background:var(--surface);border-top:5px solid var(--m)}
+.mod-wochentage .tm-card.sacred{border-top-color:var(--gold-a)}
+.mod-wochentage .tm-card-n{position:absolute;top:6px;left:10px;font:700 .75rem var(--f-body);color:var(--muted)}
+.mod-wochentage .tm-card-ar{font:400 1.7rem/1.7 var(--f-ar);color:var(--m)}
+.mod-wochentage .tm-card-tr{font-style:italic;color:var(--muted);font-size:.82rem}
+.mod-wochentage .tm-card-g{font-weight:600;font-size:.9rem;color:var(--ink)}
+.mod-wochentage .tm-card-lev{font:400 1rem/1.5 var(--f-ar);color:var(--muted)}
+
+.mod-wochentage .tm-big-ar{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:400 clamp(2.4rem,10vw,3.4rem)/1.7 var(--f-ar);color:var(--ink)}
+.mod-wochentage .tm-big-q{text-align:center;font:700 1.8rem var(--f-body);color:var(--ink)}
+
+.mod-wochentage .tm-sets{display:grid;gap:10px}
+.mod-wochentage .tm-game{display:flex;flex-direction:column;gap:12px}
+.mod-wochentage .tm-game h2{margin:0}
+.mod-wochentage .tm-game-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mod-wochentage .tm-done-list{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px;direction:rtl}
+.mod-wochentage .tm-done-list li{font:400 1.2rem/1.6 var(--f-ar);padding:2px 12px;border-radius:999px;background:var(--m-soft);border:1px solid color-mix(in srgb,var(--m) 40%,var(--line));color:var(--m)}
+.mod-wochentage .tm-tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.mod-wochentage .tm-tile{font:400 1.45rem/1.6 var(--f-ar);padding:6px 16px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:52px}
+.mod-wochentage .tm-tile.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}

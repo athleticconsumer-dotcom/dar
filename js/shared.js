@@ -48,7 +48,7 @@ const platform = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && "onto
   : /Android/i.test(ua) ? "android" : /Windows/i.test(ua) ? "windows" : /Macintosh/i.test(ua) ? "mac" : "other";
 const HELP = { ios: "voice.ios", android: "voice.android", windows: "voice.windows", mac: "voice.mac", other: "voice.other" };
 
-function speakDevice(text) {
+function speakDevice(text, hint) {
   if (!hasSynth) return false;
   if (!arVoice) pickVoice();
   // Stimmenliste ist geladen, aber ohne Arabisch → Gerät würde Unsinn vorlesen
@@ -59,7 +59,7 @@ function speakDevice(text) {
     u.lang = arVoice ? arVoice.lang : "ar-SA";   // Android: Google-TTS wählt Arabisch auch ohne Eintrag in der Liste
     if (arVoice) u.voice = arVoice;
     u.rate = 0.85;
-    u.onerror = (e) => { if (e.error !== "interrupted" && e.error !== "canceled") toast(t(HELP[platform]), 9000); };
+    u.onerror = (e) => { if (e.error !== "interrupted" && e.error !== "canceled") hint(); };
     speechSynthesis.speak(u);
     // Chrome-Eigenheit: hängt manchmal im Pausenzustand
     setTimeout(() => { try { if (speechSynthesis.paused) speechSynthesis.resume(); } catch (e) {} }, 120);
@@ -82,14 +82,19 @@ export function stopSpeaking() {
   try { if (audio) audio.pause(); } catch (e) {}
 }
 
-export function speak(text) {
+let hintShown = false;
+/**
+ * Arabischen Text vorlesen. { auto: true } = automatisch nach einer Antwort:
+ * dann erscheint der Hinweis „keine arabische Stimme“ höchstens einmal pro Besuch.
+ */
+export function speak(text, opts = {}) {
   stopSpeaking();
-  const noVoice = () => toast(t(HELP[platform]), 9000);
+  const noVoice = () => { if (opts.auto && hintShown) return; hintShown = true; toast(t(HELP[platform]), 9000); };
   if (cloudReady() && (TTS_PREFER_CLOUD || !arVoice)) {
-    speakCloud(text, () => { if (!speakDevice(text)) noVoice(); });
+    speakCloud(text, () => { if (!speakDevice(text, noVoice)) noVoice(); });
     return;
   }
-  if (!speakDevice(text)) noVoice();
+  if (!speakDevice(text, noVoice)) noVoice();
 }
 
 /** Kurzer Hinweis unten am Bildschirm */
@@ -98,7 +103,7 @@ export function toast(msg, ms = 3500) {
   if (!el) {
     el = document.createElement("div"); el.id = "toast"; el.setAttribute("role", "status");
     el.style.cssText = "position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:min(92vw,420px);" +
-      "background:var(--maroon);color:var(--gold-light);padding:10px 16px;border-radius:999px;font-size:.88rem;box-shadow:var(--shadow-hover);z-index:50;text-align:center;pointer-events:none";
+      "background:var(--maroon);color:var(--gold-light);padding:10px 18px;border-radius:18px;font-size:.88rem;box-shadow:var(--shadow-hover);z-index:50;text-align:center;pointer-events:none";
     document.body.appendChild(el);
   }
   el.textContent = msg; el.hidden = false;
