@@ -6,7 +6,7 @@
 import { rnd, shuffle, esc, loadCss } from "../../js/shared.js";
 import { makeT, L } from "../../js/i18n.js";
 import DICT from "./lang.js";
-import { WORDS, GROUPS, MASTER_AT, WUDU, PAIN } from "./data.js";
+import { WORDS, GROUPS, MASTER_AT, WUDU, SENSES } from "./data.js";
 
 const T = makeT(DICT);
 const W = (id) => WORDS.find((w) => w.id === id);
@@ -130,8 +130,7 @@ export default {
         </div>
         <div class="card explain">
           <h2>${T("h6")}</h2><p>${T("p6")}</p>
-          <div class="kp-pain">${PAIN.map((x) => { const w = W(x.id), v = w.f ? "تُؤْلِمُنِي" : "يُؤْلِمُنِي", vt = w.f ? "tuʾlimunī" : "yuʾlimunī";
-            return `<button data-say="${esc(v + " " + x.ar)}"><span lang="ar" dir="rtl"><b class="${w.f ? "f" : ""}">${v}</b> ${x.ar}</span><em>${vt} ${x.tr}</em><small>${esc(T("pain", { w: L(w.g) }))}</small></button>`; }).join("")}</div>
+          <div class="kp-pain" dir="rtl">${SENSES.map((x) => `<button data-say="${esc(x.ar)}"><span lang="ar">${x.ar}</span><em dir="ltr">${x.tr}</em><small dir="ltr">${esc(L(x.g))}</small></button>`).join("")}</div>
         </div>
         <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button></div>`);
       bindPts((id) => { S.sel = id; autoSay(W(id).ar); erklaerung(); root.querySelector("#kpSel")?.scrollIntoView({ block: "nearest", behavior: "smooth" }); });

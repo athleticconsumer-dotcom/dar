@@ -58,8 +58,14 @@ export const WUDU = {
   ],
 };
 
-// „… tut mir weh“: يُؤْلِمُنِي + Wort mit Possessiv ـِي
-export const PAIN = [
-  { id: "ras", ar: "رَأْسِي", tr: "raʾsī" }, { id: "batn", ar: "بَطْنِي", tr: "baṭnī" }, { id: "zahr", ar: "ظَهْرِي", tr: "ẓahrī" },
-  { id: "sinn", ar: "سِنِّي", tr: "sinnī" }, { id: "rukba", ar: "رُكْبَتِي", tr: "rukbatī" }, { id: "udhun", ar: "أُذُنِي", tr: "udhunī" },
+// „Was ich mit meinem Körper tue“: Verb + بِـ (mit) + Körperteil + ـِي (mein)
+export const SENSES = [
+  { id: "ayn", ar: "أَرَى بِعَيْنِي", tr: "arā bi-ʿaynī", g: { de: "Ich sehe mit meinem Auge.", en: "I see with my eye.", fr: "Je vois avec mon œil.", ru: "Я вижу своим глазом.", tr: "Gözümle görürüm." } },
+  { id: "udhun", ar: "أَسْمَعُ بِأُذُنِي", tr: "asmaʿu bi-udhunī", g: { de: "Ich höre mit meinem Ohr.", en: "I hear with my ear.", fr: "J'entends avec mon oreille.", ru: "Я слышу своим ухом.", tr: "Kulağımla duyarım." } },
+  { id: "anf", ar: "أَشُمُّ بِأَنْفِي", tr: "ashummu bi-anfī", g: { de: "Ich rieche mit meiner Nase.", en: "I smell with my nose.", fr: "Je sens avec mon nez.", ru: "Я чувствую запах носом.", tr: "Burnumla koklarım." } },
+  { id: "lisan", ar: "أَتَكَلَّمُ بِلِسَانِي", tr: "atakallamu bi-lisānī", g: { de: "Ich spreche mit meiner Zunge.", en: "I speak with my tongue.", fr: "Je parle avec ma langue.", ru: "Я говорю своим языком.", tr: "Dilimle konuşurum." } },
+  { id: "yad", ar: "أَكْتُبُ بِيَدِي", tr: "aktubu bi-yadī", g: { de: "Ich schreibe mit meiner Hand.", en: "I write with my hand.", fr: "J'écris avec ma main.", ru: "Я пишу своей рукой.", tr: "Elimle yazarım." } },
+  { id: "rijl", ar: "أَمْشِي بِرِجْلِي", tr: "amshī bi-rijlī", g: { de: "Ich gehe mit meinem Fuß.", en: "I walk with my foot.", fr: "Je marche avec mon pied.", ru: "Я хожу своей ногой.", tr: "Ayağımla yürürüm." } },
+  { id: "qalb", ar: "أُحِبُّ بِقَلْبِي", tr: "uḥibbu bi-qalbī", g: { de: "Ich liebe mit meinem Herzen.", en: "I love with my heart.", fr: "J'aime avec mon cœur.", ru: "Я люблю своим сердцем.", tr: "Kalbimle severim." } },
+  { id: "aql", ar: "أُفَكِّرُ بِعَقْلِي", tr: "ufakkiru bi-ʿaqlī", g: { de: "Ich denke mit meinem Verstand.", en: "I think with my mind.", fr: "Je pense avec ma raison.", ru: "Я думаю своим разумом.", tr: "Aklımla düşünürüm." } },
 ];
