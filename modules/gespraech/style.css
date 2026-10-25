@@ -3,12 +3,12 @@
 .gs .gs-tools{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px}
 .gs .gs-chat{display:flex;flex-direction:column;gap:12px;padding:6px 0}
 .gs .gs-line{display:flex;flex-direction:column;gap:3px;max-width:88%}
-.gs .gs-A{align-self:flex-start;align-items:flex-start}
-.gs .gs-B{align-self:flex-end;align-items:flex-end}
+.gs .gs-A{align-self:flex-end;align-items:flex-end}
+.gs .gs-B{align-self:flex-start;align-items:flex-start}
 .gs .gs-who{font:700 .7rem var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:0 8px}
 .gs .gs-bubble{display:flex;flex-direction:column;gap:2px;text-align:inherit;font:inherit;color:var(--body);cursor:pointer;padding:10px 16px 12px;border-radius:20px;border:1.5px solid var(--line);background:var(--surface)}
-.gs .gs-A .gs-bubble{border-top-left-radius:6px;background:var(--paper)}
-.gs .gs-B .gs-bubble{border-top-right-radius:6px;background:var(--m-soft);border-color:color-mix(in srgb,var(--m) 35%,var(--line))}
+.gs .gs-A .gs-bubble{border-top-right-radius:6px;background:var(--paper)}
+.gs .gs-B .gs-bubble{border-top-left-radius:6px;background:var(--m-soft);border-color:color-mix(in srgb,var(--m) 35%,var(--line))}
 .gs .gs-line.mine .gs-bubble{box-shadow:0 0 0 2px color-mix(in srgb,var(--gold-a) 55%,transparent)}
 .gs .gs-ar{font:400 1.55rem/1.8 var(--f-ar);color:var(--ink);text-align:right}
 .gs .gs-tr{font-style:italic;color:var(--muted);font-size:.86rem}
@@ -29,12 +29,12 @@
 .gs .gs-ph:last-child{border-bottom:0}
 .gs .gs-ph-g{font-size:.9rem;color:var(--body)}
 .gs .gs-ph-g b{color:var(--good)}
-.gs .gs-ph-v{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 16px}
-.gs .gs-var{display:flex;flex-direction:column;align-items:flex-end}
+.gs .gs-ph-v{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px 16px}
+.gs .gs-var{display:flex;flex-direction:column;align-items:flex-start}
 .gs .gs-var small{font:600 .66rem var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .gs .gs-var em{font-size:.8rem;color:var(--muted)}
 .gs .gs-ph-ar{border:0;background:none;padding:0;cursor:pointer;font:400 1.45rem/1.7 var(--f-ar);color:var(--m)}
-@media (max-width:520px){.gs .gs-ph{grid-template-columns:1fr}.gs .gs-ph-v{justify-content:flex-start}.gs .gs-var{align-items:flex-start}}
+@media (max-width:520px){.gs .gs-ph{grid-template-columns:1fr}}
 
 .gs .gs-prompt{text-align:center;font:600 1.25rem var(--f-body);color:var(--ink);margin:0}
 .gs .gs-prompt-ar{display:block;margin:0 auto;border:1.5px solid var(--line);background:var(--paper);border-radius:20px;padding:6px 22px;cursor:pointer;font:400 clamp(1.8rem,7vw,2.4rem)/1.8 var(--f-ar);color:var(--ink)}
@@ -46,3 +46,5 @@
 .gs .gs-rolepick h2,.gs .gs-rolepick p{margin:0}
 .gs .gs-done{text-align:center;display:flex;flex-direction:column;gap:6px;padding-top:6px;border-top:1px dashed var(--gold-line)}
 .gs .gs-done h2{margin:6px 0 0}
+.gs .gs-intro{border-inline-start:4px solid var(--m)}
+.gs .gs-intro p{margin:0}

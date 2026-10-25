@@ -11,7 +11,7 @@ const T = makeT(DICT);
 const MASTER_AT = 2;
 const pick = (v, g) => (v && typeof v === "object" ? v[g] : v);
 
-export function makeConversation({ NAMES, DIALOG, PHRASES, PAIRS, COUNTRIES }) {
+export function makeConversation({ NAMES, DIALOG, PHRASES, PAIRS, COUNTRIES = [], INTRO = null }) {
   const wordsScore = (p) => PHRASES.reduce((s, x) => s + Math.min(p.mastery?.[x.id] || 0, MASTER_AT), 0) / (PHRASES.length * MASTER_AT);
   const rolesDone = (p) => ["A", "B"].filter((r) => p.roles?.[r]).length;
   const gloss = (line, g) => L(line.g).replace("{A}", NAMES[g].A.tr).replace("{B}", NAMES[g].B.tr);
@@ -52,7 +52,7 @@ export function makeConversation({ NAMES, DIALOG, PHRASES, PAIRS, COUNTRIES }) {
 
       // ---------------- Gespräch ----------------
       function dialog() {
-        frame(`<div class="card gs-dialog">
+        frame(`${INTRO ? `<div class="card gs-intro"><p>${esc(L(INTRO))}</p></div>` : ""}<div class="card gs-dialog">
           <div class="gs-tools">${genderSwitch()}
             <div class="chips">${[["tr", "showTr"], ["gl", "showGl"]].map(([k, f]) => `<button class="chip" data-opt="${f}" aria-pressed="${S[f]}">${T("opt." + k)}</button>`).join("")}</div></div>
           <p class="note">${T("dlgHint")}</p>
@@ -75,7 +75,7 @@ export function makeConversation({ NAMES, DIALOG, PHRASES, PAIRS, COUNTRIES }) {
             ${api.canSpeak() ? `<button class="btn small" data-say="${esc(sent.join(" "))}">▶</button>` : ""}`;
         };
         frame(`
-          <div class="card gs-me">
+          ${COUNTRIES.length ? `<div class="card gs-me">
             <h2>${T("meTitle")}</h2>
             <label class="gs-field"><span>${T("meName")}</span><input id="gsName" type="text" maxlength="30" value="${esc(me.name || "")}" placeholder="${esc(T("meNamePh"))}"></label>
             <div class="gs-field"><span>${T("meCountry")}</span>
@@ -83,18 +83,19 @@ export function makeConversation({ NAMES, DIALOG, PHRASES, PAIRS, COUNTRIES }) {
             <div class="gs-mine" id="gsMine">${mine()}</div>
             <p class="note">${T("meHint")}</p>
             ${COUNTRIES.some((x) => x.al) ? `<p class="note">${T("meAlNote")}</p>` : ""}
-          </div>
+          </div>` : ""}
           <div class="card">
             <h2>${T("phrasesTitle")}</h2>
             <div class="gs-phrases">${PHRASES.map((x) => {
               const m = api.progress().mastery?.[x.id] || 0;
               const variants = typeof x.ar === "object"
-                ? `<span class="gs-var"><small>${T("toM")}</small><button class="gs-ph-ar" data-say="${esc(x.ar.m)}" lang="ar">${x.ar.m}</button><em>${esc(x.tr.m)}</em></span>
-                   <span class="gs-var"><small>${T("toF")}</small><button class="gs-ph-ar" data-say="${esc(x.ar.f)}" lang="ar">${x.ar.f}</button><em>${esc(x.tr.f)}</em></span>`
-                : `<span class="gs-var"><button class="gs-ph-ar" data-say="${esc(x.ar)}" lang="ar">${x.ar}</button><em>${esc(x.tr)}</em></span>`;
-              return `<div class="gs-ph"><div class="gs-ph-g">${esc(L(x.g))}${m >= MASTER_AT ? " <b>✓</b>" : ""}</div><div class="gs-ph-v">${variants}</div></div>`;
+                ? `<span class="gs-var"><small dir="ltr">${T(x.self ? "asM" : "toM")}</small><button class="gs-ph-ar" data-say="${esc(x.ar.m)}" lang="ar">${x.ar.m}</button><em dir="ltr">${esc(x.tr.m)}</em></span>
+                   <span class="gs-var"><small dir="ltr">${T(x.self ? "asF" : "toF")}</small><button class="gs-ph-ar" data-say="${esc(x.ar.f)}" lang="ar">${x.ar.f}</button><em dir="ltr">${esc(x.tr.f)}</em></span>`
+                : `<span class="gs-var"><button class="gs-ph-ar" data-say="${esc(x.ar)}" lang="ar">${x.ar}</button><em dir="ltr">${esc(x.tr)}</em></span>`;
+              return `<div class="gs-ph"><div class="gs-ph-g">${esc(L(x.g))}${m >= MASTER_AT ? " <b>✓</b>" : ""}</div><div class="gs-ph-v" dir="rtl">${variants}</div></div>`;
             }).join("")}</div>
           </div>`);
+        if (!COUNTRIES.length) return;
         const box = root.querySelector("#gsMine");
         const refresh = () => { box.innerHTML = mine(); box.querySelectorAll("[data-say]").forEach((b) => (b.onclick = () => api.speak(b.dataset.say))); };
         const inp = root.querySelector("#gsName");

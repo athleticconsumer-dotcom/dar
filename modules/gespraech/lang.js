@@ -1,6 +1,7 @@
 // Oberflächentexte für alle Gesprächs-Themen
 export default {
   de: {
+    "asM": "als Mann", "asF": "als Frau",
     "tab.dialog": "Gespräch", "tab.phrases": "Wendungen", "tab.role": "Rollenspiel",
     "g.m": "Zwei Männer", "g.f": "Zwei Frauen", "opt.tr": "Umschrift", "opt.gl": "Übersetzung",
     "dlgHint": "Tippe eine Zeile an, um sie zu hören. Lies laut mit.", "playAll": "▶ Ganzes Gespräch anhören",
@@ -17,6 +18,7 @@ export default {
     "ms.first": "Grüßen und antworten", "ms.phr": "Alle Wendungen", "ms.all": "Ganzes Gespräch in beiden Rollen",
   },
   en: {
+    "asM": "as a man", "asF": "as a woman",
     "tab.dialog": "Dialogue", "tab.phrases": "Phrases", "tab.role": "Role play",
     "g.m": "Two men", "g.f": "Two women", "opt.tr": "Transliteration", "opt.gl": "Translation",
     "dlgHint": "Tap a line to hear it. Read along out loud.", "playAll": "▶ Listen to the whole dialogue",
@@ -33,6 +35,7 @@ export default {
     "ms.first": "Greeting and replying", "ms.phr": "All phrases", "ms.all": "Whole dialogue in both roles",
   },
   fr: {
+    "asM": "en tant qu'homme", "asF": "en tant que femme",
     "tab.dialog": "Dialogue", "tab.phrases": "Expressions", "tab.role": "Jeu de rôle",
     "g.m": "Deux hommes", "g.f": "Deux femmes", "opt.tr": "Translittération", "opt.gl": "Traduction",
     "dlgHint": "Touche une ligne pour l'écouter. Lis à voix haute.", "playAll": "▶ Écouter tout le dialogue",
@@ -49,6 +52,7 @@ export default {
     "ms.first": "Saluer et répondre", "ms.phr": "Toutes les expressions", "ms.all": "Tout le dialogue dans les deux rôles",
   },
   ru: {
+    "asM": "о себе (м.)", "asF": "о себе (ж.)",
     "tab.dialog": "Диалог", "tab.phrases": "Фразы", "tab.role": "Ролевая игра",
     "g.m": "Двое мужчин", "g.f": "Две женщины", "opt.tr": "Транслитерация", "opt.gl": "Перевод",
     "dlgHint": "Нажми на строку, чтобы услышать её. Читай вслух.", "playAll": "▶ Прослушать весь диалог",
@@ -65,6 +69,7 @@ export default {
     "ms.first": "Поздороваться и ответить", "ms.phr": "Все фразы", "ms.all": "Весь диалог в обеих ролях",
   },
   tr: {
+    "asM": "erkek olarak", "asF": "kadın olarak",
     "tab.dialog": "Diyalog", "tab.phrases": "Kalıplar", "tab.role": "Rol oyunu",
     "g.m": "İki erkek", "g.f": "İki kadın", "opt.tr": "Okunuş", "opt.gl": "Çeviri",
     "dlgHint": "Dinlemek için bir satıra dokun. Sesli oku.", "playAll": "▶ Bütün diyaloğu dinle",

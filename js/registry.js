@@ -189,11 +189,13 @@ export const RUBRIKEN = [
     load: () => import("../modules/gespraech/vorstellen.js"),
   },
   {
-    id: "verstehen", status: "soon",
+    id: "verstehen", status: "live",
     title: {"de": "Wenn du nicht verstehst", "en": "When you don't understand", "fr": "Quand tu ne comprends pas", "ru": "Когда ты не понимаешь", "tr": "Anlamadığında"}, ar: "أَعِدْ مِنْ فَضْلِكَ",
     desc: {"de": "Bitte wiederholen, langsamer, was bedeutet …? So bleibt jedes Gespräch am Laufen.", "en": "Please repeat, slower, what does … mean? This keeps every conversation going.", "fr": "Répète s'il te plaît, plus lentement, que veut dire … ? Ainsi la conversation continue.", "ru": "Повтори, пожалуйста, медленнее, что значит …? Так любой разговор не прервётся.", "tr": "Tekrar eder misin, daha yavaş, … ne demek? Böylece sohbet hiç kopmaz."},
     needs: ["vorstellen"], level: "c1",
     color: { light: "#8A4B2A", dark: "#E6AE88" },
+    minutes: 45,
+    load: () => import("../modules/gespraech/verstehen.js"),
   },
   {
     id: "fragen", status: "soon",
