@@ -120,11 +120,13 @@ export const RUBRIKEN = [
     load: () => import("../modules/wortarten/index.js"),
   },
   {
-    id: "tarif", status: "soon",
+    id: "tarif", status: "live",
     title: { de: "Bestimmt & unbestimmt", en: "Definite & indefinite", fr: "Défini & indéfini", ru: "Определённость", tr: "Belirli ve belirsiz" }, ar: "المَعْرِفَة وَالنَّكِرَة",
     desc: { de: "Der Artikel ال und das Tanwīn: ein Buch oder das Buch.", en: "The article ال and tanwīn: a book or the book.", fr: "L'article ال et le tanwīn : un livre ou le livre.", ru: "Артикль ال и танвин: какая-то книга или эта книга.", tr: "Harf-i tarif ال ve tenvin: bir kitap ya da o kitap." },
     needs: ["wortarten"], level: "g1",
     color: { light: "#6B4E1F", dark: "#DDBB86" },
+    minutes: 60,
+    load: () => import("../modules/tarif/index.js"),
   },
   {
     id: "shamsiya", status: "soon",

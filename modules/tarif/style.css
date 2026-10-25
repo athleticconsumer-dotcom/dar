@@ -1,0 +1,58 @@
+/* Rubrik Bestimmt & unbestimmt – Blau = unbestimmt (Tanwīn), Rot = bestimmt (ال) */
+.mod-tarif{--tf-n:#1F5C7A;--tf-m:#A33B3B;--tf-name:#8A6A1F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-tarif{--tf-n:#8EC6E3;--tf-m:#F0A0A0;--tf-name:#E8C58D}}
+:root[data-theme="dark"] .mod-tarif{--tf-n:#8EC6E3;--tf-m:#F0A0A0;--tf-name:#E8C58D}
+.mod-tarif .ar{font-family:var(--f-ar);font-size:1.25em}
+
+.mod-tarif .tf-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-tarif .tf-box{display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 10px;border-radius:18px;cursor:pointer;font:inherit;color:var(--body);text-align:center;
+  border:1.5px solid color-mix(in srgb,var(--c) 45%,var(--line));background:color-mix(in srgb,var(--c) 7%,var(--surface))}
+.mod-tarif .tf-n{--c:var(--tf-n)} .mod-tarif .tf-m{--c:var(--tf-m)}
+.mod-tarif .tf-box small{font:700 .7rem var(--f-body);letter-spacing:.06em;color:var(--c)}
+.mod-tarif .tf-box span{font:400 2.2rem/1.6 var(--f-ar);color:var(--c)}
+.mod-tarif .tf-box em{color:var(--muted);font-size:.85rem}
+.mod-tarif .tf-box b{color:var(--ink)}
+.mod-tarif .tf-box i{font-style:normal;font-size:.8rem;color:var(--muted);margin-top:4px}
+.mod-tarif .tf-never{margin:0;padding:10px 14px;border-radius:14px;background:color-mix(in srgb,var(--bad) 8%,var(--surface));color:var(--body)}
+.mod-tarif .tf-never s{color:var(--bad);text-decoration-thickness:2px}
+
+.mod-tarif .tf-cases td{text-align:right}
+.mod-tarif .tf-cases button{border:0;background:none;cursor:pointer;font:400 1.6rem/1.6 var(--f-ar);padding:0}
+.mod-tarif .tf-n-t{color:var(--tf-n)} .mod-tarif .tf-m-t{color:var(--tf-m)}
+.mod-tarif .tf-c{text-align:left !important;color:var(--muted)}
+
+.mod-tarif .tf-special{display:flex;flex-wrap:wrap;gap:8px}
+.mod-tarif .tf-special button{display:flex;flex-direction:column;align-items:center;padding:6px 16px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit}
+.mod-tarif .tf-special span{font:400 1.6rem/1.6 var(--f-ar);color:var(--tf-name)}
+.mod-tarif .tf-special small{font-size:.75rem;color:var(--muted)}
+
+.mod-tarif .tf-ayat{font:400 clamp(1.5rem,5.4vw,1.9rem)/2.3 var(--f-ar);text-align:center;padding:14px;border-radius:18px;border:1.5px solid var(--gold-a);background:var(--paper);color:var(--ink)}
+.mod-tarif .tf-k-n{color:var(--tf-n);font-weight:700} .mod-tarif .tf-k-m{color:var(--tf-m);font-weight:700} .mod-tarif .tf-k-name{color:var(--tf-name)}
+.mod-tarif .tf-num{color:var(--gold);font-size:.8em}
+.mod-tarif .tf-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:.82rem}
+.mod-tarif .tf-legend span::before{content:"● "}
+.mod-tarif .tf-trans{font-style:italic;margin:0}
+
+.mod-tarif .tf-head{display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;font:700 .78rem var(--f-body);margin-bottom:6px}
+.mod-tarif .tf-list{display:flex;flex-direction:column;gap:8px}
+.mod-tarif .tf-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mod-tarif .tf-cell{display:flex;flex-direction:column;align-items:center;padding:6px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-tarif .tf-cell span{font:400 1.6rem/1.6 var(--f-ar)}
+.mod-tarif .tf-cell.n span{color:var(--tf-n)} .mod-tarif .tf-cell.m span{color:var(--tf-m)}
+.mod-tarif .tf-cell small{font-size:.82rem}
+
+.mod-tarif .tf-big{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:400 clamp(2.4rem,10vw,3.4rem)/1.7 var(--f-ar);color:var(--ink)}
+.mod-tarif .tf-big-q{text-align:center;font:700 1.6rem var(--f-body);color:var(--ink)}
+.mod-tarif .tf-game{display:flex;flex-direction:column;gap:12px}
+.mod-tarif .tf-game h2{margin:0}
+.mod-tarif .tf-best{text-align:center;margin:0;font-weight:600;color:var(--heading)}
+.mod-tarif .tf-game-head{display:flex;justify-content:space-between}
+.mod-tarif .tf-timebar{height:6px;border-radius:999px;background:var(--m-soft);overflow:hidden}
+.mod-tarif .tf-timebar i{display:block;height:100%;background:var(--m)}
+.mod-tarif .tf-sprint-word{text-align:center;font:400 clamp(2.8rem,12vw,3.8rem)/1.7 var(--f-ar);color:var(--ink);border-radius:18px;transition:background .25s}
+.mod-tarif .tf-sprint-word.ok{background:color-mix(in srgb,var(--good) 10%,transparent)}
+.mod-tarif .tf-sprint-word.no{background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.mod-tarif .tf-sprint-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-tarif .tf-sprint-btns .opt{flex-direction:column;min-height:84px}
+.mod-tarif .tf-n-btn b{color:var(--tf-n)} .mod-tarif .tf-m-btn b{color:var(--tf-m)}
+.mod-tarif .tf-sprint-btns small{font:400 1.2rem var(--f-ar);color:var(--muted)}
