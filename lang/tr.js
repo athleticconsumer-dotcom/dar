@@ -170,4 +170,8 @@ export default {
   "plan.homeTitle": "Çalışma planların",
   "plan.homeEyebrow": "Çalışma planı",
   "why.koerper": "Her gün lazım ve kelimelerin çoğu Kur'an'da geçer, mesela abdest âyetinde.",
+  "sound.onTitle": "Ses açık. Kapatmak için dokun.",
+  "sound.offTitle": "Ses kapalı. Açmak için dokun.",
+  "sound.offToast": "Ses kapalı. Uygulama artık sesli okumayacak.",
+  "sound.onToast": "Ses açık.",
 };

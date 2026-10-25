@@ -273,3 +273,8 @@ a.level-card:hover{box-shadow:var(--shadow-hover)}
 .plan-result .v-easy,.plan-result .v-ok{color:var(--good)}
 .plan-result .v-tight{color:var(--gold)}
 .plan-result .v-hard{color:var(--bad)}
+
+/* Ton an/aus */
+.sound-btn{font-size:1rem;line-height:1;width:36px;height:36px;border-radius:999px;border:1.5px solid var(--gold-line);background:var(--paper);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0}
+.sound-btn:hover{border-color:var(--maroon)}
+.sound-btn[aria-pressed="false"]{background:var(--surface);opacity:.75}

@@ -170,4 +170,8 @@ export default {
   "plan.homeTitle": "Tes plans d'étude",
   "plan.homeEyebrow": "Plan d'étude",
   "why.koerper": "Utile chaque jour, et beaucoup de ces mots sont dans le Coran, par exemple dans l'āya des ablutions.",
+  "sound.onTitle": "Son activé. Touche pour couper.",
+  "sound.offTitle": "Son coupé. Touche pour activer.",
+  "sound.offToast": "Son coupé. L'application ne lit plus rien à voix haute.",
+  "sound.onToast": "Son activé.",
 };

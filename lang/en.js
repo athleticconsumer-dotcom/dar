@@ -170,4 +170,8 @@ export default {
   "plan.homeTitle": "Your study plans",
   "plan.homeEyebrow": "Study plan",
   "why.koerper": "Needed every day, and many of the words appear in the Qur'an, for example in the wuḍūʾ āya.",
+  "sound.onTitle": "Sound is on. Tap to turn off.",
+  "sound.offTitle": "Sound is off. Tap to turn on.",
+  "sound.offToast": "Sound off. The app won't read anything aloud.",
+  "sound.onToast": "Sound on.",
 };

@@ -83,12 +83,24 @@ export function stopSpeaking() {
 }
 
 let hintShown = false;
+
+// ----- Ton an/aus (gilt für die ganze App, wird im Browser gemerkt) -----
+const MUTE_KEY = "dar-mute";
+let muted = (() => { try { return localStorage.getItem(MUTE_KEY) === "1"; } catch (e) { return false; } })();
+export const isMuted = () => muted;
+export function setMuted(v) {
+  muted = !!v;
+  try { localStorage.setItem(MUTE_KEY, muted ? "1" : "0"); } catch (e) {}
+  if (muted) stopSpeaking();
+}
+
 /**
  * Arabischen Text vorlesen. { auto: true } = automatisch nach einer Antwort:
  * dann erscheint der Hinweis „keine arabische Stimme“ höchstens einmal pro Besuch.
  */
 export function speak(text, opts = {}) {
   stopSpeaking();
+  if (muted) return;          // Ton aus: nichts vorlesen, auch keinen Stimmen-Hinweis zeigen
   const noVoice = () => { if (opts.auto && hintShown) return; hintShown = true; toast(t(HELP[platform]), 9000); };
   if (cloudReady() && (TTS_PREFER_CLOUD || !arVoice)) {
     speakCloud(text, () => { if (!speakDevice(text, noVoice)) noVoice(); });

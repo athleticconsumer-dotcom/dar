@@ -170,4 +170,8 @@ export default {
   "plan.homeTitle": "Deine Lernpläne",
   "plan.homeEyebrow": "Lernplan",
   "why.koerper": "Jeden Tag gebraucht, und viele Wörter stehen im Qur'an, etwa in der Wuḍūʾ-Āya.",
+  "sound.onTitle": "Ton ist an. Tippen zum Ausschalten.",
+  "sound.offTitle": "Ton ist aus. Tippen zum Einschalten.",
+  "sound.offToast": "Ton aus. Die App liest nichts mehr vor.",
+  "sound.onToast": "Ton an.",
 };

@@ -9,7 +9,7 @@ import { startFirebase } from "./firebase.js";
 import { QUESTIONS, buildPath, recommend } from "./guide.js";
 import { DONE_AT } from "./config.js";
 import * as PR from "../modules/propheten/index.js";
-import { speak, canSpeak, stopSpeaking, esc, toast } from "./shared.js";
+import { speak, canSpeak, stopSpeaking, esc, toast, isMuted, setMuted } from "./shared.js";
 import { planSummary, mountPlanBox, checkAchieved } from "./plan.js";
 import { t, L, LANGS, lang, setLang, onLang } from "./i18n.js";
 
@@ -348,7 +348,23 @@ async function route() {
 }
 
 // ---------- Sprache ----------
+function soundUi() {
+  const b = document.getElementById("soundBtn");
+  if (!b) return;
+  const off = isMuted();
+  b.textContent = off ? "🔇" : "🔊";
+  b.setAttribute("aria-pressed", String(!off));
+  b.title = t(off ? "sound.offTitle" : "sound.onTitle");
+  b.setAttribute("aria-label", b.title);
+}
+(function soundToggle() {
+  const b = document.getElementById("soundBtn");
+  if (!b) return;
+  b.onclick = () => { setMuted(!isMuted()); soundUi(); toast(t(isMuted() ? "sound.offToast" : "sound.onToast"), 2200); };
+})();
+
 function applyStatic() {
+  soundUi();
   document.querySelectorAll("[data-i18n]").forEach((el) => (el.textContent = t(el.dataset.i18n)));
   document.querySelectorAll("[data-i18n-aria]").forEach((el) => el.setAttribute("aria-label", t(el.dataset.i18nAria)));
   const sel = document.getElementById("langSel");
