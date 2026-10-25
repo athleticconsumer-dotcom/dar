@@ -86,3 +86,4 @@
 .mod-koerper .kp-sets{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .mod-koerper .kp-target{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:700 clamp(2.2rem,9vw,3rem)/1.5 var(--f-ar);color:var(--m)}
 .mod-koerper .kp-msg{text-align:center;margin:0;min-height:1.4em}
+.mod-koerper .kp-arrow{font-style:normal;color:var(--gold);font-size:1.1rem}

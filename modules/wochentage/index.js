@@ -72,7 +72,7 @@ export default {
     function erklaerung() {
       const dayRow = (d, i) => {
         const origin = i < 5 ? T("fromNum", { w: ar(NUMW[i]), n: i + 1 }) : i === 5 ? T("jumuaO") : T("sabtO");
-        return `<div class="tm-row"><button class="tm-ar" data-say="${esc(d.ar)}" lang="ar">${d.ar}</button><div><b>${esc(L(d.g))}</b><span class="tm-tr">${d.tr}</span><span class="tm-o">${origin}</span></div></div>`;
+        return `<div class="tm-row" dir="rtl"><span class="tm-n">${i + 1}</span><button class="tm-ar" data-say="${esc(d.ar)}" lang="ar">${d.ar}</button><div dir="ltr"><b>${esc(L(d.g))}</b><span class="tm-tr">${d.tr}</span><span class="tm-o">${origin}</span></div></div>`;
       };
       frame(`
         ${todayCard()}
@@ -86,7 +86,7 @@ export default {
         </div>
         <div class="card explain">
           <h2>${T("h3")}</h2>
-          <div class="tm-rel">${REL.map((r) => `<button data-say="${esc(r.ar)}"><span lang="ar">${r.ar}</span><small>${r.tr}</small><b>${T("relG." + r.id)}</b></button>`).join("")}</div>
+          <div class="tm-rel" dir="rtl">${REL.map((r) => `<button data-say="${esc(r.ar)}"><span lang="ar">${r.ar}</span><small>${r.tr}</small><b>${T("relG." + r.id)}</b></button>`).join("")}</div>
           <p><b>${T("qa")}</b></p>
           <div class="tm-qa"><button data-say="مَا اليَوْمُ؟" lang="ar">مَا اليَوْمُ؟</button><span>${T("qaQ")}</span>
             <button data-say="اليَوْمُ يَوْمُ السَّبْتِ" lang="ar">اليَوْمُ يَوْمُ السَّبْتِ.</button><span>${T("qaA")}</span></div>
@@ -94,13 +94,13 @@ export default {
         <div class="card explain">
           <h2>${T("h4")}</h2><p>${T("p4")}</p>
           <blockquote class="tm-quote">${ar("مِنْهَا أَرْبَعَةٌ حُرُمٌ")}<span>${T("q936")}</span></blockquote>
-          <div class="tm-rows">${HIJRI.map((m, i) => `<div class="tm-row${m.sacred ? " sacred" : ""}"><span class="tm-n">${i + 1}</span><button class="tm-ar" data-say="${esc(m.ar)}" lang="ar">${m.ar}</button>
-            <div><b>${m.tr}</b>${m.sacred ? ` <span class="pill">${T("sacred")}</span>` : ""}${HIJRI_NOTES.includes(m.id) ? `<span class="tm-o">${T("hn." + m.id)}</span>` : ""}</div></div>`).join("")}</div>
+          <div class="tm-rows">${HIJRI.map((m, i) => `<div class="tm-row${m.sacred ? " sacred" : ""}" dir="rtl"><span class="tm-n">${i + 1}</span><button class="tm-ar" data-say="${esc(m.ar)}" lang="ar">${m.ar}</button>
+            <div dir="ltr"><b>${m.tr}</b>${m.sacred ? ` <span class="pill">${T("sacred")}</span>` : ""}${HIJRI_NOTES.includes(m.id) ? `<span class="tm-o">${T("hn." + m.id)}</span>` : ""}</div></div>`).join("")}</div>
         </div>
         <div class="card explain">
           <h2>${T("h5")}</h2><p>${T("p5")}</p>
-          <div class="tablewrap"><table class="ref tm-greg"><thead><tr><th></th><th>${T("common")}</th><th>${T("lev")}</th></tr></thead><tbody>
-            ${GREG.map((m, i) => `<tr><td>${i + 1} · ${esc(L(m.g))}</td><td><button data-say="${esc(m.ar)}" lang="ar">${m.ar}</button></td><td class="tm-lev"><button data-say="${esc(m.lev)}" lang="ar">${m.lev}</button></td></tr>`).join("")}
+          <div class="tablewrap"><table class="ref tm-greg" dir="rtl"><thead><tr><th></th><th>${T("common")}</th><th>${T("lev")}</th><th></th></tr></thead><tbody>
+            ${GREG.map((m, i) => `<tr><td class="tm-gn">${toAr(i + 1)}</td><td><button data-say="${esc(m.ar)}" lang="ar">${m.ar}</button></td><td class="tm-lev"><button data-say="${esc(m.lev)}" lang="ar">${m.lev}</button></td><td dir="ltr" class="tm-gd">${i + 1} · ${esc(L(m.g))}</td></tr>`).join("")}
           </tbody></table></div>
         </div>
         <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button></div>`);
@@ -114,12 +114,12 @@ export default {
       frame(`<div class="card">
         <div class="chips" role="group">${SETS.map((k) => `<button class="chip" data-set="${k}" aria-pressed="${S.set === k}">${T("set." + k)}</button>`).join("")}</div>
         <p class="note" style="text-align:center">${T("tapHint")}</p>
-        <div class="tm-cards">${list.map((x, i) => `
+        <div class="tm-cards" dir="rtl">${list.map((x, i) => `
           <button class="tm-card${x.sacred ? " sacred" : ""}" data-say="${esc(x.ar)}">
             <span class="tm-card-n">${i + 1}</span>
             <span class="tm-card-ar" lang="ar" dir="rtl">${x.ar}</span>
-            <span class="tm-card-tr">${esc(x.tr)}</span>
-            <span class="tm-card-g">${x.g ? esc(L(x.g)) : x.sacred ? T("sacred") : "&nbsp;"}${(m[x.id] || 0) >= MASTER_AT ? " ✓" : ""}</span>
+            <span class="tm-card-tr" dir="ltr">${esc(x.tr)}</span>
+            <span class="tm-card-g" dir="ltr">${x.g ? esc(L(x.g)) : x.sacred ? T("sacred") : "&nbsp;"}${(m[x.id] || 0) >= MASTER_AT ? " ✓" : ""}</span>
             ${x.lev ? `<span class="tm-card-lev" lang="ar">${x.lev}</span>` : ""}
           </button>`).join("")}</div>
       </div>`);

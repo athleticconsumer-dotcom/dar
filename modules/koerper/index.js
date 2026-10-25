@@ -112,11 +112,11 @@ export default {
         <div class="card explain">
           <h2>${T("h2")}</h2>
           <p>${T("p2", { ex: pairs.map((w) => ar(w.ar)).join("، "), du: ar("عَيْنَانِ") + " · " + ar("يَدَانِ") })}</p>
-          <div class="kp-du">${pairs.map((w) => `<button data-say="${esc(w.du)}"><span lang="ar">${w.ar}</span>→<span lang="ar">${w.du}</span><small>${esc(L(w.g))}</small></button>`).join("")}</div>
+          <div class="kp-du">${pairs.map((w) => `<button data-say="${esc(w.du)}" dir="rtl"><span lang="ar">${w.ar}</span><i class="kp-arrow">←</i><span lang="ar">${w.du}</span><small dir="ltr">${esc(L(w.g))}</small></button>`).join("")}</div>
         </div>
         <div class="card explain">
           <h2>${T("h3")}</h2><p>${T("p3")}</p>
-          <div class="kp-du">${["ras", "wajh", "qalb", "zahr"].map(W).map((w) => `<button data-say="${esc(w.pl)}"><span lang="ar">${w.ar}</span>→<span lang="ar">${w.pl}</span><small>${esc(w.tr)} → ${esc(w.plTr)}</small></button>`).join("")}</div>
+          <div class="kp-du">${["ras", "wajh", "qalb", "zahr"].map(W).map((w) => `<button data-say="${esc(w.pl)}" dir="rtl"><span lang="ar">${w.ar}</span><i class="kp-arrow">←</i><span lang="ar">${w.pl}</span><small dir="ltr">${esc(w.plTr)} ← ${esc(w.tr)}</small></button>`).join("")}</div>
         </div>
         <div class="card explain">
           <h2>${T("h4")}</h2><p>${T("p4")}</p>
