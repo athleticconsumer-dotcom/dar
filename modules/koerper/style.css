@@ -1,0 +1,88 @@
+/* Rubrik Körper – weiche Figur in Creme/Bordeaux, antippbare Punkte */
+.mod-koerper{--skin:#EBD3BA;--skin-line:#B98F6E;--hair:#3B2A22;--cloth:color-mix(in srgb,var(--m) 22%,var(--surface));--cloth-line:color-mix(in srgb,var(--m) 55%,var(--line))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-koerper{--skin:#8C6B55;--skin-line:#C9A487;--hair:#1C1410}}
+:root[data-theme="dark"] .mod-koerper{--skin:#8C6B55;--skin-line:#C9A487;--hair:#1C1410}
+.mod-koerper .ar{font-family:var(--f-ar);font-size:1.2em}
+
+.mod-koerper .kp-fig{width:100%;height:auto;display:block;overflow:visible}
+.mod-koerper .kp-skin{fill:var(--skin);stroke:var(--skin-line);stroke-width:1.6}
+.mod-koerper .kp-cloth{fill:var(--cloth);stroke:var(--cloth-line);stroke-width:1.6}
+.mod-koerper .kp-hair{fill:var(--hair)}
+.mod-koerper .kp-line{fill:none;stroke:var(--skin-line);stroke-width:3;stroke-linecap:round}
+.mod-koerper .kp-eye{fill:#fff;stroke:var(--skin-line);stroke-width:1.4}
+.mod-koerper .kp-pupil{fill:var(--hair)}
+.mod-koerper .kp-blush{fill:#D98C7A;opacity:.28}
+.mod-koerper .kp-lips{fill:#B5616A;stroke:#9A4A55;stroke-width:1.2}
+.mod-koerper .kp-limb-o{fill:none;stroke:var(--skin-line);stroke-width:25;stroke-linecap:round;stroke-linejoin:round}
+.mod-koerper .kp-limb{fill:none;stroke:var(--skin);stroke-width:21.5;stroke-linecap:round;stroke-linejoin:round}
+.mod-koerper .kp-leg-o{fill:none;stroke:var(--cloth-line);stroke-width:33;stroke-linecap:round;stroke-linejoin:round}
+.mod-koerper .kp-leg{fill:none;stroke:var(--cloth);stroke-width:29.5;stroke-linecap:round;stroke-linejoin:round}
+.mod-koerper .kp-finger{fill:none;stroke:var(--skin-line);stroke-width:5;stroke-linecap:round}
+.mod-koerper .kp-heart{fill:var(--bad);opacity:.85}
+
+.mod-koerper .kp-pt{cursor:pointer;outline:none}
+.mod-koerper .kp-halo{fill:var(--m);opacity:0}
+.mod-koerper .kp-dot{fill:var(--m);stroke:#fff;stroke-width:2.4}
+.mod-koerper .kp-pt:hover .kp-halo,.mod-koerper .kp-pt:focus-visible .kp-halo{opacity:.22}
+.mod-koerper .kp-pt.sel .kp-halo{opacity:.35}
+.mod-koerper .kp-pt.sel .kp-dot{fill:var(--gold-a)}
+.mod-koerper .kp-pt.ok .kp-dot{fill:var(--good)} .mod-koerper .kp-pt.ok .kp-halo{fill:var(--good);opacity:.35}
+.mod-koerper .kp-pt.no .kp-dot{fill:var(--bad)} .mod-koerper .kp-pt.no .kp-halo{fill:var(--bad);opacity:.35}
+.mod-koerper .kp-pt.show .kp-dot{fill:var(--good)} .mod-koerper .kp-pt.show .kp-halo{fill:var(--good);opacity:.3}
+@media (prefers-reduced-motion:no-preference){
+  .mod-koerper .kp-pt.show .kp-halo,.mod-koerper .kp-pt.sel .kp-halo{animation:kpPulse 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes kpPulse{50%{transform:scale(1.5);opacity:.12}}}
+
+.mod-koerper .kp-figs-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end;max-width:520px;margin:0 auto;width:100%}
+.mod-koerper .kp-learn-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:center}
+@media (max-width:620px){.mod-koerper .kp-learn-grid{grid-template-columns:1fr}}
+.mod-koerper .kp-figwrap{max-width:300px;margin:0 auto;width:100%}
+.mod-koerper .kp-figwrap.game{max-width:320px}
+.mod-koerper .kp-learn{display:flex;flex-direction:column;gap:14px}
+
+.mod-koerper .kp-card{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:16px;border-radius:18px;background:var(--m-soft);border:1.5px solid color-mix(in srgb,var(--m) 35%,var(--line))}
+.mod-koerper .kp-card.empty{color:var(--muted);font-style:italic;padding:22px}
+.mod-koerper .kp-card-ar{border:0;background:none;cursor:pointer;font:400 2.6rem/1.6 var(--f-ar);color:var(--m)}
+.mod-koerper .kp-card-tr{font-style:italic;color:var(--muted)}
+.mod-koerper .kp-card-g{font-size:1.1rem;color:var(--ink)}
+.mod-koerper .kp-forms{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:6px}
+.mod-koerper .kp-forms button{display:flex;flex-direction:column;align-items:center;padding:6px 14px;border-radius:14px;border:1px solid var(--gold-line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-koerper .kp-forms small{font:600 .66rem var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mod-koerper .kp-forms span{font:400 1.4rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-koerper .kp-forms em{font-size:.8rem;color:var(--muted)}
+
+.mod-koerper .kp-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.mod-koerper .kp-item{display:flex;flex-direction:column;align-items:center;padding:8px 6px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-koerper .kp-item.sel{border-color:var(--m);background:var(--m-soft)}
+.mod-koerper .kp-item span{font:400 1.5rem/1.6 var(--f-ar);color:var(--m)}
+.mod-koerper .kp-item small{font-size:.82rem;text-align:center}
+
+.mod-koerper .kp-du{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.mod-koerper .kp-du button{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:2px 8px;padding:8px;border-radius:14px;border:1px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit;color:var(--muted)}
+.mod-koerper .kp-du span{font:400 1.35rem/1.6 var(--f-ar);color:var(--m)}
+.mod-koerper .kp-du small{flex-basis:100%;text-align:center;font-size:.78rem}
+
+.mod-koerper .kp-ayah{font:400 clamp(1.4rem,5vw,1.8rem)/2.3 var(--f-ar);text-align:center;padding:12px 14px;border-radius:18px;border:1.5px solid var(--gold-a);background:var(--paper)}
+.mod-koerper .kp-ayah .hl{display:inline-flex;flex-direction:column;align-items:center;color:var(--m);line-height:1.7}
+.mod-koerper .kp-ayah .hl small{font:600 .62rem/1 var(--f-body);color:var(--m);opacity:.85}
+.mod-koerper .kp-ref{color:var(--gold)}
+.mod-koerper .kp-trans{font-style:italic;color:var(--body);margin:0}
+.mod-koerper .kp-hadith blockquote{margin:0;padding:14px 16px;border-radius:16px;background:var(--m-soft);border-inline-start:3px solid var(--bad);display:flex;flex-direction:column;gap:8px}
+.mod-koerper .kp-hadith .ar{font-size:1.45rem;line-height:2;color:var(--heading);text-align:right}
+.mod-koerper .kp-hadith span:not(.ar){font-style:italic}
+.mod-koerper .kp-hadith cite{font-style:normal;font-size:.82rem;color:var(--muted)}
+.mod-koerper .kp-pain{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.mod-koerper .kp-pain button{display:flex;flex-direction:column;align-items:center;gap:0;padding:8px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-koerper .kp-pain span{font:400 1.35rem/1.7 var(--f-ar);color:var(--ink)}
+.mod-koerper .kp-pain b{font-weight:400;color:var(--m)} .mod-koerper .kp-pain b.f{color:var(--gold)}
+.mod-koerper .kp-pain em{font-size:.8rem;color:var(--muted)}
+.mod-koerper .kp-pain small{font-size:.8rem}
+
+.mod-koerper .kp-big{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:400 clamp(2.4rem,10vw,3.4rem)/1.7 var(--f-ar);color:var(--ink)}
+.mod-koerper .kp-big-q{text-align:center;font:700 1.8rem var(--f-body);color:var(--ink)}
+.mod-koerper .kp-game{display:flex;flex-direction:column;gap:10px}
+.mod-koerper .kp-game h2{margin:0}
+.mod-koerper .kp-game-head{display:flex;justify-content:space-between;gap:8px}
+.mod-koerper .kp-sets{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-koerper .kp-target{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:700 clamp(2.2rem,9vw,3rem)/1.5 var(--f-ar);color:var(--m)}
+.mod-koerper .kp-msg{text-align:center;margin:0;min-height:1.4em}

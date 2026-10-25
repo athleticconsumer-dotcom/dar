@@ -169,4 +169,5 @@ export default {
   "plan.achievedToast": "Ziel erreicht: {title}! Bārakallāhu fīk.",
   "plan.homeTitle": "Deine Lernpläne",
   "plan.homeEyebrow": "Lernplan",
+  "why.koerper": "Jeden Tag gebraucht, und viele Wörter stehen im Qur'an, etwa in der Wuḍūʾ-Āya.",
 };

@@ -169,4 +169,5 @@ export default {
   "plan.achievedToast": "Hedefe ulaşıldı: {title}! Bârekallâhu fîk.",
   "plan.homeTitle": "Çalışma planların",
   "plan.homeEyebrow": "Çalışma planı",
+  "why.koerper": "Her gün lazım ve kelimelerin çoğu Kur'an'da geçer, mesela abdest âyetinde.",
 };

@@ -169,4 +169,5 @@ export default {
   "plan.achievedToast": "Goal reached: {title}! Bārakallāhu fīk.",
   "plan.homeTitle": "Your study plans",
   "plan.homeEyebrow": "Study plan",
+  "why.koerper": "Needed every day, and many of the words appear in the Qur'an, for example in the wuḍūʾ āya.",
 };

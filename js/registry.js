@@ -99,6 +99,15 @@ export const RUBRIKEN = [
     needs: [], level: 1,
     color: { light: "#5E5A2A", dark: "#D3CC8A" },
   },
+  {
+    id: "koerper", status: "live",
+    title: { de: "Körper", en: "The body", fr: "Le corps", ru: "Тело", tr: "Vücut" }, ar: "الجِسْم",
+    desc: { de: "Von Kopf bis Fuß, dazu Herz, Seele und Verstand. Mit Körperfigur zum Antippen und der Wuḍūʾ-Āya.", en: "From head to toe, plus heart, soul and mind. With a body figure to tap and the wuḍūʾ āya.", fr: "De la tête aux pieds, plus le cœur, l'âme et la raison. Avec une figure à toucher et l'āya des ablutions.", ru: "С головы до ног, а также сердце, душа и разум. С фигурой для нажатия и аятом об омовении.", tr: "Baştan ayağa, ayrıca kalp, ruh ve akıl. Dokunulabilir vücut figürü ve abdest âyetiyle." },
+    needs: [], level: 1,
+    color: { light: "#9A3B3B", dark: "#F0A3A3" },
+    minutes: 150,
+    load: () => import("../modules/koerper/index.js"),
+  },
 
   // ---------------- GRAMMATIK-WEG · Level 1 ----------------
   {

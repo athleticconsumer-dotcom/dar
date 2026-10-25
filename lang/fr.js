@@ -169,4 +169,5 @@ export default {
   "plan.achievedToast": "Objectif atteint : {title} ! Bārakallāhu fīk.",
   "plan.homeTitle": "Tes plans d'étude",
   "plan.homeEyebrow": "Plan d'étude",
+  "why.koerper": "Utile chaque jour, et beaucoup de ces mots sont dans le Coran, par exemple dans l'āya des ablutions.",
 };
