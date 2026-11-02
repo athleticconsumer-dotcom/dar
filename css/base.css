@@ -278,3 +278,13 @@ a.level-card:hover{box-shadow:var(--shadow-hover)}
 .sound-btn{font-size:1rem;line-height:1;width:36px;height:36px;border-radius:999px;border:1.5px solid var(--gold-line);background:var(--paper);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0}
 .sound-btn:hover{border-color:var(--maroon)}
 .sound-btn[aria-pressed="false"]{background:var(--surface);opacity:.75}
+
+/* ---------- Qur'an-Quiz (js/quranquiz.js) ---------- */
+.qq-home{display:flex;flex-direction:column;gap:12px}
+.qq-home h2,.qq-home p{margin:0}
+.qq-secs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.qq-done{display:flex;flex-direction:column;gap:12px;text-align:center}
+.qq-found{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.qq-found div{display:flex;flex-direction:column;align-items:center;padding:8px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface)}
+.qq-found .ar{font-size:1.6rem;line-height:1.8}
+.qq-found small{color:var(--muted);font-size:.75rem}

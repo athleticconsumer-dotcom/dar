@@ -4,7 +4,9 @@
 //  Fortschritt: mastery: { <id>: richtige }, game: { face|body: bestes Ergebnis von 10 }
 // =====================================================================
 import { rnd, shuffle, esc, loadCss } from "../../js/shared.js";
-import { makeT, L } from "../../js/i18n.js";
+import { makeT, L, t as gt } from "../../js/i18n.js";
+import { quranQuiz, quranDoneCount } from "../../js/quranquiz.js";
+import { SECTIONS, SURAH, PASSAGES } from "./quran.js";
 import DICT from "./lang.js";
 import { WORDS, GROUPS, MASTER_AT, WUDU, SENSES } from "./data.js";
 
@@ -54,13 +56,13 @@ function figure(view, opts = {}) {
 }
 
 export default {
-  percent(p) { return score(p) * 80 + (figsDone(p) / 2) * 20; },
+  percent(p) { return score(p) * 70 + (figsDone(p) / 2) * 15 + (quranDoneCount(p, SECTIONS) / SECTIONS.length) * 15; },
   summary(p) { return T("sum", { a: WORDS.filter((w) => (p.mastery?.[w.id] || 0) >= MASTER_AT).length, b: WORDS.length }); },
-  extraStats(p) { return T("extra", { a: figsDone(p) }); },
+  extraStats(p) { return T("extra", { a: figsDone(p) }) + " · " + gt("qq.extra", { a: quranDoneCount(p, SECTIONS), b: SECTIONS.length }); },
   milestones() {
     const n = (g) => WORDS.filter((w) => GROUPS.indexOf(w.grp) <= GROUPS.indexOf(g)).length;
-    const pc = (k) => Math.round((k / WORDS.length) * 80);
-    return [{ pct: pc(n("head")), label: T("ms.head") }, { pct: pc(n("body")), label: T("ms.body") }, { pct: 80, label: T("ms.inner") }, { pct: 100, label: T("ms.all") }];
+    const pc = (k) => Math.round((k / WORDS.length) * 70);
+    return [{ pct: pc(n("head")), label: T("ms.head") }, { pct: pc(n("body")), label: T("ms.body") }, { pct: 70, label: T("ms.inner") }, { pct: 100, label: T("ms.all") }];
   },
 
   mount(root, api) {
@@ -74,11 +76,13 @@ export default {
       clearTimeout(tmr);
       root.innerHTML = `
         <div class="tabs" role="group">
-          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")]]
+          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["quran", api.t("qq.tab")]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
-      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; S.game = null; show(); }));
+      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { QQ.reset(); S.tab = b.dataset.tab; S.game = null; show(); }));
       root.querySelectorAll("[data-say]").forEach((b) => (b.onclick = () => api.speak(b.dataset.say)));
+      const act = root.querySelector('.tabs [aria-pressed="true"]');      // aktiven Tab auf dem Handy sichtbar machen
+      if (act && act.parentElement.scrollWidth > act.parentElement.clientWidth) act.parentElement.scrollLeft = act.offsetLeft - 16;
     }
     const bindPts = (fn) => root.querySelectorAll("[data-pt]").forEach((g) => {
       g.onclick = () => fn(g.dataset.pt);
@@ -132,9 +136,10 @@ export default {
           <h2>${T("h6")}</h2><p>${T("p6")}</p>
           <div class="kp-pain" dir="rtl">${SENSES.map((x) => `<button data-say="${esc(x.ar)}"><span lang="ar">${x.ar}</span><em dir="ltr">${x.tr}</em><small dir="ltr">${esc(L(x.g))}</small></button>`).join("")}</div>
         </div>
-        <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button></div>`);
+        <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button><button class="btn" data-goq>${api.t("qq.go")}</button></div>`);
       bindPts((id) => { S.sel = id; autoSay(W(id).ar); erklaerung(); root.querySelector("#kpSel")?.scrollIntoView({ block: "nearest", behavior: "smooth" }); });
       root.querySelector("[data-go]").onclick = () => { S.tab = "lernen"; show(); };
+      root.querySelector("[data-goq]").onclick = () => { S.tab = "quran"; show(); window.scrollTo(0, 0); };
     }
 
     // ---------------- Lernen ----------------
@@ -248,8 +253,10 @@ export default {
       const other = root.querySelector("#kpOther"); if (other) other.onclick = () => { S.game = null; spiel(); };
     }
 
-    function show() { ({ erklaerung, lernen, aufgaben, spiel })[S.tab](); }
+    const QQ = quranQuiz({ api, frame, root, base: import.meta.url, SECTIONS, SURAH, PASSAGES, secLabel: (k) => T("grp." + k), isActive: () => S.tab === "quran" });
+    const quran = () => QQ.show();
+    function show() { ({ erklaerung, lernen, aufgaben, spiel, quran })[S.tab](); }
     show();
-    return () => clearTimeout(tmr);
+    return () => { clearTimeout(tmr); QQ.stop(); };
   },
 };
