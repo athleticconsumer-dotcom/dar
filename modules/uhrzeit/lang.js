@@ -2,6 +2,7 @@
 // Die Vergleiche (z. B. „Viertel vor vier“, „moins le quart“) sind pro Sprache angepasst.
 export default {
   de: {
+    "qs.hour": "Stunde & Teile", "qs.daytime": "Tageszeiten",
     "ms.full": "Volle Stunden",
     "ms.quarter": "+ Viertel und halb",
     "ms.third": "+ Drittel",
@@ -34,6 +35,7 @@ export default {
     scoreTitle: "{s}/{m} richtig", newRec: ", neuer Rekord!", bestEver: "So gut warst du noch nie.", recordIs: "Dein Rekord liegt bei {n}/{m}.", again: "Noch einmal",
   },
   en: {
+    "qs.hour": "Hour & its parts", "qs.daytime": "Times of day",
     "ms.full": "Full hours",
     "ms.quarter": "+ quarter and half",
     "ms.third": "+ thirds",
@@ -66,6 +68,7 @@ export default {
     scoreTitle: "{s}/{m} correct", newRec: ", new record!", bestEver: "You've never done this well.", recordIs: "Your record is {n}/{m}.", again: "Once more",
   },
   fr: {
+    "qs.hour": "L'heure & ses parts", "qs.daytime": "Moments de la journée",
     "ms.full": "Heures pleines",
     "ms.quarter": "+ quart et demie",
     "ms.third": "+ tiers",
@@ -98,6 +101,7 @@ export default {
     scoreTitle: "{s}/{m} justes", newRec: ", nouveau record !", bestEver: "Tu n'as jamais fait aussi bien.", recordIs: "Ton record est de {n}/{m}.", again: "Encore une fois",
   },
   ru: {
+    "qs.hour": "Час и его части", "qs.daytime": "Время суток",
     "ms.full": "Ровные часы",
     "ms.quarter": "+ четверть и половина",
     "ms.third": "+ трети",
@@ -130,6 +134,7 @@ export default {
     scoreTitle: "Верно: {s}/{m}", newRec: ", новый рекорд!", bestEver: "Так хорошо у тебя ещё не получалось.", recordIs: "Твой рекорд: {n}/{m}.", again: "Ещё раз",
   },
   tr: {
+    "qs.hour": "Saat ve parçaları", "qs.daytime": "Günün vakitleri",
     "ms.full": "Tam saatler",
     "ms.quarter": "+ çeyrek ve buçuk",
     "ms.third": "+ üçte birler",

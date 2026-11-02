@@ -1,6 +1,7 @@
 // Texte der Rubrik „Tage & Monate“. Platzhalter {x} werden im Code gefüllt.
 export default {
   de: {
+    "qs.days": "Tage & Nächte", "qs.hijri": "Monate & Jahre",
     "q.hpos": "Der wievielte Hijri-Monat ist das?",
     "set.days": "Wochentage", "set.hijri": "Hijri-Monate", "set.greg": "Gregorianische Monate",
     "today": "Heute", "todayHijri": "Nach dem Hijri-Kalender", "todayGreg": "Nach dem gregorianischen Kalender",
@@ -35,6 +36,7 @@ export default {
     "listen": "▶ Anhören",
   },
   en: {
+    "qs.days": "Days & nights", "qs.hijri": "Months & years",
     "q.hpos": "Which number is this Hijri month?",
     "set.days": "Days of the week", "set.hijri": "Hijri months", "set.greg": "Gregorian months",
     "today": "Today", "todayHijri": "In the Hijri calendar", "todayGreg": "In the Gregorian calendar",
@@ -69,6 +71,7 @@ export default {
     "listen": "▶ Listen",
   },
   fr: {
+    "qs.days": "Jours & nuits", "qs.hijri": "Mois & années",
     "q.hpos": "Quel est le numéro de ce mois hégirien ?",
     "set.days": "Jours de la semaine", "set.hijri": "Mois hégiriens", "set.greg": "Mois grégoriens",
     "today": "Aujourd'hui", "todayHijri": "Selon le calendrier hégirien", "todayGreg": "Selon le calendrier grégorien",
@@ -103,6 +106,7 @@ export default {
     "listen": "▶ Écouter",
   },
   ru: {
+    "qs.days": "Дни и ночи", "qs.hijri": "Месяцы и годы",
     "q.hpos": "Какой это по счёту месяц хиджры?",
     "set.days": "Дни недели", "set.hijri": "Месяцы хиджры", "set.greg": "Григорианские месяцы",
     "today": "Сегодня", "todayHijri": "По календарю хиджры", "todayGreg": "По григорианскому календарю",
@@ -137,6 +141,7 @@ export default {
     "listen": "▶ Слушать",
   },
   tr: {
+    "qs.days": "Günler ve geceler", "qs.hijri": "Aylar ve yıllar",
     "q.hpos": "Bu kaçıncı hicrî ay?",
     "set.days": "Haftanın günleri", "set.hijri": "Hicrî aylar", "set.greg": "Miladî aylar",
     "today": "Bugün", "todayHijri": "Hicrî takvime göre", "todayGreg": "Miladî takvime göre",

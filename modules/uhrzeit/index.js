@@ -6,6 +6,9 @@
 import { showWorksheets, toAr, rnd, shuffle, esc, loadCss, judge } from "../../js/shared.js";
 import { makeT } from "../../js/i18n.js";
 import DICT from "./lang.js";
+import { quranQuiz, quranDoneCount } from "../../js/quranquiz.js";
+import { SECTIONS, SURAH, PASSAGES } from "./quran.js";
+import { t as gt } from "../../js/i18n.js";
 
 const T = makeT(DICT);
 const arS = (s) => `<span class="ar" lang="ar">${s}</span>`;
@@ -68,18 +71,18 @@ function clock(h, m, { small = false, interactive = false } = {}) {
 export default {
   percent(p) {
     const m = p.mastery || {};
-    return (MINUTES.reduce((s, k) => s + Math.min(m[k] || 0, MASTER_AT), 0) / (MINUTES.length * MASTER_AT)) * 100;
+    return (MINUTES.reduce((s, k) => s + Math.min(m[k] || 0, MASTER_AT), 0) / (MINUTES.length * MASTER_AT)) * 85 + (quranDoneCount(p, SECTIONS) / SECTIONS.length) * 15;
   },
   // Stufen für den Lernplan (Anteil der Minuten-Muster)
   milestones() {
-    const pc = (n) => Math.round((n / MINUTES.length) * 100);
-    return [{ pct: pc(1), label: T("ms.full") }, { pct: pc(4), label: T("ms.quarter") }, { pct: pc(6), label: T("ms.third") }, { pct: 100, label: T("ms.all") }];
+    const pc = (n) => Math.round((n / MINUTES.length) * 85);
+    return [{ pct: pc(1), label: T("ms.full") }, { pct: pc(4), label: T("ms.quarter") }, { pct: pc(6), label: T("ms.third") }, { pct: 85, label: T("ms.all") }, { pct: 100, label: gt("qq.tab") }];
   },
   summary(p) {
     const m = p.mastery || {};
     return T("sum", { a: MINUTES.filter((k) => (m[k] || 0) >= MASTER_AT).length, b: MINUTES.length });
   },
-  extraStats(p) { return T("record", { n: p.gameBest || 0, m: ROUNDS }); },
+  extraStats(p) { return T("record", { n: p.gameBest || 0, m: ROUNDS }) + " · " + gt("qq.extra", { a: quranDoneCount(p, SECTIONS), b: SECTIONS.length }); },
 
   mount(root, api) {
     loadCss(import.meta.url, "style.css");
@@ -97,10 +100,12 @@ export default {
     function frame(body) {
       root.innerHTML = `
         <div class="tabs" role="group" aria-label="${T("tabsAria")}">
-          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["blaetter", api.t("tab.sheets")]]
+          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["blaetter", api.t("tab.sheets")], ["quran", api.t("qq.tab")]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
-      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { S.tab = b.dataset.tab; show(); }));
+      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { QQ.reset(); S.tab = b.dataset.tab; show(); }));
+      const act = root.querySelector('.tabs [aria-pressed="true"]');      // aktiven Tab auf dem Handy sichtbar machen
+      if (act && act.parentElement.scrollWidth > act.parentElement.clientWidth) act.parentElement.scrollLeft = act.offsetLeft - 16;
     }
     const table = (h, clickable) => `<div class="tablewrap"><table class="ref"><tbody>${MINUTES.map((m) => `
       <tr${clickable ? ` data-m="${m}" tabindex="0"` : ""}><td class="u-time">${fmt(h, m)}</td><td class="a" lang="ar">${MIN[m][0]}</td><td class="t">${T("m" + m)}</td></tr>`).join("")}</tbody></table></div>`;
@@ -137,8 +142,9 @@ export default {
           <div class="tablewrap"><table class="ref"><tbody>${DAYTIME.map(([a, t], i) => `<tr><td class="a" lang="ar">${a}</td><td class="t">${t}</td><td>${T("d" + i)}</td></tr>`).join("")}</tbody></table></div>
         </div>
         <div class="card explain"><h2>${T("all")}</h2>${table(3, false)}</div>
-        <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button></div>`);
+        <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button><button class="btn" data-goq>${api.t("qq.go")}</button></div>`);
       root.querySelector("[data-go]").onclick = () => { S.tab = "lernen"; show(); };
+      root.querySelector("[data-goq]").onclick = () => { S.tab = "quran"; show(); window.scrollTo(0, 0); };
     }
 
     // ---------------- Lernen ----------------
@@ -286,7 +292,10 @@ export default {
 
     function blaetter() { frame(`<div id="wsRoot" style="display:flex;flex-direction:column;gap:16px"></div>`); showWorksheets(root.querySelector("#wsRoot"), import.meta.url); }
 
-    function show() { ({ erklaerung, lernen, aufgaben, spiel, blaetter })[S.tab](); }
+    const QQ = quranQuiz({ api, frame, root, base: import.meta.url, SECTIONS, SURAH, PASSAGES, secLabel: (k) => T("qs." + k), isActive: () => S.tab === "quran" });
+    const quran = () => QQ.show();
+    function show() { ({ erklaerung, lernen, aufgaben, spiel, blaetter, quran })[S.tab](); }
     show();
+    return () => QQ.stop();
   },
 };

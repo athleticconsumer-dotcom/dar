@@ -2,6 +2,7 @@
 // Die Vergleiche in den Erklärungen sind bewusst pro Sprache angepasst (z. B. „einundzwanzig“ vs. „twenty-one“).
 export default {
   de: {
+    "qs.small": "1 bis 10", "qs.tens": "11 bis 99", "qs.big": "Hundert & Tausend",
     sum: "{a} von {b} Bereichen", record: "Sprint-Rekord {n}", listen: "🔊 Anhören", rangeAria: "Zahlenbereich", tabsAria: "Bereich der Rubrik",
     "range.zehner": "Zehner", "range.hunderter": "Hunderter",
     h1: "1 · Die Ziffern",
@@ -27,6 +28,7 @@ export default {
     penalty: "Falsche Antworten kosten 3 Sekunden.", again: "Noch einmal",
   },
   en: {
+    "qs.small": "1 to 10", "qs.tens": "11 to 99", "qs.big": "Hundreds & thousands",
     sum: "{a} of {b} ranges", record: "Sprint record {n}", listen: "🔊 Listen", rangeAria: "Number range", tabsAria: "Section of the topic",
     "range.zehner": "Tens", "range.hunderter": "Hundreds",
     h1: "1 · The digits",
@@ -52,6 +54,7 @@ export default {
     penalty: "Wrong answers cost 3 seconds.", again: "Once more",
   },
   fr: {
+    "qs.small": "1 à 10", "qs.tens": "11 à 99", "qs.big": "Centaines & milliers",
     sum: "{a} plages sur {b}", record: "Record du sprint {n}", listen: "🔊 Écouter", rangeAria: "Plage de nombres", tabsAria: "Partie de la rubrique",
     "range.zehner": "Dizaines", "range.hunderter": "Centaines",
     h1: "1 · Les chiffres",
@@ -77,6 +80,7 @@ export default {
     penalty: "Chaque erreur coûte 3 secondes.", again: "Encore une fois",
   },
   ru: {
+    "qs.small": "От 1 до 10", "qs.tens": "От 11 до 99", "qs.big": "Сотни и тысячи",
     sum: "освоено диапазонов: {a} из {b}", record: "рекорд спринта {n}", listen: "🔊 Слушать", rangeAria: "Диапазон чисел", tabsAria: "Часть раздела",
     "range.zehner": "Десятки", "range.hunderter": "Сотни",
     h1: "1 · Цифры",
@@ -102,6 +106,7 @@ export default {
     penalty: "Каждая ошибка стоит 3 секунды.", again: "Ещё раз",
   },
   tr: {
+    "qs.small": "1'den 10'a", "qs.tens": "11'den 99'a", "qs.big": "Yüzler ve binler",
     sum: "{b} aralıktan {a} tanesi", record: "Sprint rekoru {n}", listen: "🔊 Dinle", rangeAria: "Sayı aralığı", tabsAria: "Bölümün kısmı",
     "range.zehner": "Onluklar", "range.hunderter": "Yüzlükler",
     h1: "1 · Rakamlar",

@@ -7,6 +7,9 @@ import { showWorksheets, toAr, rnd, shuffle, esc, loadCss, judge, AR_DIGITS } fr
 import { words, RANGES, MASTER_AT, pickIn, stepIn, inRange } from "./data.js";
 import { makeT } from "../../js/i18n.js";
 import DICT from "./lang.js";
+import { quranQuiz, quranDoneCount } from "../../js/quranquiz.js";
+import { SECTIONS, SURAH, PASSAGES } from "./quran.js";
+import { t as gt } from "../../js/i18n.js";
 
 const T = makeT(DICT);
 const rl = (r) => (r.values ? T("range." + r.key) : r.label);   // Bereichsname in der aktuellen Sprache
@@ -17,15 +20,15 @@ const SPRINT_SECONDS = 60;
 export default {
   percent(p) {
     const m = p.mastery || {};
-    return (RANGES.reduce((s, r) => s + Math.min(m[r.key] || 0, MASTER_AT), 0) / (RANGES.length * MASTER_AT)) * 100;
+    return (RANGES.reduce((s, r) => s + Math.min(m[r.key] || 0, MASTER_AT), 0) / (RANGES.length * MASTER_AT)) * 85 + (quranDoneCount(p, SECTIONS) / SECTIONS.length) * 15;
   },
   summary(p) {
     const m = p.mastery || {};
     return T("sum", { a: RANGES.filter((r) => (m[r.key] || 0) >= MASTER_AT).length, b: RANGES.length });
   },
-  extraStats(p) { return T("record", { n: p.sprintBest || 0 }); },
+  extraStats(p) { return T("record", { n: p.sprintBest || 0 }) + " · " + gt("qq.extra", { a: quranDoneCount(p, SECTIONS), b: SECTIONS.length }); },
   // Stufen für den Lernplan: jeder Bereich schließt die vorherigen ein
-  milestones() { return RANGES.map((r, i) => ({ pct: Math.round(((i + 1) / RANGES.length) * 100), label: rl(r) })); },
+  milestones() { return RANGES.map((r, i) => ({ pct: Math.round(((i + 1) / RANGES.length) * 85), label: rl(r) })).concat([{ pct: 100, label: gt("qq.tab") }]); },
 
   mount(root, api) {
     loadCss(import.meta.url, "style.css");
@@ -46,10 +49,12 @@ export default {
     function frame(body) {
       root.innerHTML = `
         <div class="tabs" role="group" aria-label="${T("tabsAria")}">
-          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["blaetter", api.t("tab.sheets")]]
+          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["blaetter", api.t("tab.sheets")], ["quran", api.t("qq.tab")]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
-      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { stopTimer(); S.tab = b.dataset.tab; show(); }));
+      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { stopTimer(); QQ.reset(); S.tab = b.dataset.tab; show(); }));
+      const act = root.querySelector('.tabs [aria-pressed="true"]');      // aktiven Tab auf dem Handy sichtbar machen
+      if (act && act.parentElement.scrollWidth > act.parentElement.clientWidth) act.parentElement.scrollLeft = act.offsetLeft - 16;
     }
 
     // ---------------- Erklärung ----------------
@@ -90,8 +95,9 @@ export default {
           <h2>${T("h7")}</h2>
           <p>${T("p7", { ex1: arS("ثَلَاثَةُ كُتُب"), ex2: arS("ثَلَاثُ سَاعَات"), kitab: arS("كِتَاب"), saa: arS("سَاعَة") })}</p>
         </div>
-        <div class="row center"><button class="btn primary" data-go="lernen">${T("toLearn")}</button></div>`);
+        <div class="row center"><button class="btn primary" data-go="lernen">${T("toLearn")}</button><button class="btn" data-goq>${api.t("qq.go")}</button></div>`);
       root.querySelector("[data-go]").onclick = () => { S.tab = "lernen"; show(); };
+      root.querySelector("[data-goq]").onclick = () => { S.tab = "quran"; show(); window.scrollTo(0, 0); };
     }
 
     // ---------------- Lernen ----------------
@@ -242,10 +248,12 @@ export default {
 
     function blaetter() { frame(`<div id="wsRoot" style="display:flex;flex-direction:column;gap:16px"></div>`); showWorksheets(root.querySelector("#wsRoot"), import.meta.url); }
 
+    const QQ = quranQuiz({ api, frame, root, base: import.meta.url, SECTIONS, SURAH, PASSAGES, secLabel: (k) => T("qs." + k), isActive: () => S.tab === "quran" });
+    const quran = () => QQ.show();
     function show() {
-      ({ erklaerung, lernen, aufgaben, spiel, blaetter })[S.tab]();
+      ({ erklaerung, lernen, aufgaben, spiel, blaetter, quran })[S.tab]();
     }
     show();
-    return stopTimer;   // wird beim Verlassen der Rubrik aufgerufen
+    return () => { stopTimer(); QQ.stop(); };   // wird beim Verlassen der Rubrik aufgerufen
   },
 };
