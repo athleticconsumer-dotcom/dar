@@ -174,4 +174,5 @@ export default {
   "sound.offTitle": "Ton ist aus. Tippen zum Einschalten.",
   "sound.offToast": "Ton aus. Die App liest nichts mehr vor.",
   "sound.onToast": "Ton an.",
+  "why.lebewesen": "Die Lektion deines Lehrers: Menschen, Tiere, Pflanzen und Dinge aus dem Alltag.",
 };

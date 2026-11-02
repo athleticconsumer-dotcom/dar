@@ -174,4 +174,5 @@ export default {
   "sound.offTitle": "Sound is off. Tap to turn on.",
   "sound.offToast": "Sound off. The app won't read anything aloud.",
   "sound.onToast": "Sound on.",
+  "why.lebewesen": "Your teacher's lesson: people, animals, plants and everyday things.",
 };

@@ -108,6 +108,15 @@ export const RUBRIKEN = [
     minutes: 150,
     load: () => import("../modules/koerper/index.js"),
   },
+  {
+    id: "lebewesen", status: "live",
+    title: { de: "Lebewesen & Dinge", en: "Living beings & things", fr: "Êtres vivants & choses", ru: "Живые существа и предметы", tr: "Canlılar ve eşyalar" }, ar: "الكَائِنَات",
+    desc: { de: "Menschen, Tiere, Pflanzen, Insekten, Gegenstände und Flüssigkeiten, mit Bildern und Sortier-Sprint.", en: "People, animals, plants, insects, objects and fluids, with pictures and a sorting sprint.", fr: "Personnes, animaux, plantes, insectes, objets et liquides, avec images et sprint de tri.", ru: "Люди, животные, растения, насекомые, предметы и жидкости, с картинками и спринтом-сортировкой.", tr: "İnsanlar, hayvanlar, bitkiler, böcekler, eşyalar ve sıvılar; resimlerle ve sıralama sprintiyle." },
+    needs: [], level: 1,
+    color: { light: "#3E6B2E", dark: "#A6D68F" },
+    minutes: 150,
+    load: () => import("../modules/lebewesen/index.js"),
+  },
 
   // ---------------- GRAMMATIK-WEG · Level 1 ----------------
   {

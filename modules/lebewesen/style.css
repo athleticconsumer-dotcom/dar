@@ -1,0 +1,55 @@
+/* Rubrik Lebewesen & Dinge – Bildkarten mit Emoji, Grün-Töne */
+.mod-lebewesen .ar{font-family:var(--f-ar);font-size:1.2em}
+.mod-lebewesen .lw-over,.mod-lebewesen .lw-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.mod-lebewesen .lw-card{display:flex;flex-direction:column;align-items:center;gap:0;padding:12px 8px;border-radius:18px;cursor:pointer;font:inherit;color:var(--body);
+  border:1.5px solid color-mix(in srgb,var(--m) 30%,var(--line));background:var(--surface)}
+.mod-lebewesen .lw-card:hover{border-color:var(--m);background:var(--m-soft)}
+.mod-lebewesen .lw-e{font-size:2.1rem;line-height:1.2}
+.mod-lebewesen .lw-e-none{color:var(--gold-line);font-size:1.6rem}
+.mod-lebewesen .lw-ar{font:400 1.7rem/1.7 var(--f-ar);color:var(--m)}
+.mod-lebewesen .lw-tr{font-style:italic;color:var(--muted);font-size:.82rem}
+.mod-lebewesen .lw-g{font-weight:600;font-size:.88rem;text-align:center;color:var(--ink)}
+
+.mod-lebewesen .lw-names{display:flex;flex-wrap:wrap;gap:8px}
+.mod-lebewesen .lw-names button{display:flex;flex-direction:column;align-items:center;padding:6px 14px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit}
+.mod-lebewesen .lw-names button.f{background:color-mix(in srgb,var(--gold-a) 12%,var(--surface))}
+.mod-lebewesen .lw-names span{font:400 1.45rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-lebewesen .lw-names small{font-size:.75rem;color:var(--muted)}
+.mod-lebewesen .lw-names.big span{font-size:1.8rem}
+.mod-lebewesen .lw-act{padding:12px 14px;border-radius:16px;border:1.5px dashed var(--gold-line);background:var(--paper)}
+.mod-lebewesen .lw-act p{margin:0 0 8px}
+.mod-lebewesen .lw-inputs{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.mod-lebewesen .lw-inputs input{font:500 .95rem var(--f-body);padding:9px 11px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+
+.mod-lebewesen .lw-units{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.mod-lebewesen .lw-units button{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:2px 8px;padding:8px;border-radius:14px;border:1px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit;color:var(--muted)}
+.mod-lebewesen .lw-units span{font:400 1.4rem/1.6 var(--f-ar);color:var(--m)}
+.mod-lebewesen .lw-units i{font-style:normal;color:var(--gold)}
+.mod-lebewesen .lw-units small{flex-basis:100%;text-align:center;font-size:.78rem}
+.mod-lebewesen .lw-suras{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.mod-lebewesen .lw-suras button{display:flex;flex-direction:column;align-items:center;padding:10px 6px;border-radius:16px;border:1.5px solid var(--gold-a);background:var(--paper);cursor:pointer;font:inherit}
+.mod-lebewesen .lw-suras span[lang]{font:700 1.5rem/1.6 var(--f-ar);color:var(--heading)}
+.mod-lebewesen .lw-suras small{font-size:.78rem;color:var(--muted);text-align:center}
+.mod-lebewesen .lw-fav{display:flex;flex-wrap:wrap;gap:8px}
+.mod-lebewesen .lw-fav span{font-family:var(--f-ar);font-size:1.15rem}
+.mod-lebewesen .lw-favline{margin:6px 0 0;font-weight:600}
+
+.mod-lebewesen .lw-big{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:400 clamp(2.4rem,10vw,3.4rem)/1.7 var(--f-ar);color:var(--ink)}
+.mod-lebewesen .lw-q{display:flex;flex-direction:column;align-items:center;gap:4px}
+.mod-lebewesen .lw-q-e{font-size:3.2rem;line-height:1.1}
+.mod-lebewesen .lw-q b{font:700 1.5rem var(--f-body);color:var(--ink);text-align:center}
+.mod-lebewesen .lw-cats{grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+.mod-lebewesen .lw-cats .opt,.mod-lebewesen .lw-sprint-btns .opt{flex-direction:column;gap:0}
+.mod-lebewesen .lw-cats span,.mod-lebewesen .lw-sprint-btns span{font:400 1.35rem/1.5 var(--f-ar);color:var(--m)}
+.mod-lebewesen .lw-cats small,.mod-lebewesen .lw-sprint-btns small{font:500 .78rem var(--f-body);color:var(--muted)}
+.mod-lebewesen .lw-game{display:flex;flex-direction:column;gap:12px}
+.mod-lebewesen .lw-game h2{margin:0}
+.mod-lebewesen .lw-best{text-align:center;margin:0;font-weight:600;color:var(--heading)}
+.mod-lebewesen .lw-game-head{display:flex;justify-content:space-between}
+.mod-lebewesen .lw-timebar{height:6px;border-radius:999px;background:var(--m-soft);overflow:hidden}
+.mod-lebewesen .lw-timebar i{display:block;height:100%;background:var(--m)}
+.mod-lebewesen .lw-sprint-word{text-align:center;font:400 clamp(2.8rem,12vw,3.8rem)/1.7 var(--f-ar);color:var(--ink);border-radius:18px;transition:background .25s}
+.mod-lebewesen .lw-sprint-word.ok{background:color-mix(in srgb,var(--good) 10%,transparent)}
+.mod-lebewesen .lw-sprint-word.no{background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.mod-lebewesen .lw-sprint-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:420px){.mod-lebewesen .lw-sprint-btns{grid-template-columns:repeat(2,1fr)}}

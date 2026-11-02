@@ -174,4 +174,5 @@ export default {
   "sound.offTitle": "Ses kapalı. Açmak için dokun.",
   "sound.offToast": "Ses kapalı. Uygulama artık sesli okumayacak.",
   "sound.onToast": "Ses açık.",
+  "why.lebewesen": "Hocanın dersi: insanlar, hayvanlar, bitkiler ve günlük eşyalar.",
 };

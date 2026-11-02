@@ -174,4 +174,5 @@ export default {
   "sound.offTitle": "Son coupé. Touche pour activer.",
   "sound.offToast": "Son coupé. L'application ne lit plus rien à voix haute.",
   "sound.onToast": "Son activé.",
+  "why.lebewesen": "La leçon de ton professeur : personnes, animaux, plantes et objets du quotidien.",
 };
