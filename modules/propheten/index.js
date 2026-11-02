@@ -37,7 +37,7 @@ export const PERSONS = [
   { id: "isa", ar: "عِيسَىٰ", name: { de: "ʿĪsā", en: "ʿĪsā", fr: "ʿĪsā", ru: "Иса", tr: "Îsâ" } },
 ];
 export const livePersons = () => PERSONS.filter((p) => p.data);
-const SURAH = { 18: ["al-Kahf", "الكَهْف"], 20: ["Ṭā-Hā", "طه"], 26: ["ash-Shuʿarāʾ", "الشُّعَرَاء"], 28: ["al-Qaṣaṣ", "القَصَص"] };
+const SURAH = { 18: ["al-Kahf", "الكَهْف"], 20: ["Ṭā-Hā", "طه"], 21: ["al-Anbiyāʾ", "الأَنْبِيَاء"], 26: ["ash-Shuʿarāʾ", "الشُّعَرَاء"], 28: ["al-Qaṣaṣ", "القَصَص"], 37: ["aṣ-Ṣāffāt", "الصَّافَّات"], 68: ["al-Qalam", "القَلَم"] };
 const PASS_AT = 4;
 const AR = "٠١٢٣٤٥٦٧٨٩", ar = (n) => String(n).replace(/\d/g, (d) => AR[d]);
 const WAQF = /[ۖ-ۜ۞۩]/g;

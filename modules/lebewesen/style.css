@@ -53,3 +53,11 @@
 .mod-lebewesen .lw-sprint-word.no{background:color-mix(in srgb,var(--bad) 10%,transparent)}
 .mod-lebewesen .lw-sprint-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 @media (max-width:420px){.mod-lebewesen .lw-sprint-btns{grid-template-columns:repeat(2,1fr)}}
+.mod-lebewesen .lw-qhome{display:flex;flex-direction:column;gap:12px}
+.mod-lebewesen .lw-qhome h2,.mod-lebewesen .lw-qhome p{margin:0}
+.mod-lebewesen .lw-qsecs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.mod-lebewesen .lw-qdone{display:flex;flex-direction:column;gap:12px;text-align:center}
+.mod-lebewesen .lw-found{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.mod-lebewesen .lw-found div{display:flex;flex-direction:column;align-items:center;padding:8px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface)}
+.mod-lebewesen .lw-found .ar{font-size:1.6rem;line-height:1.8}
+.mod-lebewesen .lw-found small{color:var(--muted);font-size:.75rem}

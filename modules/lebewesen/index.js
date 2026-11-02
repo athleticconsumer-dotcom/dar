@@ -3,29 +3,40 @@
 //  Tabs: Erklärung (mit den Aufgaben der Lektion) · Lernen · Aufgaben · Spiel (Sortier-Sprint)
 //  Fortschritt: mastery: { <id>: richtige }, sprintBest, names: [5], fav: [ids]
 // =====================================================================
-import { rnd, shuffle, esc, loadCss } from "../../js/shared.js";
+import { rnd, shuffle, esc, loadCss, toAr } from "../../js/shared.js";
 import { makeT, L } from "../../js/i18n.js";
 import DICT from "./lang.js";
 import { OVERVIEW, NAMES, WORDS, GROUPS, GROUP_AR, UNITS, SURAS, MASTER_AT, SPRINT_SECONDS, SPRINT_GOAL } from "./data.js";
+import { SECTIONS, SURAH, PASSAGES } from "./quran.js";
 
 const T = makeT(DICT);
 const W = (id) => WORDS.find((w) => w.id === id);
 const ar = (s, cls = "") => `<span class="ar ${cls}" lang="ar" dir="rtl">${s}</span>`;
 const sayOf = (w) => w.say || w.ar;
+const quranDone = (p) => SECTIONS.filter((k) => p.quran?.[k]).length;
+const WAQF = /[ۖ-ۜ۞۩]/g;
+const cleanW = (w) => w.replace(WAQF, "");
+const recitation = (s, a) => `https://everyayah.com/data/Alafasy_128kbps/${String(s).padStart(3, "0")}${String(a).padStart(3, "0")}.mp3`;
+let QTEXT = null;
+const loadQ = async () => QTEXT || (QTEXT = await (await fetch(new URL("quran.json", import.meta.url))).json());
 const score = (p) => WORDS.reduce((s, w) => s + Math.min(p.mastery?.[w.id] || 0, MASTER_AT), 0) / (WORDS.length * MASTER_AT);
 
 export default {
-  percent(p) { return score(p) * 80 + (Math.min(p.sprintBest || 0, SPRINT_GOAL) / SPRINT_GOAL) * 20; },
+  percent(p) { return score(p) * 70 + (Math.min(p.sprintBest || 0, SPRINT_GOAL) / SPRINT_GOAL) * 15 + (quranDone(p) / SECTIONS.length) * 15; },
   summary(p) { return T("sum", { a: WORDS.filter((w) => (p.mastery?.[w.id] || 0) >= MASTER_AT).length, b: WORDS.length }); },
-  extraStats(p) { return T("extra", { n: p.sprintBest || 0 }); },
+  extraStats(p) { return T("extra", { n: p.sprintBest || 0 }) + " · " + T("qExtra", { a: quranDone(p), b: SECTIONS.length }); },
   milestones() {
     const upTo = (gs) => Math.round((WORDS.filter((w) => gs.includes(w.grp)).length / WORDS.length) * 80);
-    return [{ pct: upTo(["animal"]), label: T("ms.animal") }, { pct: upTo(["animal", "plant", "insect"]), label: T("ms.pi") }, { pct: 80, label: T("ms.of") }, { pct: 100, label: T("ms.all") }];
+    const k = (n) => Math.round((WORDS.filter((w) => GROUPS.indexOf(w.grp) <= n).length / WORDS.length) * 70);
+    return [{ pct: k(0), label: T("ms.animal") }, { pct: k(2), label: T("ms.pi") }, { pct: 70, label: T("ms.of") }, { pct: 100, label: T("ms.all") }];
   },
 
   mount(root, api) {
     loadCss(import.meta.url, "style.css");
-    const S = { tab: api.progress().answered ? "aufgaben" : "erklaerung", grp: "animal", last: null, sprint: null };
+    loadCss(import.meta.url, "../propheten/style.css");     // Mushaf-Ansicht und Farben wie bei den Geschichten
+    const S = { tab: api.progress().answered ? "aufgaben" : "erklaerung", grp: "animal", last: null, sprint: null, q: null };
+    let audio = null;
+    const stopAudio = () => { try { audio && audio.pause(); } catch (e) {} audio = null; };
     let timer = null;
     const stop = () => { clearInterval(timer); timer = null; };
     const credit = (id) => api.update((p) => { p.mastery = p.mastery || {}; p.mastery[id] = (p.mastery[id] || 0) + 1; });
@@ -34,11 +45,13 @@ export default {
     function frame(body) {
       root.innerHTML = `
         <div class="tabs" role="group">
-          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")]]
+          ${[["erklaerung", api.t("tab.explain")], ["lernen", api.t("tab.learn")], ["aufgaben", api.t("tab.tasks")], ["spiel", api.t("tab.game")], ["quran", T("tab.quran")]]
             .map(([k, t]) => `<button data-tab="${k}" aria-pressed="${S.tab === k}">${t}</button>`).join("")}
         </div>${body}`;
-      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { stop(); S.tab = b.dataset.tab; S.sprint = null; show(); }));
+      root.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { stop(); stopAudio(); S.tab = b.dataset.tab; S.sprint = null; S.q = null; show(); }));
       root.querySelectorAll("[data-say]").forEach((b) => (b.onclick = () => api.speak(b.dataset.say)));
+      const act = root.querySelector('.tabs [aria-pressed="true"]');      // aktiven Tab auf dem Handy sichtbar machen
+      if (act && act.parentElement.scrollWidth > act.parentElement.clientWidth) act.parentElement.scrollLeft = act.offsetLeft - 16;
     }
     const card = (w, done) => `<button class="lw-card" data-say="${esc(sayOf(w))}">
       ${w.e ? `<span class="lw-e" aria-hidden="true">${w.e}</span>` : `<span class="lw-e lw-e-none" aria-hidden="true">•</span>`}
@@ -73,8 +86,9 @@ export default {
           <div class="lw-fav" dir="rtl">${WORDS.filter((w) => w.grp === "animal").map((w) => `<button class="chip" data-fav="${w.id}" aria-pressed="${fav.includes(w.id)}">${w.e} <span lang="ar">${w.ar}</span></button>`).join("")}</div>
           ${fav.length ? `<p class="lw-favline">${T("fav")} ${ar(fav.map((id) => W(id).ar).join("، "))}</p>` : ""}
         </div>
-        <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button></div>`);
+        <div class="row center"><button class="btn primary" data-go>${T("toLearn")}</button><button class="btn" data-goq>${T("qGo")}</button></div>`);
       root.querySelector("[data-go]").onclick = () => { S.tab = "lernen"; show(); };
+      root.querySelector("[data-goq]").onclick = () => { S.tab = "quran"; show(); window.scrollTo(0, 0); };
       root.querySelectorAll("[data-n]").forEach((inp) => (inp.onchange = () => api.update((q) => { q.names = q.names || []; q.names[+inp.dataset.n] = inp.value.trim(); })));
       root.querySelectorAll("[data-fav]").forEach((b) => (b.onclick = () => {
         const id = b.dataset.fav;
@@ -191,8 +205,111 @@ export default {
       }));
     }
 
-    function show() { ({ erklaerung, lernen, aufgaben, spiel })[S.tab](); }
+    // ---------------- Qur'an: Wörter der Lektion in echten Āyāt ----------------
+    const col = (i) => `c${i % 6}`;
+    const glossOf = (P) => L(P.w) || P.w.de;
+    const surahHead = (d) => { const [sn, sa] = SURAH[d.s] || [String(d.s), ""]; return { sn, sa }; };
+    const ayahHtml = (d, inner) => `${d.start ? "" : "… "}${inner}${d.end ? ` <span class="pr-end">﴿${toAr(d.a)}﴾</span>` : " …"}`;
+
+    async function quran() {
+      const Q = await loadQ();
+      if (S.tab !== "quran") return;
+      if (!S.q) return quranHome();
+      const P = PASSAGES.filter((x) => x.sec === S.q.sec)[S.q.k];
+      if (!P) return quranFinish(Q);
+      return S.q.phase === "read" ? quranRead(Q, P) : quranGap(Q, P);
+    }
+    function quranHome() {
+      const done = api.progress().quran || {};
+      frame(`<div class="card lw-qhome">
+        <h2>${T("qTitle")}</h2><p>${T("qLead")}</p>
+        <div class="lw-qsecs">${SECTIONS.map((k) => { const n = PASSAGES.filter((x) => x.sec === k).length;
+          return `<button class="choice" data-sec="${k}"><b>${T("grp." + k)}${done[k] ? " ✓" : ""}</b>${T("qCount", { n })}</button>`; }).join("")}</div>
+        <p class="pr-src">${T("qSrc")}</p>
+      </div>`);
+      root.querySelectorAll("[data-sec]").forEach((b) => (b.onclick = () => { S.q = { sec: b.dataset.sec, k: 0, phase: "read", mistakes: 0 }; quran(); window.scrollTo(0, 0); }));
+    }
+    function hud(P, d, label) {
+      const list = PASSAGES.filter((x) => x.sec === S.q.sec), { sn } = surahHead(d);
+      return `<div class="hud"><span>${T("grp." + S.q.sec)} · ${T(label, { k: S.q.k + 1, n: list.length })}</span><span>${T("qSurah", { name: sn })} · ${d.s}:${d.a}</span></div>`;
+    }
+    function quranRead(Q, P) {
+      const d = Q[P.id], words = d.text.split(" "), gl = glossOf(P), { sa } = surahHead(d);
+      const html = words.map((w, i) => `<span class="pr-w ${col(i)}">${w}</span>`).join(" ");
+      const gloss = words.map((w, i) => `<li class="${col(i)}"><span class="ar" lang="ar" dir="rtl">${cleanW(w)}</span><span class="de">${esc(gl[i])}</span></li>`).join("");
+      frame(`${hud(P, d, "qRead")}
+        <article class="pr-mushaf" lang="ar" dir="rtl"><div class="pr-surah"><span>سُورَةُ ${sa}</span></div>
+          <p class="pr-ayah">${ayahHtml(d, html)}</p></article>
+        <p class="note" style="text-align:center">${T("qReadNote")}${d.start && d.end ? "" : " " + T("qPart")}</p>
+        <div class="row center"><button class="btn" id="qRec">${T("qRecite")}</button><button class="btn primary" id="qGap">${T("qToGap")}</button></div>
+        <section class="card pr-wbw"><h3>${T("qWbw")}</h3><ol class="pr-gloss" dir="rtl">${gloss}</ol></section>`);
+      root.querySelector("#qRec").onclick = () => { stopAudio(); audio = new Audio(recitation(d.s, d.a)); audio.play().catch(() => {}); };
+      root.querySelector("#qGap").onclick = () => { stopAudio(); S.q.phase = "gap"; quran(); window.scrollTo(0, 0); };
+    }
+    function quranGap(Q, P) {
+      const d = Q[P.id], words = d.text.split(" "), gl = glossOf(P), { sa } = surahHead(d);
+      const gapIdx = [...P.gaps].sort((x, y) => x - y);
+      const answers = gapIdx.map((i) => cleanW(words[i]));
+      const all = PASSAGES.flatMap((x) => x.gaps.map((g) => cleanW(Q[x.id].text.split(" ")[g])));
+      const pool = [...new Set(all.filter((w) => !answers.includes(w)))];
+      const chips = shuffle([...answers, ...shuffle(pool).slice(0, Math.max(2, 5 - answers.length))]);
+      let next = 0, mistakes = 0;
+      const html = words.map((w, i) => {
+        const gi = gapIdx.indexOf(i);
+        if (gi < 0) return `<span class="pr-w ${col(i)}">${w}</span>`;
+        const waqf = (w.match(WAQF) || []).join("");
+        return `<span class="pr-gap ${col(i)}" data-g="${gi}"><small dir="ltr">${esc(gl[i])}</small></span>${waqf ? `<span class="pr-w ${col(i)}">${waqf}</span>` : ""}`;
+      }).join(" ");
+      const gloss = words.map((w, i) => { const gi = gapIdx.indexOf(i);
+        return `<li class="${col(i)}${gi >= 0 ? " is-gap" : ""}" ${gi >= 0 ? `data-gl="${gi}"` : ""}><span class="ar" lang="ar" dir="rtl">${gi >= 0 ? "؟" : cleanW(w)}</span><span class="de">${esc(gl[i])}</span></li>`; }).join("");
+      const last = S.q.k + 1 >= PASSAGES.filter((x) => x.sec === S.q.sec).length;
+      frame(`${hud(P, d, "qGapH")}
+        <article class="pr-mushaf" lang="ar" dir="rtl"><div class="pr-surah"><span>سُورَةُ ${sa}</span></div>
+          <p class="pr-ayah">${ayahHtml(d, html)}</p></article>
+        <p class="note" style="text-align:center">${T("qGapNote")}</p>
+        <div class="pr-chips" lang="ar" dir="rtl">${chips.map((c) => `<button class="pr-chip" data-w="${esc(c)}">${c}</button>`).join("")}</div>
+        <div class="feedback" aria-live="polite"></div>
+        <div id="qAfter" hidden class="row center"><button class="btn" id="qRec">${T("qRecite")}</button><button class="btn primary" id="qNext">${last ? T("qFinish") : T("qNext")}</button></div>
+        <section class="card pr-wbw"><h3>${T("qWbw")}</h3><ol class="pr-gloss" dir="rtl">${gloss}</ol></section>`);
+      const fb = root.querySelector(".feedback");
+      root.querySelectorAll(".pr-chip").forEach((b) => (b.onclick = () => {
+        if (next >= answers.length) return;
+        if (b.dataset.w === answers[next]) {
+          const slot = root.querySelector(`.pr-gap[data-g="${next}"]`);
+          slot.textContent = b.dataset.w; slot.classList.add("filled");
+          const g2 = root.querySelector(`[data-gl="${next}"] .ar`); if (g2) g2.textContent = b.dataset.w;
+          b.disabled = true; b.classList.add("used"); next++; api.answer(true);
+          if (next === answers.length) {
+            S.q.mistakes += mistakes;
+            fb.className = "feedback ok"; fb.textContent = mistakes ? T("qDoneN", { n: mistakes }) : T("qPerfect");
+            root.querySelectorAll(".pr-chip:not(.used)").forEach((c) => (c.disabled = true));
+            root.querySelector("#qAfter").hidden = false;
+            root.querySelector("#qRec").onclick = () => { stopAudio(); audio = new Audio(recitation(d.s, d.a)); audio.play().catch(() => {}); };
+            root.querySelector("#qNext").onclick = () => { stopAudio(); S.q.k++; S.q.phase = "read"; quran(); window.scrollTo(0, 0); };
+          }
+        } else {
+          mistakes++; api.answer(false);
+          b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); setTimeout(() => b.classList.remove("shake"), 700);
+          fb.className = "feedback no"; fb.textContent = T("qWrong");
+        }
+      }));
+    }
+    function quranFinish(Q) {
+      const sec = S.q.sec;
+      api.update((p) => { p.quran = p.quran || {}; p.quran[sec] = true; });
+      const found = PASSAGES.filter((x) => x.sec === sec).flatMap((x) => { const ws = Q[x.id].text.split(" "), gl = glossOf(x);
+        return x.gaps.map((g) => ({ ar: cleanW(ws[g]), g: gl[g], ref: `${Q[x.id].s}:${Q[x.id].a}` })); });
+      frame(`<div class="card pr-result lw-qdone">
+        <h2>${T("qDoneTitle")}</h2>
+        <p>${T("qDoneText")}</p>
+        <div class="pr-learned lw-found" dir="rtl">${found.map((f, i) => `<div class="${col(i)}"><span class="ar" lang="ar">${f.ar}</span><span dir="ltr">${esc(f.g)}</span><small>${f.ref}</small></div>`).join("")}</div>
+        <div class="row center"><button class="btn primary" id="qBack">${T("qBack")}</button></div>
+      </div>`);
+      root.querySelector("#qBack").onclick = () => { S.q = null; quran(); };
+    }
+
+    function show() { ({ erklaerung, lernen, aufgaben, spiel, quran })[S.tab](); }
     show();
-    return stop;
+    return () => { stop(); stopAudio(); };
   },
 };
