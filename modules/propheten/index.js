@@ -8,6 +8,7 @@
 import { esc, shuffle, loadCss } from "../../js/shared.js";
 import { t, L as tl, lang, missing } from "../../js/i18n.js";
 import musa from "./data/musa.js";
+import yunus from "./data/yunus.js";
 
 export const CATEGORY = {
   id: "propheten",
@@ -31,7 +32,7 @@ export const PERSONS = [
   { id: "musa", ar: "مُوسَىٰ", name: { de: "Mūsā", en: "Mūsā", fr: "Mūsā", ru: "Муса", tr: "Mûsâ" }, data: musa },
   { id: "khidr", ar: "الخَضِر", name: { de: "al-Khiḍr", en: "al-Khiḍr", fr: "al-Khiḍr", ru: "аль-Хидр", tr: "Hızır" } },
   { id: "dhulqarnain", ar: "ذُو القَرْنَيْن", name: { de: "Dhū l-Qarnayn", en: "Dhū l-Qarnayn", fr: "Dhū l-Qarnayn", ru: "Зуль-Карнайн", tr: "Zülkarneyn" } },
-  { id: "yunus", ar: "يُونُس", name: { de: "Yūnus", en: "Yūnus", fr: "Yūnus", ru: "Юнус", tr: "Yûnus" } },
+  { id: "yunus", ar: "يُونُس", name: { de: "Yūnus", en: "Yūnus", fr: "Yūnus", ru: "Юнус", tr: "Yûnus" }, data: yunus },
   { id: "maryam", ar: "مَرْيَم", name: { de: "Maryam", en: "Maryam", fr: "Maryam", ru: "Марьям", tr: "Meryem" } },
   { id: "isa", ar: "عِيسَىٰ", name: { de: "ʿĪsā", en: "ʿĪsā", fr: "ʿĪsā", ru: "Иса", tr: "Îsâ" } },
 ];
@@ -77,6 +78,12 @@ function motif(kind) {
     rolle: `<rect x="55" y="25" width="90" height="55" rx="6" fill="none" stroke="${g}" stroke-width="4"/><circle cx="55" cy="52" r="9" fill="${m}"/><circle cx="145" cy="52" r="9" fill="${m}"/><path d="M75 42 h50 M75 54 h50 M75 66 h32" stroke="${g}" stroke-width="3"/>`,
     stab: `<path d="M100 15 V88" stroke="${m}" stroke-width="5" stroke-linecap="round"/><path d="M60 80 q15 -25 0 -40 q-15 -15 0 -25" fill="none" stroke="${g}" stroke-width="3"/><path d="M140 80 q-15 -25 0 -40 q15 -15 0 -25" fill="none" stroke="${g}" stroke-width="3"/>`,
     meer: `<path d="M0 30 Q 20 20 40 30 T 80 30 L80 90 L0 90Z" fill="${g}" opacity=".35"/><path d="M120 30 Q 140 20 160 30 T 200 30 L200 90 L120 90Z" fill="${g}" opacity=".35"/><path d="M100 20 V90" stroke="${m}" stroke-width="4" stroke-dasharray="3 6"/>`,
+    stadt: `<path d="M30 85 V55 h22 V40 h18 V85 M78 85 V50 h26 V85 M112 85 V35 l14 -12 l14 12 V85 M148 85 V58 h24 V85" fill="none" stroke="${m}" stroke-width="4" stroke-linejoin="round"/><path d="M20 86 H185" stroke="${g}" stroke-width="4"/><circle cx="126" cy="18" r="3" fill="${g}"/>`,
+    schiff: `<path d="M0 78 Q 25 68 50 78 T 100 78 T 150 78 T 200 78" fill="none" stroke="${g}" stroke-width="4"/><path d="M55 62 h90 l-14 16 h-62z" fill="${m}"/><path d="M100 62 V18 M100 20 l30 32 h-30" fill="none" stroke="${m}" stroke-width="4" stroke-linejoin="round"/>`,
+    wal: `<path d="M0 80 Q 25 72 50 80 T 100 80 T 150 80 T 200 80" fill="none" stroke="${g}" stroke-width="3" opacity=".6"/><path d="M40 55 Q 70 25 120 38 Q 150 46 158 60 L 182 44 L 176 64 L 186 80 L 160 70 Q 140 82 100 80 Q 55 78 40 55 Z" fill="${m}"/><circle cx="62" cy="50" r="3" fill="${g}"/><path d="M90 30 q-4 -12 4 -16 M98 30 q4 -14 12 -14" fill="none" stroke="${g}" stroke-width="3" stroke-linecap="round"/>`,
+    nacht: `<rect x="0" y="0" width="200" height="95" rx="8" fill="${m}" opacity=".12"/><path d="M118 22 a20 20 0 1 0 14 34 a16 16 0 1 1 -14 -34z" fill="${g}"/><circle cx="50" cy="25" r="2.5" fill="${g}"/><circle cx="75" cy="45" r="2" fill="${g}"/><circle cx="165" cy="30" r="2.5" fill="${g}"/><path d="M0 80 Q 50 70 100 80 T 200 80" fill="none" stroke="${m}" stroke-width="4"/>`,
+    kuerbis: `<path d="M10 85 Q 100 70 190 85" fill="none" stroke="${g}" stroke-width="4"/><path d="M100 82 Q 96 55 104 30" fill="none" stroke="${m}" stroke-width="4"/><path d="M104 40 q-40 -18 -46 12 q30 6 46 -12z M102 52 q40 -16 48 12 q-32 6 -48 -12z M104 30 q-14 -22 6 -24 q8 14 -6 24z" fill="${g}"/><ellipse cx="124" cy="78" rx="12" ry="8" fill="${m}"/>`,
+    sonne: `<path d="M30 80 a70 70 0 0 1 140 0" fill="${g}" opacity=".3"/><circle cx="100" cy="80" r="24" fill="${g}"/><path d="M100 40 V28 M72 52 l-9 -9 M128 52 l9 -9 M58 78 H44 M142 78 H156" stroke="${m}" stroke-width="4" stroke-linecap="round"/><path d="M10 82 H190" stroke="${m}" stroke-width="4"/>`,
     meere: `<path d="M0 40 Q 50 30 100 60 Q 150 30 200 40" fill="none" stroke="${g}" stroke-width="4"/><path d="M0 70 Q 50 60 100 60 Q 150 60 200 70" fill="none" stroke="${g}" stroke-width="3" opacity=".6"/><circle cx="100" cy="60" r="6" fill="${m}"/>`,
   };
   return `<svg class="pr-motif" viewBox="0 0 200 95" aria-hidden="true">${shapes[kind] || shapes.wellen}</svg>`;
