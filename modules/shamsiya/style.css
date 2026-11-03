@@ -1,0 +1,23 @@
+/* Rubrik Sonnen- & Mondbuchstaben – Gelb = Sonne, Blau = Mond */
+.mod-shamsiya{--sun:#A86A0C;--moon:#1F5C9A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-shamsiya{--sun:#F0C27E;--moon:#8EC1F0}}
+:root[data-theme="dark"] .mod-shamsiya{--sun:#F0C27E;--moon:#8EC1F0}
+.mod-shamsiya .sm-sun{--c:var(--sun)} .mod-shamsiya .sm-moon{--c:var(--moon)}
+.mod-shamsiya .sm-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-shamsiya .sm-box{display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 10px;border-radius:18px;cursor:pointer;font:inherit;color:var(--body);text-align:center;border:1.5px solid color-mix(in srgb,var(--c) 45%,var(--line));background:color-mix(in srgb,var(--c) 7%,var(--surface))}
+.mod-shamsiya .sm-box small{font:700 .78rem var(--f-body);color:var(--c)}
+.mod-shamsiya .sm-box span{font:400 2.2rem/1.6 var(--f-ar);color:var(--c)}
+.mod-shamsiya .sm-box em{color:var(--ink);font-weight:600}
+.mod-shamsiya .sm-box i{font-style:normal;font-size:.8rem;color:var(--muted);margin-top:4px}
+.mod-shamsiya .sm-letters{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.mod-shamsiya .sm-letters span{min-width:48px;text-align:center;font:400 1.9rem/1.6 var(--f-ar);color:var(--c);border-radius:12px;border:1.5px solid color-mix(in srgb,var(--c) 40%,var(--line));background:color-mix(in srgb,var(--c) 6%,var(--surface))}
+.mod-shamsiya .sm-moon-t{color:var(--moon)}
+.mod-shamsiya .ls-chip{border-color:color-mix(in srgb,var(--c) 50%,var(--line));background:color-mix(in srgb,var(--c) 8%,var(--surface));cursor:default}
+.mod-shamsiya .ls-chip > span:first-child{color:var(--c)}
+.mod-shamsiya .sm-h{margin:14px 0 6px;color:var(--c)}
+.mod-shamsiya .sm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.mod-shamsiya .sm-grid button{display:flex;flex-direction:column;align-items:center;padding:6px 4px;border-radius:14px;border:1.5px solid color-mix(in srgb,var(--c) 35%,var(--line));background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-shamsiya .sm-grid b{font:700 1.3rem/1.2 var(--f-ar);color:var(--c)}
+.mod-shamsiya .sm-grid span{font:400 1.6rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-shamsiya .sm-grid small{font-size:.72rem;color:var(--muted);text-align:center}
+.mod-shamsiya .opt.sm-sun b,.mod-shamsiya .opt.sm-sun{color:var(--sun)} .mod-shamsiya .opt.sm-moon b,.mod-shamsiya .opt.sm-moon{color:var(--moon)}

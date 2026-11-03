@@ -1,0 +1,21 @@
+/* Rubrik Iḍāfa – Rot = Muḍāf, Blau = Muḍāf ilayh */
+.mod-idafa{--ia:#A33B3B;--ib:#1F5C9A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-idafa{--ia:#F0A0A0;--ib:#8EC1F0}}
+:root[data-theme="dark"] .mod-idafa{--ia:#F0A0A0;--ib:#8EC1F0}
+.mod-idafa .id-parts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-idafa .id-parts > div{display:flex;flex-direction:column;align-items:center;padding:12px 8px;border-radius:18px;border:1.5px solid color-mix(in srgb,var(--c) 45%,var(--line));background:color-mix(in srgb,var(--c) 7%,var(--surface));text-align:center}
+.mod-idafa .id-a{--c:var(--ia)} .mod-idafa .id-b{--c:var(--ib)}
+.mod-idafa .id-parts span{font:400 2.1rem/1.6 var(--f-ar);color:var(--c)}
+.mod-idafa .id-parts small{font-size:.8rem;color:var(--muted)}
+.mod-idafa .id-cmp{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.mod-idafa .id-cmp button{display:flex;flex-direction:column;align-items:center;padding:4px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:400 1.6rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-idafa .id-cmp button.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 7%,var(--surface))}
+.mod-idafa .id-cmp button.no{border-color:color-mix(in srgb,var(--bad) 40%,var(--line));cursor:default}
+.mod-idafa .id-cmp s{color:var(--bad);text-decoration-thickness:2px}
+.mod-idafa .id-cmp small{font:700 .9rem var(--f-body)}
+.mod-idafa .id-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.mod-idafa .id-list button{display:flex;flex-direction:column;align-items:center;padding:6px 8px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-idafa .id-list span{font:400 1.6rem/1.6 var(--f-ar)}
+.mod-idafa .id-list small{font-size:.75rem;color:var(--muted);text-align:center}
+.mod-idafa .id-at{font-weight:400;color:var(--ia)} .mod-idafa .id-bt{font-weight:400;color:var(--ib)}
+.mod-idafa .ls-btns .opt{font-size:1.8rem}

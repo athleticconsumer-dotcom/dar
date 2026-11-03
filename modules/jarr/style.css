@@ -1,0 +1,10 @@
+/* Rubrik Präpositionen */
+.mod-jarr .jr-rows{display:flex;flex-direction:column;gap:6px}
+.mod-jarr .jr-rows button{display:flex;align-items:center;justify-content:center;gap:16px;padding:4px 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:400 1.7rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-jarr .jr-rows i{font:400 1rem var(--f-body);color:var(--gold);font-style:normal}
+.mod-jarr .jr-k{color:var(--m)}
+.mod-jarr .jr-group{margin-top:10px}
+.mod-jarr .jr-group h3{margin:0 0 6px;font-size:1rem}
+.mod-jarr .jr-group h3 span{font:400 1.4rem var(--f-ar);color:var(--m)}
+.mod-jarr .jr-gap{display:inline-block;min-width:2.4em;margin-right:8px;border-bottom:3px dotted var(--gold-a);color:var(--gold)}
+.mod-jarr .ls-tag{font:400 1.2rem var(--f-ar)}

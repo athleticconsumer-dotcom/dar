@@ -1,0 +1,12 @@
+/* Rubrik Personalpronomen – Tabelle wie bei der Vergangenheit: rechts Einzahl */
+.mod-damair{--g3:#1F5C9A;--g2:#2E7A3E;--g1:#8A6A1F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-damair{--g3:#8EC1F0;--g2:#9ED6A6;--g1:#E8C58D}}
+:root[data-theme="dark"] .mod-damair{--g3:#8EC1F0;--g2:#9ED6A6;--g1:#E8C58D}
+.mod-damair .dm-table{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.mod-damair .dm-col{text-align:center;font:700 .72rem var(--f-body);letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.mod-damair .dm-cell{display:flex;border-radius:14px;border:1.5px solid var(--line);border-right:4px solid var(--gc);background:var(--surface)}
+.mod-damair .g3{--gc:var(--g3)} .mod-damair .g2{--gc:var(--g2)} .mod-damair .g1{--gc:var(--g1)}
+.mod-damair .dm-cell button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 2px;border:0;background:none;cursor:pointer;font:inherit;color:var(--body);text-align:center}
+.mod-damair .dm-cell span{font:400 clamp(1.3rem,5vw,1.65rem)/1.6 var(--f-ar);color:var(--gc);white-space:nowrap}
+.mod-damair .dm-cell small{font-size:.72rem;line-height:1.2;color:var(--muted)}
+.mod-damair .ls-tag{font:400 1.2rem var(--f-ar);color:var(--m)}

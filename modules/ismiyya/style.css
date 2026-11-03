@@ -1,0 +1,28 @@
+/* Rubrik Nominalsatz – Rot = Mubtadaʾ, Blau = Khabar */
+.mod-ismiyya{--mt:#A33B3B;--kt:#1F5C9A}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-ismiyya{--mt:#F0A0A0;--kt:#8EC1F0}}
+:root[data-theme="dark"] .mod-ismiyya{--mt:#F0A0A0;--kt:#8EC1F0}
+.mod-ismiyya .ns-parts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-ismiyya .ns-parts > div{display:flex;flex-direction:column;align-items:center;padding:12px 8px;border-radius:18px;border:1.5px solid color-mix(in srgb,var(--c) 45%,var(--line));background:color-mix(in srgb,var(--c) 7%,var(--surface));text-align:center}
+.mod-ismiyya .ns-m{--c:var(--mt)} .mod-ismiyya .ns-k{--c:var(--kt)}
+.mod-ismiyya .ns-parts span{font:400 2.1rem/1.6 var(--f-ar);color:var(--c)}
+.mod-ismiyya .ns-parts small{font-size:.8rem;color:var(--muted)}
+.mod-ismiyya .ns-rules{margin:0 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.mod-ismiyya .ns-three{display:flex;flex-direction:column;gap:8px}
+.mod-ismiyya .ns-three button{display:flex;flex-direction:column;align-items:center;padding:6px 10px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-ismiyya .ns-three button.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 7%,var(--surface))}
+.mod-ismiyya .ns-three span{font:400 1.8rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-ismiyya .ns-three small{font-size:.82rem;color:var(--muted)}
+.mod-ismiyya .ns-pick{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px}
+.mod-ismiyya .ns-pick button{display:flex;flex-direction:column;align-items:center;padding:2px 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-ismiyya .ns-pick span{font:400 1.3rem/1.5 var(--f-ar)}
+.mod-ismiyya .ns-pick small{font-size:.7rem;color:var(--muted)}
+.mod-ismiyya .ns-pick button[aria-pressed="true"]{border-color:var(--m);background:var(--m);color:var(--on-m,#fff)}
+.mod-ismiyya .ns-pick button[aria-pressed="true"] small{color:inherit;opacity:.85}
+.mod-ismiyya .ns-result{display:flex;flex-direction:column;align-items:center;width:100%;padding:10px;border-radius:18px;border:1.5px solid var(--gold-a);background:var(--paper);cursor:pointer;font:inherit}
+.mod-ismiyya .ns-result span{font:400 clamp(2rem,8vw,2.6rem)/1.6 var(--f-ar)}
+.mod-ismiyya .ns-result small{color:var(--muted)}
+.mod-ismiyya .ns-mt{font-weight:400;color:var(--mt)} .mod-ismiyya .ns-kt{font-weight:400;color:var(--kt)}
+.mod-ismiyya .ns-gap{display:inline-block;min-width:2.4em;border-bottom:3px dotted var(--gold-a);color:var(--gold)}
+.mod-ismiyya .ls-btns.n3{grid-template-columns:1fr}
+.mod-ismiyya .ls-btns .opt{min-height:52px}

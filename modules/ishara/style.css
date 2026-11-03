@@ -1,0 +1,9 @@
+/* Rubrik Hinweiswörter */
+.mod-ishara .is-gap{display:inline-block;min-width:2.4em;border-bottom:3px dotted var(--gold-a);color:var(--gold)}
+.mod-ishara .is-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-ishara .is-two button{display:flex;flex-direction:column;align-items:center;padding:10px 8px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-ishara .is-two button:first-child{border-color:var(--good);background:color-mix(in srgb,var(--good) 7%,var(--surface))}
+.mod-ishara .is-two span{font:400 1.8rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-ishara .is-two small{font-size:.8rem;color:var(--muted);text-align:center}
+.mod-ishara .ls-tag span{font:400 1.2rem var(--f-ar);color:var(--m)}
+.mod-ishara .ls-btns .opt{font:400 1.6rem/1.5 var(--f-ar)}

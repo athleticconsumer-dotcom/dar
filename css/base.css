@@ -288,3 +288,36 @@ a.level-card:hover{box-shadow:var(--shadow-hover)}
 .qq-found div{display:flex;flex-direction:column;align-items:center;padding:8px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface)}
 .qq-found .ar{font-size:1.6rem;line-height:1.8}
 .qq-found small{color:var(--muted);font-size:.75rem}
+
+/* ---- Lesson-Engine (js/lesson.js): Aufgaben & Sprint ---- */
+.ls-q{text-align:center}
+.ls-q .ar,.ls-sub .ar,.feedback .ar{font-family:var(--f-ar);font-size:1.3em}
+.ls-big{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:400 clamp(2.2rem,9vw,3.2rem)/1.7 var(--f-ar);color:var(--ink);text-align:center}
+.ls-sub{text-align:center;margin:-6px 0 4px;color:var(--muted)}
+.opt .ar{font-family:var(--f-ar);font-size:1.3em}
+.ls-game{display:flex;flex-direction:column;gap:12px}
+.ls-game h2{margin:0}
+.ls-best{text-align:center;margin:0;font-weight:600;color:var(--heading)}
+.ls-game-head{display:flex;justify-content:space-between}
+.ls-timebar{height:6px;border-radius:999px;background:var(--m-soft);overflow:hidden}
+.ls-timebar i{display:block;height:100%;background:var(--m)}
+.ls-word{text-align:center;font:400 clamp(2.4rem,10vw,3.4rem)/1.7 var(--f-ar);color:var(--ink);border-radius:18px;transition:background .25s}
+.ls-word.ok{background:color-mix(in srgb,var(--good) 10%,transparent)}
+.ls-word.no{background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.ls-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ls-btns.n3{grid-template-columns:repeat(3,1fr)}
+.ls-btns .opt{flex-direction:column;min-height:72px;justify-content:center}
+.ls-btns .opt small{display:block;font:400 1.1rem var(--f-ar);color:var(--muted)}
+/* gemeinsame Bausteine der Grammatik-Lektionen */
+.ls-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ls-chips button,.ls-chip{display:inline-flex;flex-direction:column;align-items:center;padding:4px 14px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit;color:var(--body)}
+.ls-chips button > span:first-child,.ls-chip > span:first-child{font:400 1.6rem/1.6 var(--f-ar);color:var(--ink)}
+.ls-chips small,.ls-chip small{font-size:.75rem;color:var(--muted);max-width:15em;text-align:center}
+.ls-aya{margin:0;padding:10px 14px;border-radius:18px;border:1.5px solid var(--gold-a);background:var(--paper)}
+.ls-aya p{margin:0;font:400 clamp(1.4rem,5.4vw,1.8rem)/2 var(--f-ar);color:var(--ink);text-align:right}
+.ls-aya b{font-weight:400;color:var(--m);background:var(--m-soft);border-radius:8px;padding:0 4px}
+.ls-aya figcaption{display:flex;flex-direction:column;gap:2px;font-size:.88rem;color:var(--body)}
+.ls-aya figcaption small{color:var(--muted)}
+.ls-ayat{display:flex;flex-direction:column;gap:10px}
+.ls-num{color:var(--gold);font-size:.8em}
+.ls-tag{font:400 1.25rem/1.5 var(--f-ar);color:var(--m)}

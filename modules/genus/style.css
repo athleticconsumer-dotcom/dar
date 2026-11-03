@@ -1,0 +1,15 @@
+/* Rubrik Männlich & weiblich – Blau = männlich, Rot = weiblich */
+.mod-genus{--gm:#1F5C9A;--gf:#A33B5E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-genus{--gm:#8EC1F0;--gf:#F0A3BE}}
+:root[data-theme="dark"] .mod-genus{--gm:#8EC1F0;--gf:#F0A3BE}
+.mod-genus .gn-m{--c:var(--gm)} .mod-genus .gn-f{--c:var(--gf)}
+.mod-genus .ar.gn-m,.mod-genus .ls-chips .gn-m > span:first-child,.mod-genus .ls-chips .gn-f > span:first-child{color:var(--c)}
+.mod-genus .gn-pairs{display:flex;flex-direction:column;gap:6px}
+.mod-genus .gn-pair{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px 10px;padding:2px 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface)}
+.mod-genus .gn-pair button{border:0;background:none;cursor:pointer;font:400 1.7rem/1.6 var(--f-ar);color:var(--c)}
+.mod-genus .gn-pair b{font-weight:700;background:color-mix(in srgb,var(--gf) 14%,transparent);border-radius:6px}
+.mod-genus .gn-arrow{color:var(--gold)}
+.mod-genus .gn-pair small{grid-column:1/-1;text-align:center;color:var(--muted);font-size:.78rem;margin-top:-6px}
+.mod-genus .gn-h{margin:12px 0 6px;color:var(--heading)}
+.mod-genus .opt.gn-m{color:var(--gm)} .mod-genus .opt.gn-f{color:var(--gf)}
+.mod-genus .opt.gn-m b,.mod-genus .opt.gn-f b{color:inherit}
