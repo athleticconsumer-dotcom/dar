@@ -1,0 +1,55 @@
+/* Rubrik Wurzel & Muster – 1. Wurzelbuchstabe blau (ف), 2. rot (ع), 3. grün (ل) */
+.mod-jadhr{--r1:#1F5C9A;--r2:#B03A3A;--r3:#2E7A3E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-jadhr{--r1:#8EC1F0;--r2:#F2A0A0;--r3:#9ED6A6}}
+:root[data-theme="dark"] .mod-jadhr{--r1:#8EC1F0;--r2:#F2A0A0;--r3:#9ED6A6}
+.mod-jadhr .ar{font-family:var(--f-ar);font-size:1.2em}
+.mod-jadhr .jd-r1{color:var(--r1);font-weight:700} .mod-jadhr .jd-r2{color:var(--r2);font-weight:700} .mod-jadhr .jd-r3{color:var(--r3);font-weight:700}
+.mod-jadhr .jd-root{font:400 1.5em/1.4 var(--f-ar);white-space:nowrap}
+.mod-jadhr .jd-root.big{font-size:2.2rem}
+.mod-jadhr .jd-inline{font:400 1.4em var(--f-ar)}
+
+.mod-jadhr .jd-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+.mod-jadhr .jd-card{display:flex;flex-direction:column;align-items:center;gap:0;padding:10px 8px;border-radius:18px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body);text-align:center}
+.mod-jadhr .jd-card:hover{border-color:var(--gold-a)}
+.mod-jadhr .jd-w{font:400 2rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-jadhr .jd-m{font:400 1.2rem/1.5 var(--f-ar);color:var(--muted);padding:0 10px;border-radius:999px;background:var(--m-soft)}
+.mod-jadhr .jd-card small{margin-top:4px;font-size:.82rem;line-height:1.3}
+
+.mod-jadhr .jd-weigh{display:flex;flex-direction:column;gap:6px}
+.mod-jadhr .jd-weigh button{display:flex;align-items:center;justify-content:center;gap:16px;padding:4px 10px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:400 1.7rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-jadhr .jd-weigh i{font:400 1rem var(--f-body);color:var(--gold);font-style:normal}
+.mod-jadhr .jd-weigh span{min-width:5.5em;text-align:center}
+
+.mod-jadhr .jd-cat{margin-top:12px}
+.mod-jadhr .jd-cat h3{margin:0 0 6px;font-size:1rem}
+.mod-jadhr .jd-cat h3 span{font:400 1.35rem var(--f-ar)}
+.mod-jadhr .jd-chips{display:flex;flex-wrap:wrap;gap:8px}
+.mod-jadhr .jd-chips button{display:flex;flex-direction:column;align-items:center;padding:4px 14px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit;color:var(--body)}
+.mod-jadhr .jd-chips button > span:first-child{font:400 1.6rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-jadhr .jd-chips small{font-size:.75rem;color:var(--muted);max-width:14em}
+.mod-jadhr .jd-basmala{text-align:center;font:400 clamp(1.6rem,6vw,2.1rem)/2 var(--f-ar);color:var(--ink);margin:6px 0;padding:8px;border-radius:18px;border:1.5px solid var(--gold-a);background:var(--paper)}
+.mod-jadhr .jd-hl{color:var(--r2)}
+
+.mod-jadhr .jd-roots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px}
+.mod-jadhr .jd-roots button{display:flex;flex-direction:column;align-items:center;padding:2px 12px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-jadhr .jd-roots button span{font:400 1.3rem/1.5 var(--f-ar)}
+.mod-jadhr .jd-roots button small{font-size:.7rem;color:var(--muted)}
+.mod-jadhr .jd-roots button[aria-pressed="true"]{border-color:var(--m);background:var(--m);color:var(--on-m,#fff)}
+.mod-jadhr .jd-roots button[aria-pressed="true"] small{color:inherit;opacity:.85}
+.mod-jadhr .jd-head{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px;color:var(--muted)}
+
+.mod-jadhr .jd-q .ar{font-size:1.5em}
+.mod-jadhr .jd-big{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:400 clamp(2.4rem,10vw,3.4rem)/1.7 var(--f-ar);color:var(--ink)}
+.mod-jadhr .feedback .ar{font-size:1.35em}
+
+.mod-jadhr .jd-game{display:flex;flex-direction:column;gap:12px}
+.mod-jadhr .jd-game h2{margin:0}
+.mod-jadhr .jd-best{text-align:center;margin:0;font-weight:600;color:var(--heading)}
+.mod-jadhr .jd-game-head{display:flex;justify-content:space-between}
+.mod-jadhr .jd-timebar{height:6px;border-radius:999px;background:var(--m-soft);overflow:hidden}
+.mod-jadhr .jd-timebar i{display:block;height:100%;background:var(--m)}
+.mod-jadhr .jd-letters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.mod-jadhr .jd-letters button{min-width:58px;padding:2px 10px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:400 2.2rem/1.7 var(--f-ar);color:var(--ink)}
+.mod-jadhr .jd-letters button.hit{border-color:currentColor;background:color-mix(in srgb,currentColor 10%,var(--surface))}
+.mod-jadhr .jd-letters button.miss{border-color:var(--bad);opacity:.5}
+.mod-jadhr .jd-whole{text-align:center;font:400 1.6rem var(--f-ar);color:var(--muted);margin:0}

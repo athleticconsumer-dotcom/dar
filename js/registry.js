@@ -38,6 +38,10 @@ export const LEVELS = [
     desc: { de: "Die Bausteine: Ism, Fiʿl und Ḥarf, bestimmt und unbestimmt, männlich und weiblich, bis zum ersten eigenen Satz.", en: "The building blocks: ism, fiʿl and ḥarf, definite and indefinite, masculine and feminine, up to your first own sentence.", fr: "Les briques : ism, fiʿl et ḥarf, défini et indéfini, masculin et féminin, jusqu'à ta première phrase.", ru: "Основы: исм, фиʿль и харф, определённость и неопределённость, мужской и женский род, вплоть до первого собственного предложения.", tr: "Yapı taşları: isim, fiil ve harf, belirli ve belirsiz, eril ve dişil, ilk kendi cümlene kadar." },
   },
   {
+    id: "g2", approach: "grammatik", title: { de: "Level 2", en: "Level 2", fr: "Niveau 2", ru: "Уровень 2", tr: "Seviye 2" }, ar: "المُسْتَوَى الثَّانِي",
+    desc: { de: "Wie Wörter gebaut werden (Ṣarf): Wurzel und Muster, dann das Verb in allen Personen, in Vergangenheit, Gegenwart und Befehl.", en: "How words are built (ṣarf): root and pattern, then the verb in every person, in the past, the present and the imperative.", fr: "Comment les mots sont construits (ṣarf) : racine et schème, puis le verbe à toutes les personnes, au passé, au présent et à l'impératif.", ru: "Как строятся слова (сарф): корень и модель, затем глагол во всех лицах, в прошедшем, настоящем времени и повелительном наклонении.", tr: "Kelimeler nasıl kurulur (sarf): kök ve kalıp, sonra fiil bütün şahıslarda, geçmiş, şimdiki zaman ve emir." },
+  },
+  {
     id: "c1", approach: "gespraech", title: { de: "Level 1", en: "Level 1", fr: "Niveau 1", ru: "Уровень 1", tr: "Seviye 1" }, ar: "المُسْتَوَى الأَوَّل",
     desc: { de: "Die ersten Gespräche: begrüßen, sich vorstellen, nachfragen, wenn du etwas nicht verstehst, über dich erzählen, in der Moschee und als Gast.", en: "First conversations: greeting, introducing yourself, asking when you don't understand, talking about yourself, at the mosque and as a guest.", fr: "Premières conversations : saluer, se présenter, demander quand on ne comprend pas, parler de soi, à la mosquée et en tant qu'invité.", ru: "Первые разговоры: поздороваться, представиться, переспросить, если не понял, рассказать о себе, в мечети и в гостях.", tr: "İlk sohbetler: selamlaşmak, kendini tanıtmak, anlamadığında sormak, kendinden bahsetmek, camide ve misafirlikte." },
   },
@@ -185,6 +189,68 @@ export const RUBRIKEN = [
     desc: { de: "Zwei Nomen verbinden: بَيْتُ اللّٰهِ, das Haus Allahs.", en: "Joining two nouns: بَيْتُ اللّٰهِ, the House of Allah.", fr: "Relier deux noms : بَيْتُ اللّٰهِ, la Maison d'Allah.", ru: "Соединение двух имён: بَيْتُ اللّٰهِ, Дом Аллаха.", tr: "İki ismi bağlamak: بَيْتُ اللّٰهِ, Allah'ın evi." },
     needs: ["jarr"], level: "g1",
     color: { light: "#4A4A1E", dark: "#D2D28A" },
+  },
+
+  // ---------------- GRAMMATIK-WEG · Level 2 (Ṣarf) ----------------
+  {
+    id: "jadhr", status: "live",
+    title: {"de": "Wurzel & Muster", "en": "Root & pattern", "fr": "Racine & schème", "ru": "Корень и модель", "tr": "Kök ve kalıp"}, ar: "الجَذْرُ وَالمِيزَان",
+    desc: {"de": "Drei Buchstaben, viele Wörter: كَتَبَ، كِتَابٌ، مَكْتَبَةٌ. Mit فَعَلَ erkennst du jedes Muster.", "en": "Three letters, many words: كَتَبَ، كِتَابٌ، مَكْتَبَةٌ. With فَعَلَ you can read every pattern.", "fr": "Trois lettres, beaucoup de mots : كَتَبَ، كِتَابٌ، مَكْتَبَةٌ. Avec فَعَلَ tu reconnais chaque schème.", "ru": "Три буквы, много слов: كَتَبَ، كِتَابٌ، مَكْتَبَةٌ. С помощью فَعَلَ ты узнаёшь любую модель.", "tr": "Üç harf, çok kelime: كَتَبَ، كِتَابٌ، مَكْتَبَةٌ. فَعَلَ ile her kalıbı tanırsın."},
+    needs: [], level: "g2",
+    color: { light: "#2F5D50", dark: "#93D1BF" },
+    minutes: 90,
+    load: () => import("../modules/jadhr/index.js"),
+  },
+  {
+    id: "madi", status: "live",
+    title: {"de": "Die Vergangenheit", "en": "The past tense", "fr": "Le passé", "ru": "Прошедшее время", "tr": "Geçmiş zaman"}, ar: "الفِعْلُ المَاضِي",
+    desc: {"de": "كَتَبَ، كَتَبْتُ، كَتَبْنَا: ein Verb in allen 13 Personen, mit Beispielen aus dem Qur'an.", "en": "كَتَبَ، كَتَبْتُ، كَتَبْنَا: one verb in all 13 persons, with examples from the Qur'an.", "fr": "كَتَبَ، كَتَبْتُ، كَتَبْنَا : un verbe aux 13 personnes, avec des exemples du Coran.", "ru": "كَتَبَ، كَتَبْتُ، كَتَبْنَا: один глагол во всех 13 лицах, с примерами из Корана.", "tr": "كَتَبَ، كَتَبْتُ، كَتَبْنَا: bir fiil 13 şahısta, Kur'an'dan örneklerle."},
+    needs: ["jadhr"], level: "g2",
+    color: { light: "#7A3B1E", dark: "#F0B08C" },
+    minutes: 120,
+    load: () => import("../modules/madi/index.js"),
+  },
+  {
+    id: "mudari", status: "soon",
+    title: {"de": "Die Gegenwart", "en": "The present tense", "fr": "Le présent", "ru": "Настоящее время", "tr": "Şimdiki zaman"}, ar: "الفِعْلُ المُضَارِع",
+    desc: {"de": "يَكْتُبُ، أَكْتُبُ، نَكْتُبُ: Vorsilben und Endungen der Gegenwart.", "en": "يَكْتُبُ، أَكْتُبُ، نَكْتُبُ: the prefixes and endings of the present.", "fr": "يَكْتُبُ، أَكْتُبُ، نَكْتُبُ : préfixes et terminaisons du présent.", "ru": "يَكْتُبُ، أَكْتُبُ، نَكْتُبُ: приставки и окончания настоящего времени.", "tr": "يَكْتُبُ، أَكْتُبُ، نَكْتُبُ: şimdiki zamanın önekleri ve ekleri."},
+    needs: ["madi"], level: "g2",
+    color: { light: "#24527A", dark: "#9CC8EE" },
+  },
+  {
+    id: "amr", status: "soon",
+    title: {"de": "Der Befehl", "en": "The imperative", "fr": "L'impératif", "ru": "Повелительное наклонение", "tr": "Emir"}, ar: "فِعْلُ الأَمْر",
+    desc: {"de": "اُكْتُبْ، اِقْرَأْ: Aufforderungen bilden, wie im ersten offenbarten Wort.", "en": "اُكْتُبْ، اِقْرَأْ: making commands, like the first revealed word.", "fr": "اُكْتُبْ، اِقْرَأْ : former l'impératif, comme le premier mot révélé.", "ru": "اُكْتُبْ، اِقْرَأْ: повелительная форма, как в первом ниспосланном слове.", "tr": "اُكْتُبْ، اِقْرَأْ: emir kipi, ilk inen kelimedeki gibi."},
+    needs: ["mudari"], level: "g2",
+    color: { light: "#6A2E6E", dark: "#D9A6DD" },
+  },
+  {
+    id: "mazid", status: "soon",
+    title: {"de": "Verbstämme II bis X", "en": "Verb forms II to X", "fr": "Formes verbales II à X", "ru": "Породы глагола II–X", "tr": "Mezîd fiiller (II–X)"}, ar: "الأَفْعَالُ المَزِيدَة",
+    desc: {"de": "عَلَّمَ، أَسْلَمَ، اِسْتَغْفَرَ: wie Zusatzbuchstaben die Bedeutung verändern.", "en": "عَلَّمَ، أَسْلَمَ، اِسْتَغْفَرَ: how added letters change the meaning.", "fr": "عَلَّمَ، أَسْلَمَ، اِسْتَغْفَرَ : comment les lettres ajoutées changent le sens.", "ru": "عَلَّمَ، أَسْلَمَ، اِسْتَغْفَرَ: как добавочные буквы меняют значение.", "tr": "عَلَّمَ، أَسْلَمَ، اِسْتَغْفَرَ: ilave harfler anlamı nasıl değiştirir."},
+    needs: ["mudari"], level: "g2",
+    color: { light: "#5A4A12", dark: "#E0CB7E" },
+  },
+  {
+    id: "mushtaqat", status: "soon",
+    title: {"de": "Partizip & Maṣdar", "en": "Participles & maṣdar", "fr": "Participes & maṣdar", "ru": "Причастия и масдар", "tr": "İsim-fail, isim-meful, masdar"}, ar: "المُشْتَقَّات",
+    desc: {"de": "فَاعِلٌ، مَفْعُولٌ und das Verbalnomen: aus jedem Verb neue Wörter machen.", "en": "فَاعِلٌ، مَفْعُولٌ and the verbal noun: new words from every verb.", "fr": "فَاعِلٌ، مَفْعُولٌ et le nom verbal : de nouveaux mots à partir de chaque verbe.", "ru": "فَاعِلٌ، مَفْعُولٌ и отглагольное имя: новые слова из каждого глагола.", "tr": "فَاعِلٌ، مَفْعُولٌ ve masdar: her fiilden yeni kelimeler."},
+    needs: ["mazid"], level: "g2",
+    color: { light: "#1E5E6A", dark: "#8FD3DF" },
+  },
+  {
+    id: "jamtaksir", status: "soon",
+    title: {"de": "Gebrochene Plurale", "en": "Broken plurals", "fr": "Pluriels brisés", "ru": "Ломаное множественное число", "tr": "Kırık çoğul"}, ar: "جَمْعُ التَّكْسِير",
+    desc: {"de": "كِتَابٌ → كُتُبٌ، قَلْبٌ → قُلُوبٌ: Plurale, die das Muster ändern.", "en": "كِتَابٌ → كُتُبٌ، قَلْبٌ → قُلُوبٌ: plurals that change the pattern.", "fr": "كِتَابٌ → كُتُبٌ، قَلْبٌ → قُلُوبٌ : des pluriels qui changent le schème.", "ru": "كِتَابٌ → كُتُبٌ، قَلْبٌ → قُلُوبٌ: множественное число, меняющее модель.", "tr": "كِتَابٌ → كُتُبٌ، قَلْبٌ → قُلُوبٌ: kalıbı değiştiren çoğullar."},
+    needs: ["jadhr"], level: "g2",
+    color: { light: "#7A2440", dark: "#EFA0B8" },
+  },
+  {
+    id: "muttal", status: "soon",
+    title: {"de": "Schwache Verben", "en": "Weak verbs", "fr": "Verbes faibles", "ru": "Слабые глаголы", "tr": "Mu'tel fiiller"}, ar: "الفِعْلُ المُعْتَلّ",
+    desc: {"de": "قَالَ، دَعَا، وَجَدَ: Verben mit و oder ي in der Wurzel.", "en": "قَالَ، دَعَا، وَجَدَ: verbs with و or ي in the root.", "fr": "قَالَ، دَعَا، وَجَدَ : verbes avec و ou ي dans la racine.", "ru": "قَالَ، دَعَا، وَجَدَ: глаголы с و или ي в корне.", "tr": "قَالَ، دَعَا، وَجَدَ: kökünde و veya ي olan fiiller."},
+    needs: ["mazid"], level: "g2",
+    color: { light: "#3E3E6E", dark: "#B4B4EA" },
   },
 
   // ---------------- GESPRÄCHS-WEG · Level 1 ----------------

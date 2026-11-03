@@ -1,0 +1,57 @@
+/* Rubrik Vergangenheit – Endungen farbig, Tabelle von rechts (Einzahl) nach links (Mehrzahl) */
+.mod-madi{--end:#B03A3A;--g3:#1F5C9A;--g2:#2E7A3E;--g1:#8A6A1F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mod-madi{--end:#F2A0A0;--g3:#8EC1F0;--g2:#9ED6A6;--g1:#E8C58D}}
+:root[data-theme="dark"] .mod-madi{--end:#F2A0A0;--g3:#8EC1F0;--g2:#9ED6A6;--g1:#E8C58D}
+.mod-madi .ar{font-family:var(--f-ar);font-size:1.25em}
+.mod-madi .md-end{color:var(--end);font-weight:700}
+
+.mod-madi .md-table{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.mod-madi .md-col{display:flex;flex-direction:column;align-items:center;font:700 .72rem var(--f-body);letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.mod-madi .md-col i{font:400 1rem var(--f-ar);font-style:normal;text-transform:none}
+.mod-madi .md-cell{display:flex;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);border-right:4px solid var(--gc,var(--line));min-height:84px}
+.mod-madi .md-cell.g3m,.mod-madi .md-cell.g3f{--gc:var(--g3)} .mod-madi .md-cell.g2m,.mod-madi .md-cell.g2f,.mod-madi .md-cell.g2{--gc:var(--g2)} .mod-madi .md-cell.g1{--gc:var(--g1)}
+.mod-madi .md-cell > button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:4px 2px;border:0;background:none;cursor:pointer;font:inherit;color:var(--body);text-align:center}
+.mod-madi .md-pr{font:400 1rem/1.4 var(--f-ar);color:var(--gc,var(--muted))}
+.mod-madi .md-f{font:400 clamp(1.25rem,5vw,1.65rem)/1.5 var(--f-ar);color:var(--ink)}
+.mod-madi .md-f.q{color:var(--gold);font-weight:700} .mod-madi .md-f.md-hide{visibility:hidden}
+.mod-madi .md-f{white-space:nowrap}
+.mod-madi .md-cell small{font-size:.7rem;line-height:1.2;color:var(--muted)}
+.mod-madi .md-cell.now{border-color:var(--gold-a);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold-a) 35%,transparent)}
+
+.mod-madi .md-four{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mod-madi .md-four button{display:flex;flex-direction:column;align-items:center;padding:6px 2px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--m-soft);cursor:pointer;font:inherit;color:var(--body)}
+.mod-madi .md-four span{font:400 1.7rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-madi .md-four small{font-size:.75rem;color:var(--muted)}
+
+.mod-madi .md-ayat{display:flex;flex-direction:column;gap:10px}
+.mod-madi .md-aya{margin:0;padding:10px 14px;border-radius:18px;border:1.5px solid var(--gold-a);background:var(--paper)}
+.mod-madi .md-aya p{margin:0;font:400 clamp(1.4rem,5.4vw,1.8rem)/2 var(--f-ar);color:var(--ink);text-align:right}
+.mod-madi .md-aya b{color:var(--end);font-weight:400;background:color-mix(in srgb,var(--end) 10%,transparent);border-radius:8px;padding:0 4px}
+.mod-madi .md-num{color:var(--gold);font-size:.8em}
+.mod-madi .md-aya figcaption{display:flex;flex-direction:column;gap:2px;font-size:.88rem;color:var(--body)}
+.mod-madi .md-tags{font-weight:600;color:var(--heading)} .mod-madi .md-tags span{font:400 1.15rem var(--f-ar)}
+.mod-madi .md-aya small{color:var(--muted)}
+
+.mod-madi .md-verbs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:12px}
+.mod-madi .md-verbs button{display:flex;flex-direction:column;align-items:center;padding:2px 12px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;color:var(--body)}
+.mod-madi .md-verbs button span{font:400 1.35rem/1.5 var(--f-ar)}
+.mod-madi .md-verbs button small{font-size:.7rem;color:var(--muted)}
+.mod-madi .md-verbs button[aria-pressed="true"]{border-color:var(--m);background:var(--m);color:var(--on-m,#fff)}
+.mod-madi .md-verbs button[aria-pressed="true"] small{color:inherit;opacity:.85}
+
+.mod-madi .md-big{display:block;margin:0 auto;border:0;background:none;cursor:pointer;font:400 clamp(2.2rem,9vw,3.2rem)/1.7 var(--f-ar);color:var(--ink)}
+.mod-madi .md-sub{text-align:center;margin:-6px 0 4px;color:var(--muted)}
+.mod-madi .opt small{color:var(--muted);font-size:.85rem}
+.mod-madi .feedback .ar{font-size:1.3em}
+
+.mod-madi .md-game{display:flex;flex-direction:column;gap:12px}
+.mod-madi .md-game h2{margin:0}
+.mod-madi .md-best{text-align:center;margin:0;font-weight:600;color:var(--heading)}
+.mod-madi .md-game-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px}
+.mod-madi .md-game-head .pill span{font:400 1.15rem var(--f-ar)}
+.mod-madi .md-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.mod-madi .md-chips button{padding:2px 14px;border-radius:14px;border:1.5px solid var(--gold-line);background:var(--surface);cursor:pointer;font:400 1.6rem/1.6 var(--f-ar);color:var(--ink)}
+.mod-madi .md-chips button.miss{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.mod-madi .md-table.game .md-cell{flex-direction:column;align-items:center;justify-content:center;padding:4px 2px;text-align:center}
+.mod-madi .md-who{display:flex;flex-direction:column;align-items:center;line-height:1.3}
+.mod-madi .md-who small{font-size:.8rem}
